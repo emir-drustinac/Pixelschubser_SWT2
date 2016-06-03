@@ -1,14 +1,50 @@
 package Server;
 
+import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Collection;
+import java.util.LinkedList;
 
-public class ServerCommunicator {
+import SharedData.NetworkProtocol;
+import SharedData.NetworkProtocol.AuthenticationPacket;
+import SharedData.SocketWorker;
+import SharedData.SocketWorkerManager;
+
+public class ServerCommunicator implements Runnable, SocketWorkerManager{
 
 	private ServerSocket serverSocket;
-
+	private Collection<SocketWorker> socketWorkers;
+	private Thread workerThread;
+	
+	public ServerCommunicator() throws IOException {
+		this(NetworkProtocol.DEFAULT_PORT);
+	}
+	public ServerCommunicator(int port) throws IOException{
+		serverSocket = new ServerSocket(port);
+		socketWorkers = new LinkedList<SocketWorker>();
+	}
+	public void start(){
+		workerThread = new Thread(this);
+		workerThread.start();
+	}
+	public void shutdown(){
+		workerThread.interrupt();
+	}
 	public void acceptConnection() {
 		// TODO - implement ServerCommunicator.acceptConnection
 		throw new UnsupportedOperationException();
+	}
+	
+	public Boolean authenticateClient(AuthenticationPacket a){
+		System.out.println("Connect from "+a.username + a.userpass);
+		return true;
+	}
+
+	public void registerWorker(SocketWorker s){
+		synchronized (socketWorkers) {
+			socketWorkers.add(s);
+		}
 	}
 
 	public void sendGameDataToAllClients() {
@@ -44,5 +80,21 @@ public class ServerCommunicator {
 		// TODO - implement ServerCommunicator.receivedMessage
 		throw new UnsupportedOperationException();
 	}
-
+	@Override
+	public void run() {
+		Socket connecting = null;
+		while (!Thread.interrupted()){
+			try{
+				connecting = serverSocket.accept();
+				new ServerSocketWorker(connecting, this).start();
+			}catch (IOException e){
+				try{
+					connecting.close();
+				}catch(NullPointerException|IOException ignored){
+					// ignored
+				}
+				e.printStackTrace();
+			}
+		}
+	}
 }

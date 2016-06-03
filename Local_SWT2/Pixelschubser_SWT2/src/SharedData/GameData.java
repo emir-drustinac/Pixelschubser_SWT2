@@ -1,9 +1,14 @@
 package SharedData;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class GameData {
+public class GameData implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4237062929837830623L;
 	public int phase;
 	public Collection<PlayerList> players;
 	private Collection<ActionCardList> deck;

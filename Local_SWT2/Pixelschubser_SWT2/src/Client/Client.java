@@ -1,19 +1,38 @@
 package Client;
 
+import java.io.IOException;
+
+import javax.swing.JOptionPane;
+
 import SharedData.*;
 
 public class Client {
 
 	private String playerID;
 	private ClientGameLogic game;
+	private ClientCommunicator com;
 
 	/**
 	 * 
 	 * @param args
 	 */
-	public void main(String[] args) {
-		// TODO - implement Client.main
-		throw new UnsupportedOperationException();
+	public static void main(String[] args) {
+		new Client().initialize();
+	}
+
+	private void initialize() {
+		//String ip = JOptionPane.showInputDialog("Server IP");
+		//String username = JOptionPane.showInputDialog("Name");
+		//String userpass = JOptionPane.showInputDialog("Password");
+		com = new ClientCommunicator();
+		com.setAuth("Nero", "test");
+		try {
+			com.connect();
+			System.out.println("client up");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
