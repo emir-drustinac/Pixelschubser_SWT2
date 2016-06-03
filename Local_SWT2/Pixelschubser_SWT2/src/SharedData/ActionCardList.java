@@ -1,32 +1,36 @@
 package SharedData;
 
-public class ActionCardList {
+import java.util.Vector;
+
+public class ActionCardList extends Vector<ActionCard> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8854831794429897717L;
 
 	/**
 	 * 
 	 * @param c
 	 */
 	public boolean removeCard(ActionCard c) {
-		// TODO - implement ActionCardList.removeCard
-		throw new UnsupportedOperationException();
+		return this.remove(c);
 	}
 
 	/**
-	 * 
+	 * adds the given card to this ActionCardList
 	 * @param c
 	 */
 	public void addCard(ActionCard c) {
-		// TODO - implement ActionCardList.addCard
-		throw new UnsupportedOperationException();
+		this.add(c);
 	}
 
 	/**
-	 * 
+	 * returns the card with index i or null if there is not card with that index
 	 * @param i
 	 */
 	public ActionCard getCard(int i) {
-		// TODO - implement ActionCardList.getCard
-		throw new UnsupportedOperationException();
+		return i < 0 || i >= this.size() ? null : this.get(i);
 	}
 
 }

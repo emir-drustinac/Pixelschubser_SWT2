@@ -2,15 +2,13 @@ package Client;
 
 import java.io.IOException;
 
-import javax.swing.JOptionPane;
-
-import SharedData.*;
+import SharedData.GameData;
 
 public class Client {
 
-	private String playerID;
-	private ClientGameLogic game;
-	private ClientCommunicator com;
+	private static String playerID;
+	private static ClientGameLogic game;
+	private static ClientCommunicator com;
 
 	/**
 	 * 
@@ -58,4 +56,12 @@ public class Client {
 		throw new UnsupportedOperationException();
 	}
 
+	public static Object getGameLogic() {
+		if (game == null) game = new ClientGameLogic();
+		return game;
+	}
+
+	public static String getPlayerID() {
+		return playerID;
+	}
 }
