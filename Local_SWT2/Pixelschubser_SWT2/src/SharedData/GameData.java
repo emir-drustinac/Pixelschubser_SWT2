@@ -13,6 +13,10 @@ public class GameData implements Serializable{
 	public PlayerList players;
 	private ActionCardList deck;
 	private ActionCardList discardPile;
+	
+	public GameData() {
+		players = new PlayerList();
+	}
 
 	/**
 	 * 

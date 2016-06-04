@@ -11,7 +11,8 @@ public class Presentation {
 		throw new UnsupportedOperationException();
 	}
 
-	public void createGameWindow(GameData gameData) {
+	public static void createGameWindow(GameData gameData) {
+		// TODO: if gameWindow != null dispose old gameWindow
 		gameWindow = new GameWindow(gameData);
 	}
 

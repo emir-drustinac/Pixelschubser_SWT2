@@ -26,11 +26,11 @@ public class GameWindow extends JFrame {
 	private static final long serialVersionUID = -1661482076832146231L;
 
 	public GameWindow(GameData gameData) {
-		
-		// create frame
-		JFrame f = new JFrame(windowName);
-		f.setSize(initialWidth, initialHeight);
-		f.setLayout(new BorderLayout());
+		//JFrame f = this;
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle(windowName);
+		setSize(initialWidth, initialHeight);
+		setLayout(new BorderLayout());
 		
 		// add playerInfos
 		JPanel players = new JPanel(new GridLayout());
@@ -46,7 +46,7 @@ public class GameWindow extends JFrame {
 			}
 		}
 		// add player infos to the frame
-		f.add(players, BorderLayout.NORTH);
+		add(players, BorderLayout.NORTH);
 		
 		// add myInfo
 		for (PlayerData p : gameData.players) {
@@ -58,14 +58,16 @@ public class GameWindow extends JFrame {
 				playerInfo = mi;
 			}
 		}
-		f.add(playerInfo, BorderLayout.CENTER);
+		add(playerInfo, BorderLayout.CENTER);
 		
 		// add gameInfo
 		gameInfo = new GameInfos(gameData);
-		f.add(gameInfo, BorderLayout.EAST);
+		add(gameInfo, BorderLayout.EAST);
 		
+		// center frame on screen
+		setLocationRelativeTo(null);
 		// show frame
-		f.setVisible(true);
+		setVisible(true);
 	}
 
 	public void updateGameState(GameData g) {
