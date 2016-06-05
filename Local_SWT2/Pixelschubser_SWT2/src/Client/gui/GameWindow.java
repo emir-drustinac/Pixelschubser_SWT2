@@ -1,24 +1,30 @@
 package Client.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.HashMap;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Client.Client;
-import SharedData.*;
+import SharedData.GameData;
+import SharedData.PlayerData;
 
 public class GameWindow extends JFrame {
 	
-	private static final String windowName = "Proconsul Client v0.1";
+	private static final String windowName = "Proconsul - Liber qui praesunt - Client v0.1";
 	private static final int initialWidth = 900;
 	private static final int initialHeight = 700;
 
 	private HashMap<String, PlayerInfos> playerPanels = new HashMap<String, PlayerInfos>();
 	private MyInfos playerInfo;
 	private GameInfos gameInfo;
+	private JLabel message;
 	
 	/**
 	 * 
@@ -30,10 +36,13 @@ public class GameWindow extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle(windowName);
 		setSize(initialWidth, initialHeight);
+		setMinimumSize(new Dimension(600, 500));
 		setLayout(new BorderLayout());
 		
 		// add playerInfos
-		JPanel players = new JPanel(new GridLayout());
+		JPanel players = new JPanel(new GridLayout(1, 0, 10, 0));
+		players.setBackground(Color.white);
+		players.setBorder(BorderFactory.createLineBorder(Color.white, 10));
 		for (PlayerData p : gameData.players) {
 			// create PlayerInfo for other players
 			if (!p.playerID.equals(Client.getPlayerID())) {
@@ -63,6 +72,14 @@ public class GameWindow extends JFrame {
 		// add gameInfo
 		gameInfo = new GameInfos(gameData);
 		add(gameInfo, BorderLayout.EAST);
+		
+		// add status message panel
+		message = new JLabel();
+		message.setText("initialized...");
+		message.setVerticalAlignment(JLabel.TOP);
+		message.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(0,10,10,10,Color.white), BorderFactory.createEmptyBorder(5, 10, 5, 10)));
+		message.setPreferredSize(new Dimension(500, 50));
+		add(message, BorderLayout.SOUTH);
 		
 		// center frame on screen
 		setLocationRelativeTo(null);

@@ -24,6 +24,11 @@ public class PlayerInfos extends JPanel {
 	private static final int preferredWidth = 150;
 	private static final int preferredHeight = 100;
 
+	private Color bgColor;
+	public Color getBgColor() {
+		return bgColor;
+	}
+
 	private JLabel name;
 	private JLabel proconsul;
 	private JLabel mercenary;
@@ -34,9 +39,9 @@ public class PlayerInfos extends JPanel {
 		this.playerID = playerID;
 		// create all gui elements
 		setLayout(new BorderLayout());
-		Color bgColor = getBackgroundColor();
+		bgColor = getBackgroundColor();
 		setBackground(bgColor);
-		setBorder(BorderFactory.createLineBorder(Color.black));
+		//setBorder(BorderFactory.createLineBorder(Color.white, 5));
 		setMinimumSize(new Dimension(preferredWidth, preferredHeight));
 		setSize(preferredWidth, preferredHeight);
 		setPreferredSize(new Dimension(preferredWidth, preferredHeight));
@@ -66,37 +71,38 @@ public class PlayerInfos extends JPanel {
 		JPanel b2 = new JPanel();
 		b2.setLayout(new GridLayout(1, 3));
 		b2.setBackground(bgColor);
+		b2.setBorder(BorderFactory.createEmptyBorder(0, 5, 10, 5));
+		//b2.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10), new EtchedBorder()));
+
 		
 		// first Icon
-		imgUrl = getClass().getResource("/images/mercenary_small.png");
-		icon = new ImageIcon(imgUrl);
-		mercenary = createImageLabel(icon);
+		mercenary = createImageLabel("/images/mercenary_small.png");
 		b2.add(mercenary, BorderLayout.WEST);
 		
 		// second Icon
-		imgUrl = getClass().getResource("/images/building_small.png");
-		icon = new ImageIcon(imgUrl);
-		building = createImageLabel(icon);
+		building = createImageLabel("/images/building_small.png");
 		b2.add(building, BorderLayout.CENTER);
 		
 		// third Icon
-		imgUrl = getClass().getResource("/images/cards_small.png");
-		icon = new ImageIcon(imgUrl);
-		cards = createImageLabel(icon);
+		cards = createImageLabel("/images/cards_small.png");
 		b2.add(cards, BorderLayout.EAST);
 		
 		add(b2, BorderLayout.CENTER);
 	}
 
 	/**
-	 * @param icon
+	 * @param string
 	 * @return 
 	 */
-	private JLabel createImageLabel(ImageIcon icon) {
+	private JLabel createImageLabel(String string) {
+		java.net.URL imgUrl = getClass().getResource(string);
+		ImageIcon icon = new ImageIcon(imgUrl);
 		JLabel label = new JLabel(icon);
-		label.setVerticalAlignment(JLabel.CENTER);
+		// label is bound to the bottom
+		label.setVerticalAlignment(JLabel.BOTTOM);
 		label.setHorizontalAlignment(JLabel.CENTER);
-		label.setVerticalTextPosition(JLabel.TOP);
+		// with text beneath icon
+		label.setVerticalTextPosition(JLabel.BOTTOM);
 		label.setHorizontalTextPosition(JLabel.CENTER);
 		label.setText("-");
 		return label;
@@ -118,7 +124,7 @@ public class PlayerInfos extends JPanel {
 	private static Color[] backgroundColors = new Color[]{
 			new Color(255,  0,255,50),
 			new Color(255,  0,  0,50),
-			new Color(  0,255,  0,50),
+			//new Color(  0,255,  0,50),
 			new Color(  0,  0,255,50),
 			new Color(255,255,  0,50),
 			new Color(  0,255,255,50)

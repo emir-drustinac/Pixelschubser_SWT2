@@ -20,7 +20,7 @@ public class Presentation {
 	 * 
 	 * @param g
 	 */
-	public void updateGameState(GameData g) {
+	public static void updateGameState(GameData g) {
 		if (gameWindow != null) gameWindow.updateGameState(g);
 	}
 

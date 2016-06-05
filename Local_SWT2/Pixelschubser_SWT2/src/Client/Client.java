@@ -12,6 +12,7 @@ import java.util.UUID;
 
 import Client.gui.Presentation;
 import SharedData.GameData;
+import SharedData.PlayerData;
 
 public class Client {
 
@@ -53,19 +54,39 @@ public class Client {
 	 */
 	public static void main(String[] args) {
 		try {
-			//new Client().initialize();
+			new Client().initialize();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		// test of GameWindow
 		GameData g = new GameData();
+		// first player
 		g.addPlayer(playerID, "Alpha");
+		PlayerData p = g.players.lastElement();
+		p.isGameLeader = true;
+		p.numberOfBuildings = 3;
+		p.numberOfMercenaries = 3;
+		// second player
 		g.addPlayer("b2000000-0000-0000-000000000000", "Beta");
+		g.makeProconsul("b2000000-0000-0000-000000000000");
+		p = g.players.lastElement();
+		p.numberOfBuildings = 1;
+		p.numberOfMercenaries = 4;
+		// third player
 		g.addPlayer("c3", "Gamma");
+		p = g.players.lastElement();
+		p.numberOfBuildings = 2;
+		p.numberOfMercenaries = 1;
+		// fourth player
 		g.addPlayer("d4", "Delta");
-		g.makeProconsul(playerID);
+		p = g.players.lastElement();
+		p.numberOfBuildings = 1;
+		p.numberOfMercenaries = 2;
+		// create game window
 		Presentation.createGameWindow(g);
+		// and show gamedata
+		updateGameState(g);
 	}
 	
 	private void initialize() {
@@ -97,9 +118,8 @@ public class Client {
 	 * 
 	 * @param g
 	 */
-	public void updateGameState(GameData g) {
-		// TODO - implement Client.updateGameState
-		throw new UnsupportedOperationException();
+	public static void updateGameState(GameData g) {
+		Presentation.updateGameState(g);
 	}
 
 	public void quit() {
