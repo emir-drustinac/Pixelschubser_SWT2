@@ -61,39 +61,39 @@ public class ActionCard {
 	 * 
 	 */
 	
-//	public boolean addsPoint() {
-//		// TODO - implement ActionCard.addsPoint
-//		throw new UnsupportedOperationException();
-//	}
-//
-//	public boolean usableDuringFight() {
-//		// TODO - implement ActionCard.usableDuringFight
-//		throw new UnsupportedOperationException();
-//	}
-//	
-//	public boolean usableForOffender(){
-//		// TODO
-//		return false;
-//	}
+	public boolean addsPoint() {
+		// TODO - implement ActionCard.addsPoint
+		throw new UnsupportedOperationException();
+	}
+
+	public boolean usableDuringFight() {
+		// TODO - implement ActionCard.usableDuringFight
+		throw new UnsupportedOperationException();
+	}
+	
+	public boolean usableForOffender(){
+		// TODO
+		return false;
+	}
 
 	public CardType getType() {
 		return this.type;
 	}
 
-//	public String getName() {
-//		// TODO - implement ActionCard.getName
-//		throw new UnsupportedOperationException();
-//	}
+	public String getName() {
+		// TODO - implement ActionCard.getName
+		throw new UnsupportedOperationException();
+	}
 
-//	public boolean isMoneyCard() {
-//		return type == CardType.DENARI1000 || type == CardType.DENARI2000 || type == CardType.DENARI3000;
-//	}
-//
-//	public int moneyValue() {
-//		if (type == CardType.DENARI1000) return 1000;
-//		if (type == CardType.DENARI2000) return 2000;
-//		if (type == CardType.DENARI3000) return 3000;
-//		return 0;
-//	}
+	public boolean isMoneyCard() {
+		return type == CardType.DENARI1000 || type == CardType.DENARI2000 || type == CardType.DENARI3000;
+	}
+
+	public int moneyValue() {
+		if (type == CardType.DENARI1000) return 1000;
+		if (type == CardType.DENARI2000) return 2000;
+		if (type == CardType.DENARI3000) return 3000;
+		return 0;
+	}
 
 }
