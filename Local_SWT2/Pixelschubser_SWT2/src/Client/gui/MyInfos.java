@@ -80,6 +80,7 @@ public class MyInfos extends JPanel {
 		}
 		add(cards, BorderLayout.SOUTH);
 		
+		//TODO EAST for proconsul icon (valign top)
 	}
 
 	public void updateMyInfos(PlayerData p) {

@@ -78,6 +78,7 @@ public class Client {
 		p = g.players.lastElement();
 		p.numberOfBuildings = 2;
 		p.numberOfMercenaries = 1;
+		g.makeProconsul("c3");
 		// fourth player
 		g.addPlayer("d4", "Delta");
 		p = g.players.lastElement();
