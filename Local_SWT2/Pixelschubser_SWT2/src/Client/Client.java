@@ -58,38 +58,56 @@ public class Client {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		// test of GameWindow
-		GameData g = new GameData();
-		// first player
-		g.addPlayer(playerID, "Alpha");
-		PlayerData p = g.players.lastElement();
-		p.isGameLeader = true;
-		p.numberOfBuildings = 3;
-		p.numberOfMercenaries = 3;
-		// second player
-		g.addPlayer("b2000000-0000-0000-000000000000", "Beta");
-		g.makeProconsul("b2000000-0000-0000-000000000000");
-		p = g.players.lastElement();
-		p.numberOfBuildings = 1;
-		p.numberOfMercenaries = 4;
-		// third player
-		g.addPlayer("c3", "Gamma");
-		p = g.players.lastElement();
-		p.numberOfBuildings = 2;
-		p.numberOfMercenaries = 1;
-		g.makeProconsul("c3");
-		// fourth player
-		g.addPlayer("d4", "Delta");
-		p = g.players.lastElement();
-		p.numberOfBuildings = 1;
-		p.numberOfMercenaries = 2;
-		// create game window
-		Presentation.createGameWindow(g);
-		// and show gamedata
-		//g.makeProconsul(playerID);
-		updateGameState(g);
-	}
+
+		// test von CFR
+		if (playerID.equals("82687bf1-df0c-4bb2-af1a-d84a492f7501X")) {
+			// test of GameWindow
+			GameData g = new GameData();
+			// first player
+			g.addPlayer(playerID, "Alpha");
+			PlayerData p = g.players.lastElement();
+			p.isGameLeader = true;
+			p.numberOfBuildings = 3;
+			p.numberOfMercenaries = 3;
+			// second player
+			g.addPlayer("b2000000-0000-0000-000000000000", "Beta");
+			g.makeProconsul("b2000000-0000-0000-000000000000");
+			p = g.players.lastElement();
+			p.numberOfBuildings = 1;
+			p.numberOfMercenaries = 4;
+			// third player
+			g.addPlayer("c3", "Gamma");
+			p = g.players.lastElement();
+			p.numberOfBuildings = 2;
+			p.numberOfMercenaries = 1;
+			g.makeProconsul("c3");
+			// fourth player
+			g.addPlayer("d4", "Delta");
+			p = g.players.lastElement();
+			p.numberOfBuildings = 1;
+			p.numberOfMercenaries = 2;
+			// create game window
+			Presentation.createGameWindow(g);
+			// and show gamedata
+			g.makeProconsul(playerID);
+			g.players.get(0).addCard(null);
+			g.players.get(0).addCard(null);
+			g.players.get(0).addCard(null);
+			g.players.get(0).addCard(null);
+			g.players.get(0).addCard(null);
+			g.players.get(0).addCard(null);
+			g.players.get(0).addCard(null);
+			g.players.get(0).addCard(null);
+			g.players.get(0).addCard(null);
+			updateGameState(g);
+		}
+
+		// test von ABO
+		if (playerID.equals("82687bf1-df0c-4bb2-af1a-d84a492f7501")) {
+			// test of MenuWindow
+			Presentation.createMenuWindow();
+		}
+}
 	
 	private void initialize() {
 		//String ip = JOptionPane.showInputDialog("Server IP");

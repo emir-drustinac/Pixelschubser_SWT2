@@ -18,8 +18,8 @@ import SharedData.PlayerData;
 public class GameWindow extends JFrame {
 	
 	private static final String windowName = "Proconsul - Liber qui praesunt - Client v0.1";
-	private static final int initialWidth = 900;
-	private static final int initialHeight = 700;
+	private static final int initialWidth = 1280;
+	private static final int initialHeight = 960;
 
 	private HashMap<String, PlayerInfos> playerPanels = new HashMap<String, PlayerInfos>();
 	private MyInfos playerInfo;

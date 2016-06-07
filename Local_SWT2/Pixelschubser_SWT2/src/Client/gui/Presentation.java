@@ -5,10 +5,10 @@ import SharedData.GameData;
 public class Presentation {
 	
 	private static GameWindow gameWindow;
+	private static MenuWindow menuWindow;
 	
-	public void createMenuWindow() {
-		// TODO - implement Presentation.createMenuWindow
-		throw new UnsupportedOperationException();
+	public static void createMenuWindow() {
+		menuWindow = new MenuWindow();
 	}
 
 	public static void createGameWindow(GameData gameData) {

@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.net.URL;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -14,6 +13,8 @@ import javax.swing.JPanel;
 import SharedData.PlayerData;
 
 public class MyInfos extends JPanel {
+
+	private static final int MAX_NUMBER_OF_MERCENARIES = 4;
 
 	/**
 	 * 
@@ -43,11 +44,11 @@ public class MyInfos extends JPanel {
 		
 		// east for mercenaries
 		JPanel mercs = new JPanel();
-		mercs.setLayout(new GridLayout(4, 1));
+		mercs.setLayout(new GridLayout(0, 1));
 		mercs.setBorder(BorderFactory.createEmptyBorder(20, 15, 20, 15));
 		mercs.setBackground(bgColor);
-		mercenaries = new JLabel[4];
-		for (int i = 0; i < 4; i++) {
+		mercenaries = new JLabel[MAX_NUMBER_OF_MERCENARIES];
+		for (int i = 0; i < MAX_NUMBER_OF_MERCENARIES; i++) {
 			JLabel label;
 			label = getIconLabel("/images/mercenary.png");
 			label.setVerticalAlignment(JLabel.CENTER);
@@ -70,10 +71,10 @@ public class MyInfos extends JPanel {
 		// south for visual card list
 		cards = new JPanel();
 		cards.setBackground(bgColor);
-		for (int i = 0; i < 7; i++) {
-			JLabel card = getIconLabel("/images/card.png");
-			cards.add(card);
-		}
+//		for (int i = 0; i < 7; i++) {
+//			JLabel card = getIconLabel("/images/card.png");
+//			cards.add(card);
+//		}
 		add(cards, BorderLayout.SOUTH);
 		
 		//east for proconsul icon (valign top with 10 pixel padding)
