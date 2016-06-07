@@ -87,6 +87,7 @@ public class Client {
 		// create game window
 		Presentation.createGameWindow(g);
 		// and show gamedata
+		//g.makeProconsul(playerID);
 		updateGameState(g);
 	}
 	

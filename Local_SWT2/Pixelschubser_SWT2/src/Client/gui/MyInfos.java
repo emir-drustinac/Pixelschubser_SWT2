@@ -28,6 +28,7 @@ public class MyInfos extends JPanel {
 	private JLabel[] mercenaries;
 	private JLabel buildings;
 	private JPanel cards;
+	private JLabel proconsul;
 
 	public MyInfos(String playerID) {
 		this.playerID = playerID;
@@ -47,9 +48,8 @@ public class MyInfos extends JPanel {
 		mercs.setBackground(bgColor);
 		mercenaries = new JLabel[4];
 		for (int i = 0; i < 4; i++) {
-			java.net.URL imgUrl = getClass().getResource("/images/mercenary.png");
-			ImageIcon icon = new ImageIcon(imgUrl);
-			JLabel label = new JLabel(icon);
+			JLabel label;
+			label = getIconLabel("/images/mercenary.png");
 			label.setVerticalAlignment(JLabel.CENTER);
 			mercenaries[i] = label;
 			mercs.add(label);
@@ -57,9 +57,7 @@ public class MyInfos extends JPanel {
 		add(mercs, BorderLayout.WEST);
 		
 		// center for buildings
-		java.net.URL imgUrl = getClass().getResource("/images/building.png");
-		ImageIcon icon = new ImageIcon(imgUrl);
-		buildings = new JLabel(icon);
+		buildings = getIconLabel("/images/building.png");
 		// label is centered
 		buildings.setVerticalAlignment(JLabel.CENTER);
 		buildings.setHorizontalAlignment(JLabel.CENTER);
@@ -73,14 +71,27 @@ public class MyInfos extends JPanel {
 		cards = new JPanel();
 		cards.setBackground(bgColor);
 		for (int i = 0; i < 7; i++) {
-			imgUrl = getClass().getResource("/images/card.png");
-			icon = new ImageIcon(imgUrl);
-			JLabel card = new JLabel(icon);
+			JLabel card = getIconLabel("/images/card.png");
 			cards.add(card);
 		}
 		add(cards, BorderLayout.SOUTH);
 		
-		//TODO EAST for proconsul icon (valign top)
+		//east for proconsul icon (valign top with 10 pixel padding)
+		proconsul = getIconLabel("/images/proconsul.png");
+		proconsul.setVerticalAlignment(JLabel.TOP);
+		proconsul.setHorizontalAlignment(JLabel.CENTER);
+		proconsul.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 10));
+		proconsul.setVisible(false);
+		add(proconsul, BorderLayout.EAST);
+	}
+
+	/**
+	 * @return
+	 */
+	private JLabel getIconLabel(String path) {
+		java.net.URL imgUrl = getClass().getResource(path);
+		ImageIcon icon = new ImageIcon(imgUrl);
+		return new JLabel(icon);
 	}
 
 	public void updateMyInfos(PlayerData p) {
@@ -93,16 +104,18 @@ public class MyInfos extends JPanel {
 		// TODO perhaps some visual buildings?
 		buildings.setText(String.valueOf(p.numberOfBuildings));
 		
+		// proconsul icon
+		proconsul.setVisible(p.isProconsul);
+		
 		// show cards
 		cards.removeAll();
-		for (int i = 0; i < 9; i++) {
-			URL imgUrl = getClass().getResource("/images/card.png");
-			ImageIcon icon = new ImageIcon(imgUrl);
-			JLabel card = new JLabel(icon);
+		for (int i = 0; i < p.getNumberOfCards(); i++) {
+			JLabel card = getIconLabel("/images/card.png");
 			cards.add(card);
 		}
-		
-		doLayout();
+		// update visualization
+		cards.invalidate();
+		invalidate();
 	}
 
 	public String getPlayerID() {
