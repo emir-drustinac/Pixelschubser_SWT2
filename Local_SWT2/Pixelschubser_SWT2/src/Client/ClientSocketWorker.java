@@ -11,21 +11,11 @@ import java.util.Arrays;
 
 
 import SharedData.*;
-import SharedData.NetworkProtocol.AuthenticationPacket;
 
 public class ClientSocketWorker extends SocketWorker{
 	
-	private String playerID;
-	private String userName;
-	private String userPass;
-	
 	public ClientSocketWorker(Socket s, SocketWorkerManager parent) throws IOException {
 		super(s, parent);
-	}
-	
-	public void setAuth(String name, String pass){
-		playerID = userName = name;
-		userPass = pass;
 	}
 	
 	public void connect(InetSocketAddress address, int timeout) throws IOException{
@@ -64,7 +54,7 @@ public class ClientSocketWorker extends SocketWorker{
 		
 		in = new ObjectInputStream(inRaw);
 		out = new ObjectOutputStream(outRaw);
-		out.writeObject(new AuthenticationPacket(userName, userPass));
+		out.writeObject(auth);
 		
 	}
 

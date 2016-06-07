@@ -68,6 +68,7 @@ public class ServerSocketWorker extends SocketWorker{
 			if (!((ServerCommunicator) parent).authenticateClient(auth)){
 				s.close();
 			}else{
+				this.auth = auth;
 				parent.registerWorker(this);
 			}
 		} catch (ClassNotFoundException e) {

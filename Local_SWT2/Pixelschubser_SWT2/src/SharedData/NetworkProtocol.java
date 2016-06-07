@@ -16,11 +16,23 @@ public class NetworkProtocol {
 		 * 
 		 */
 		private static final long serialVersionUID = 5455107748231623523L;
-		public String username;
-		public String userpass;
-		public AuthenticationPacket(String name, String pass){
-			username = name;
-			userpass = pass;
+		private String clientID;
+		private String username;
+		private String password;
+		public AuthenticationPacket(String clientID, String username, String pass){
+			this.clientID = clientID;
+			this.username = username;
+			this.password = pass;
 		}
+		public String getClientID() {
+			return clientID;
+		}
+		public String getUsername() {
+			return username;
+		}
+		public String getPassword() {
+			return password;
+		}
+		
 	}
 }

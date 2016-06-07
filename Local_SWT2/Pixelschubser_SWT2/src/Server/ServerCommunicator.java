@@ -37,7 +37,7 @@ public class ServerCommunicator implements Runnable, SocketWorkerManager{
 	}
 	
 	public Boolean authenticateClient(AuthenticationPacket a){
-		System.out.println("Connect from "+a.username + a.userpass);
+		System.out.println("Connect from "+a.getClientID()+" "+a.getUsername());
 		return true;
 	}
 

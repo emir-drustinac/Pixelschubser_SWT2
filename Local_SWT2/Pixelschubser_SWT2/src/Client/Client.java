@@ -15,7 +15,9 @@ import SharedData.GameData;
 import SharedData.PlayerData;
 
 public class Client {
-
+	
+	public static final Boolean DEBUG = true;
+	
 	// generate or load playerID of this client from file
 	private static final String playerID;
 	static {
@@ -114,13 +116,26 @@ public class Client {
 		//String username = JOptionPane.showInputDialog("Name");
 		//String userpass = JOptionPane.showInputDialog("Password");
 		com = new ClientCommunicator();
-		com.setAuth("Nero", "test");
+		com.setAuth(playerID, "Nero", "test");
 		try {
 			com.connect();
 			System.out.println("client up");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if (DEBUG){
+				// Manually call the server
+				System.err.println("Server not running, trying to start one.");
+				Server.Server.main(new String[0]);
+				try {
+					com.connect();
+					System.out.println("client up");
+				} catch (IOException ex) {
+					System.err.println("Failed to start server.");
+					ex.printStackTrace();
+				}
+			}else{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 	}

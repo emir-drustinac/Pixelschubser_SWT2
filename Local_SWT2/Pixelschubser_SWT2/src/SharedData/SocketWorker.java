@@ -13,6 +13,7 @@ abstract public class SocketWorker implements Runnable{
 	protected ObjectOutputStream out;
 	protected ObjectInputStream in;
 	protected SocketWorkerManager parent;
+	protected NetworkProtocol.AuthenticationPacket auth;
 
 	public SocketWorker(Socket s, SocketWorkerManager parent) throws IOException{
 		this.socket = s;
@@ -56,5 +57,9 @@ abstract public class SocketWorker implements Runnable{
 		}catch (IOException|ClassNotFoundException e){
 			e.printStackTrace();
 		}
+	}
+
+	public void setAuth(NetworkProtocol.AuthenticationPacket auth) {
+		this.auth = auth;
 	}
 }

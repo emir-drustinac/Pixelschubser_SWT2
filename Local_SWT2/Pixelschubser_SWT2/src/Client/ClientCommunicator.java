@@ -13,12 +13,10 @@ public class ClientCommunicator implements SocketWorkerManager{
 	private ClientSocketWorker socketWorker;
 	private InetSocketAddress serverAddress;
 	private int timeout = NetworkProtocol.CONNECT_TIMEOUT;
-	private String userName = "";
-	private String userPass = "";
+	private NetworkProtocol.AuthenticationPacket auth;
 	
-	public void setAuth(String name, String pass){
-		userName = name;
-		userPass = pass;
+	public void setAuth(String id, String name, String pass){
+		auth = new NetworkProtocol.AuthenticationPacket(id, name, pass);
 	}
 	public void setServer(String address){
 		serverAddress = new InetSocketAddress(address, NetworkProtocol.DEFAULT_PORT);
@@ -42,7 +40,7 @@ public class ClientCommunicator implements SocketWorkerManager{
 			serverAddress = new InetSocketAddress(Inet6Address.getLoopbackAddress(), NetworkProtocol.DEFAULT_PORT);
 		}		
 		socketWorker = new ClientSocketWorker(new Socket(), this);
-		socketWorker.setAuth(userName, userPass);
+		socketWorker.setAuth(auth);
 		socketWorker.connect(serverAddress, timeout);
 	}
 	@Override
