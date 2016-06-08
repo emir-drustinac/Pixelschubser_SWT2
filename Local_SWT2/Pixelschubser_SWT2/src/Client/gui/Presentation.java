@@ -7,8 +7,8 @@ public class Presentation {
 	private static GameWindow gameWindow;
 	private static MenuWindow menuWindow;
 	
-	public static void createMenuWindow() {
-		menuWindow = new MenuWindow();
+	public static void createMenuWindow(Logic logic) {
+		menuWindow = new MenuWindow(logic);
 	}
 
 	public static void createGameWindow(GameData gameData) {

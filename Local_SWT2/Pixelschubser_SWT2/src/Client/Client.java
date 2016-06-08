@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.UUID;
 
+import Client.gui.Logic;
 import Client.gui.Presentation;
 import SharedData.GameData;
 import SharedData.PlayerData;
@@ -49,6 +50,7 @@ public class Client {
 	}
 	private static ClientGameLogic game;
 	private static ClientCommunicator com;
+	private static Logic logic;
 
 	/**
 	 * 
@@ -105,9 +107,13 @@ public class Client {
 		}
 
 		// test von ABO
-		if (playerID.equals("82687bf1-df0c-4bb2-af1a-d84a492f7501")) {
+		if (playerID.equals("91fa3ab2-2280-4c90-b215-327b2a4b2be0")) {
 			// test of MenuWindow
-			Presentation.createMenuWindow();
+			
+			// Create Logic for Start Menu
+			logic =  new Logic();
+			
+			Presentation.createMenuWindow(logic);
 		}
 }
 	
