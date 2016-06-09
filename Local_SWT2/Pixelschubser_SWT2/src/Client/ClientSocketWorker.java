@@ -9,7 +9,6 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Arrays;
 
-
 import SharedData.*;
 
 public class ClientSocketWorker extends SocketWorker{
@@ -23,21 +22,16 @@ public class ClientSocketWorker extends SocketWorker{
 		start();
 	}
 
-	/**
-	 * 
-	 * @param m
-	 */
-	public void sendMessage(String m) throws IOException{
-		// TODO - implement ClientSocketWorker.sendMessage
-		throw new UnsupportedOperationException();
+	@Override
+	public void receivedMessage(String m) {
+		((ClientCommunicator) parent).receivedMessage(m);
 	}
-
 	/**
 	 * 
 	 * @param g
 	 */
 	public void receivedGameState(GameData g) {
-		System.out.println(g);
+		((ClientCommunicator) parent).receivedGameState(g);
 	}
 	@Override
 	protected void negotiate(Socket s) throws IOException {
@@ -57,6 +51,4 @@ public class ClientSocketWorker extends SocketWorker{
 		out.writeObject(auth);
 		
 	}
-
-
 }

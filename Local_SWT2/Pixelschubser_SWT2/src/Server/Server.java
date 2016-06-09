@@ -16,9 +16,12 @@ public class Server {
 		new Server().initialize();
 	}
 
-	private void initialize() {
+	public void initialize() {
 		try {
 			com = new ServerCommunicator(SharedData.NetworkProtocol.DEFAULT_PORT);
+			game = new GameLogic(com);
+			game.initNewGame();
+			
 			com.start();
 			System.out.println("server up");
 			//System.in.read();

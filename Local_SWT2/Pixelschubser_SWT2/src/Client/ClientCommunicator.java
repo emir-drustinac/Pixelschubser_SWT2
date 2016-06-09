@@ -9,7 +9,8 @@ import java.net.Socket;
 import SharedData.*;
 
 public class ClientCommunicator implements SocketWorkerManager{
-
+	
+	private ClientGameLogic game;
 	private ClientSocketWorker socketWorker;
 	private InetSocketAddress serverAddress;
 	private int timeout = NetworkProtocol.CONNECT_TIMEOUT;
@@ -47,14 +48,16 @@ public class ClientCommunicator implements SocketWorkerManager{
 	public void registerWorker(SocketWorker s) {
 		//TODO: how to signal ready?
 	}
+	public void setGameLogic(ClientGameLogic g){
+		game = g;
+	}
 
 	/**
 	 * 
 	 * @param g
 	 */
 	public void receivedGameState(GameData g) {
-		// TODO - implement ClientCommunicator.receivedGameState
-		throw new UnsupportedOperationException();
+		game.updateGameState(g);
 	}
 
 	/**
@@ -62,17 +65,16 @@ public class ClientCommunicator implements SocketWorkerManager{
 	 * @param m
 	 */
 	public void receivedMessage(String m) {
-		// TODO - implement ClientCommunicator.receivedMessage
-		throw new UnsupportedOperationException();
+		System.out.println(m);
 	}
 
 	/**
 	 * 
 	 * @param m
+	 * @throws IOException 
 	 */
-	public void sendMessage(String m) {
-		// TODO - implement ClientCommunicator.sendMessage
-		throw new UnsupportedOperationException();
+	public void sendMessage(String m) throws IOException {
+		socketWorker.sendMessage(m);
 	}
 
 }

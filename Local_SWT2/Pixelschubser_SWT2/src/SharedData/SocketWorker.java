@@ -32,8 +32,7 @@ abstract public class SocketWorker implements Runnable{
 	 * @param m
 	 */
 	public void sendMessage(String m) throws IOException{
-		// TODO - implement ClientSocketWorker.sendMessage
-		throw new UnsupportedOperationException();
+		out.writeObject(m);
 	}
 
 	/**
@@ -41,6 +40,7 @@ abstract public class SocketWorker implements Runnable{
 	 * @param g
 	 */
 	public abstract void receivedGameState(GameData g);
+	public abstract void receivedMessage(String m);
 
 	protected abstract void negotiate(Socket s) throws IOException;
 	
@@ -53,6 +53,8 @@ abstract public class SocketWorker implements Runnable{
 				Object data = in.readObject();
 				if(data instanceof GameData)
 					receivedGameState((GameData)data);
+				if(data instanceof String)
+					receivedMessage((String)data);
 			}
 		}catch (IOException|ClassNotFoundException e){
 			e.printStackTrace();

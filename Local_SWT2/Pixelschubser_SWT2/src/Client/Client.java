@@ -10,6 +10,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.UUID;
 
+import javax.swing.JOptionPane;
+
 import Client.gui.Logic;
 import Client.gui.Presentation;
 import SharedData.GameData;
@@ -62,7 +64,7 @@ public class Client {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 		// test von CFR
 		if (playerID.equals("82687bf1-df0c-4bb2-af1a-d84a492f7501X")) {
 			// test of GameWindow
@@ -115,6 +117,21 @@ public class Client {
 			
 			Presentation.createMenuWindow(logic);
 		}
+		
+		// Network test
+		if (playerID.equals("bfd15200-f2a8-40a0-ad1d-9f73eae6f3c8")) {
+			try {
+				// wait for the connection
+				Thread.sleep(2500);
+				com.sendMessage("Hello World");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 }
 	
 	private void initialize() {
@@ -122,15 +139,17 @@ public class Client {
 		//String username = JOptionPane.showInputDialog("Name");
 		//String userpass = JOptionPane.showInputDialog("Password");
 		com = new ClientCommunicator();
+		game = new ClientGameLogic(com);
 		com.setAuth(playerID, "Nero", "test");
 		try {
+			com.setServer(JOptionPane.showInputDialog("Server IP"));
 			com.connect();
 			System.out.println("client up");
 		} catch (IOException e) {
 			if (DEBUG){
 				// Manually call the server
 				System.err.println("Server not running, trying to start one.");
-				Server.Server.main(new String[0]);
+				new Server.Server().initialize();
 				try {
 					com.connect();
 					System.out.println("client up");
@@ -169,7 +188,7 @@ public class Client {
 	}
 
 	public static Object getGameLogic() {
-		if (game == null) game = new ClientGameLogic();
+		//if (game == null) game = new ClientGameLogic();
 		return game;
 	}
 

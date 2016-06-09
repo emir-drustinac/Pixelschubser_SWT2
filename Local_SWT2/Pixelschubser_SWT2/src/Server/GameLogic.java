@@ -6,6 +6,11 @@ public class GameLogic {
 
 	private GameData game;
 	private ServerCommunicator com;
+	
+	public GameLogic(ServerCommunicator com) {
+		this.com = com;
+		com.setGameLogic(this);
+	}
 
 	public void nextPhase() {
 		// TODO - implement GameLogic.nextPhase
@@ -13,8 +18,19 @@ public class GameLogic {
 	}
 
 	public void initNewGame() {
-		// TODO - implement GameLogic.initNewGame
-		throw new UnsupportedOperationException();
+		game = new GameData();
+		// first player
+		game.addPlayer("a1000000-0000-0000-000000000000", "Alpha");
+		PlayerData p = game.players.lastElement();
+		p.isGameLeader = true;
+		p.numberOfBuildings = 3;
+		p.numberOfMercenaries = 3;
+		// second player
+		game.addPlayer("b2000000-0000-0000-000000000000", "Beta");
+		game.makeProconsul("b2000000-0000-0000-000000000000");
+		p = game.players.lastElement();
+		p.numberOfBuildings = 1;
+		p.numberOfMercenaries = 4;
 	}
 
 	/**
@@ -37,9 +53,10 @@ public class GameLogic {
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean addPlayer() {
-		// TODO - implement GameLogic.addPlayer
-		throw new UnsupportedOperationException();
+	public boolean addPlayer(String playerID, String name) {
+		game.addPlayer(playerID, name);
+		com.sendGameDataToAllClients(game);
+		return true;
 	}
 
 	public void removePlayer() {
@@ -55,6 +72,10 @@ public class GameLogic {
 	public void mixCards() {
 		// TODO - implement GameLogic.mixCards
 		throw new UnsupportedOperationException();
+	}
+
+	public GameData getGameData() {
+		return game;
 	}
 
 }

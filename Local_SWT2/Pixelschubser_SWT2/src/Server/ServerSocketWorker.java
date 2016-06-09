@@ -19,9 +19,8 @@ public class ServerSocketWorker extends SocketWorker{
 		super(s, parent);
 	}
 		
-	public void sendGameData() {
-		// TODO - implement ServerSocketWorker.sendGameData
-		throw new UnsupportedOperationException();
+	public void sendGameData(GameData g) throws IOException {
+		out.writeObject(g);
 	}
 
 	/**
@@ -29,23 +28,24 @@ public class ServerSocketWorker extends SocketWorker{
 	 * @param m
 	 */
 	public void receivedMessage(String m) {
-		// TODO - implement ServerSocketWorker.receivedMessage
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param m
-	 */
-	public void sendMessage(String m) {
-		// TODO - implement ServerSocketWorker.sendMessage
-		throw new UnsupportedOperationException();
+		((ServerCommunicator) parent).sendMessageToAllClients(auth.getUsername()+": "+m);
 	}
 
 	@Override
 	public void receivedGameState(GameData g) {
 		// TODO Auto-generated method stub
-		
+	}
+	
+	public String getClientID(){
+		if(auth == null)
+			return null;
+		return auth.getClientID();
+	}
+
+	public String getUsername(){
+		if(auth == null)
+			return null;
+		return auth.getUsername();
 	}
 
 	@Override

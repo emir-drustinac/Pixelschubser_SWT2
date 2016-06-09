@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import SharedData.GameData;
 import SharedData.NetworkProtocol;
 import SharedData.NetworkProtocol.AuthenticationPacket;
 import SharedData.SocketWorker;
@@ -13,8 +14,9 @@ import SharedData.SocketWorkerManager;
 
 public class ServerCommunicator implements Runnable, SocketWorkerManager{
 
+	private GameLogic game;
 	private ServerSocket serverSocket;
-	private Collection<SocketWorker> socketWorkers;
+	private Collection<ServerSocketWorker> socketWorkers;
 	private Thread workerThread;
 	
 	public ServerCommunicator() throws IOException {
@@ -22,7 +24,7 @@ public class ServerCommunicator implements Runnable, SocketWorkerManager{
 	}
 	public ServerCommunicator(int port) throws IOException{
 		serverSocket = new ServerSocket(port);
-		socketWorkers = new LinkedList<SocketWorker>();
+		socketWorkers = new LinkedList<ServerSocketWorker>();
 	}
 	public void start(){
 		workerThread = new Thread(this);
@@ -43,13 +45,24 @@ public class ServerCommunicator implements Runnable, SocketWorkerManager{
 
 	public void registerWorker(SocketWorker s){
 		synchronized (socketWorkers) {
-			socketWorkers.add(s);
+			socketWorkers.add((ServerSocketWorker)s);
 		}
+		String playerID = ((ServerSocketWorker)s).getClientID();
+		String name = ((ServerSocketWorker)s).getUsername();
+		game.addPlayer(playerID, name);
 	}
 
-	public void sendGameDataToAllClients() {
-		// TODO - implement ServerCommunicator.sendGameDataToAllClients
-		throw new UnsupportedOperationException();
+	public void sendGameDataToAllClients(GameData g) {
+		synchronized (socketWorkers) {
+			for(ServerSocketWorker sw:socketWorkers){
+				try {
+					sw.sendGameData(g);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	/**
@@ -57,8 +70,16 @@ public class ServerCommunicator implements Runnable, SocketWorkerManager{
 	 * @param m
 	 */
 	public void sendMessageToAllClients(String m) {
-		// TODO - implement ServerCommunicator.sendMessageToAllClients
-		throw new UnsupportedOperationException();
+		synchronized (socketWorkers) {
+			for(SocketWorker sw:socketWorkers){
+				try {
+					sw.sendMessage(m);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	/**
@@ -96,5 +117,8 @@ public class ServerCommunicator implements Runnable, SocketWorkerManager{
 				e.printStackTrace();
 			}
 		}
+	}
+	public void setGameLogic(GameLogic g) {
+		game = g;
 	}
 }

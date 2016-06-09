@@ -1,7 +1,13 @@
 package SharedData;
 
-public class PlayerData {
+import java.io.Serializable;
 
+public class PlayerData implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5933512311142328024L;
 	public boolean isGameLeader;
 	public String name;
 	public final String playerID;

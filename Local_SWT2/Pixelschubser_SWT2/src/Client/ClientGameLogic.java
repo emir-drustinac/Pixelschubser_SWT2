@@ -1,19 +1,31 @@
 package Client;
 
+import Client.gui.Presentation;
 import SharedData.*;
 
 public class ClientGameLogic {
 
 	private GameData game;
 	private ClientCommunicator com;
-
+	
+	
+	public ClientGameLogic(ClientCommunicator com) {
+		this.com = com;
+		com.setGameLogic(this);
+	}
 	/**
 	 * 
 	 * @param g
 	 */
 	public void updateGameState(GameData g) {
-		// TODO - implement ClientGameLogic.updateGameState
-		throw new UnsupportedOperationException();
+		if(game == null){
+			game = g;
+			Presentation.createGameWindow(game);
+		}else{
+			// TODO - implement ClientGameLogic.updateGameState
+			game = g;
+			Presentation.updateGameState(game);
+		}
 	}
 
 	/**
