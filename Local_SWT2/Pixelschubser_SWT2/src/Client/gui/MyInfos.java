@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -56,6 +59,44 @@ public class MyInfos extends JPanel {
 			mercs.add(label);
 		}
 		add(mercs, BorderLayout.WEST);
+		
+		//mercenaries[0] = getIconLabel("/images/dice_side_1.png");
+		mercenaries[0].addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int rnd = new Random().nextInt(6) + 1;
+				ImageIcon diceIcon = new ImageIcon("/images/dice_side_" + rnd + ".png");
+				mercenaries[0].setIcon(diceIcon);
+				mercenaries[0].setVisible(true);
+				
+			}
+		});		
+				
 		
 		// center for buildings
 		buildings = getIconLabel("/images/building.png");
