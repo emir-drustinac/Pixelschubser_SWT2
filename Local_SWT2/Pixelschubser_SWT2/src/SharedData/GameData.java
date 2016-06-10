@@ -65,7 +65,7 @@ public class GameData implements Serializable{
 		PlayerList winners = new PlayerList();
 		
 		for (PlayerData player : players) {
-			int points = player.getNumberOfPoints();
+			int points = player.getNumberOfVictoryPoints();
 			int money = player.getAmountOfMoney();
 			// new top dog
 			if (points > maxPoints || (points == maxPoints && money > maxMoney)) {

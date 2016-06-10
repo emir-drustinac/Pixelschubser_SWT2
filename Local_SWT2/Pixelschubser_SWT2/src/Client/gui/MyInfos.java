@@ -4,15 +4,20 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Random;
-
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import Client.DiceAnimation;
+import SharedData.GameData;
+import SharedData.Mercenary;
 import SharedData.PlayerData;
 
 public class MyInfos extends JPanel {
@@ -28,14 +33,15 @@ public class MyInfos extends JPanel {
 	
 	private static final int preferredWidth = 250;
 	private static final int preferredHeight = 300;
-	
+
 	private JLabel[] mercenaries;
 	private JLabel buildings;
 	private JPanel cards;
 	private JLabel proconsul;
-
+	
 	public MyInfos(String playerID) {
 		this.playerID = playerID;
+		
 		// create all gui elements
 		setLayout(new BorderLayout());
 		Color bgColor = new Color(204,255,204);
@@ -46,6 +52,15 @@ public class MyInfos extends JPanel {
 		setPreferredSize(new Dimension(preferredWidth, preferredHeight));
 		
 		// east for mercenaries
+		class MercClickListener extends MouseAdapter{
+			
+			public void mousePressed(MouseEvent e) {
+				DiceAnimation diceAnim = new DiceAnimation();
+				diceAnim.runDiceAnimation((JLabel)e.getSource());
+			}
+		}
+		MercClickListener mercLstnr = new MercClickListener(); 
+		
 		JPanel mercs = new JPanel();
 		mercs.setLayout(new GridLayout(0, 1));
 		mercs.setBorder(BorderFactory.createEmptyBorder(20, 15, 20, 15));
@@ -57,46 +72,9 @@ public class MyInfos extends JPanel {
 			label.setVerticalAlignment(JLabel.CENTER);
 			mercenaries[i] = label;
 			mercs.add(label);
+			mercenaries[i].addMouseListener(mercLstnr);
 		}
 		add(mercs, BorderLayout.WEST);
-		
-		//mercenaries[0] = getIconLabel("/images/dice_side_1.png");
-		mercenaries[0].addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int rnd = new Random().nextInt(6) + 1;
-				ImageIcon diceIcon = new ImageIcon("/images/dice_side_" + rnd + ".png");
-				mercenaries[0].setIcon(diceIcon);
-				mercenaries[0].setVisible(true);
-				
-			}
-		});		
-				
 		
 		// center for buildings
 		buildings = getIconLabel("/images/building.png");

@@ -118,67 +118,66 @@ public class Client {
 		}
 		
 		//Test von Emir
-				if (playerID.equals("c6debb40-db95-45f7-afd8-83c954e39a27")) {
-					
-					// test of MenuWindow
-					GameData g = new GameData();
-					
-					// first player
-					g.addPlayer(playerID, "Emir");
-					PlayerData p = g.players.lastElement();
-					p.isGameLeader = true;
-					p.numberOfBuildings = 3;
-					p.numberOfMercenaries = 3;
-					p.addCard(new ActionCard());
-					//p.addCard(new ActionCard());
-					//p.addCard(new ActionCard());
-					
-					// second player
-					g.addPlayer("ID0002", "Spieler2");
-					g.makeProconsul("b2000000-0000-0000-000000000000");
-					p = g.players.lastElement();
-					p.numberOfBuildings = 1;
-					p.numberOfMercenaries = 4;
-					
-					// third player
-					g.addPlayer("ID0003", "Spieler3");
-					p = g.players.lastElement();
-					p.numberOfBuildings = 2;
-					p.numberOfMercenaries = 1;
-					g.makeProconsul("c3");
-					p.addCard(new ActionCard());
-					p.addCard(new ActionCard());
-					p.addCard(new ActionCard());
-					p.addCard(new ActionCard());
-					p.addCard(new ActionCard());
-					
-					// fourth player
-					g.addPlayer("ID0004", "Spieler4");
-					p = g.players.lastElement();
-					p.numberOfBuildings = 1;
-					p.numberOfMercenaries = 2;
-					
-					// fifth player
-					g.addPlayer("ID0005", "Spieler5");
-					p = g.players.lastElement();
-					p.numberOfBuildings = 1;
-					p.numberOfMercenaries = 2;
-					p.addCard(new ActionCard());
-					
-					// create game window
-					Presentation.createGameWindow(g);
-					g.players.elementAt(0).addCard(new ActionCard());
-					g.players.elementAt(0).addCard(new ActionCard());
-					g.players.elementAt(0).addCard(new ActionCard());
-					updateGameState(g);
-					
-					/*
-					// Create Logic for Start Menu
-					logic =  new Logic();
-					
-					Presentation.createMenuWindow(logic);*/
-				}
-		
+		if (playerID.equals("c6debb40-db95-45f7-afd8-83c954e39a27")) {
+			
+			// test of MenuWindow
+			GameData g = new GameData();
+			
+			// first player
+			g.addPlayer(playerID, "Emir");
+			PlayerData p = g.players.lastElement();
+			p.isGameLeader = true;
+			p.numberOfBuildings = 3;
+			p.numberOfMercenaries = 3;
+			p.addCard(new ActionCard());
+			//p.addCard(new ActionCard());
+			//p.addCard(new ActionCard());
+			
+			// second player
+			g.addPlayer("ID0002", "Spieler2");
+			g.makeProconsul("ID0002");
+			p = g.players.lastElement();
+			p.numberOfBuildings = 1;
+			p.numberOfMercenaries = 4;
+			
+			// third player
+			g.addPlayer("ID0003", "Spieler3");
+			p = g.players.lastElement();
+			p.numberOfBuildings = 2;
+			p.numberOfMercenaries = 1;
+			p.addCard(new ActionCard());
+			p.addCard(new ActionCard());
+			p.addCard(new ActionCard());
+			p.addCard(new ActionCard());
+			p.addCard(new ActionCard());
+			
+			// fourth player
+			g.addPlayer("ID0004", "Spieler4");
+			p = g.players.lastElement();
+			p.numberOfBuildings = 1;
+			p.numberOfMercenaries = 2;
+			
+			// fifth player
+			g.addPlayer("ID0005", "Spieler5");
+			p = g.players.lastElement();
+			p.numberOfBuildings = 1;
+			p.numberOfMercenaries = 2;
+			p.addCard(new ActionCard());
+			
+			// create game window
+			Presentation.createGameWindow(g);
+			g.players.elementAt(0).addCard(new ActionCard());
+			g.players.elementAt(0).addCard(new ActionCard());
+			g.players.elementAt(0).addCard(new ActionCard());
+			updateGameState(g);
+			
+			/*
+			// Create Logic for Start Menu
+			logic =  new Logic();
+			
+			Presentation.createMenuWindow(logic);*/
+		}
+
 		// Network test
 		if (playerID.equals("bfd15200-f2a8-40a0-ad1d-9f73eae6f3c8")) {
 			try {

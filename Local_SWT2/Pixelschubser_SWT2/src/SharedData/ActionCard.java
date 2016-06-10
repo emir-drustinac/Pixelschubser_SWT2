@@ -79,9 +79,15 @@ public class ActionCard {
 	 * CFR: die Methoden unterstützen die Logic dabei zu entscheiden, welche Karte nutzbar ist
 	 */
 	
-	public boolean addsPoint() {
-		// TODO - implement ActionCard.addsPoint
-		throw new UnsupportedOperationException();
+	public boolean addsFightPoints() {
+		return 
+				type == CardType.CATAPULT;
+	}
+	
+	public boolean addsVictoryPoints() {
+		return
+				type == CardType.GOLDENCHARIOT ||
+				type == CardType.GOLDENLION;			
 	}
 
 	public boolean usableDuringFight() {
@@ -124,24 +130,24 @@ public class ActionCard {
 
 	public String getName() {
 		switch (type) {
-		case PICKLOCK: return "Einbrecher";
-		case SPY: return "Spion";
-		case ASSASSINATION: return "Attentat";
-		case CATAPULT: return "Katapult";
-		case SLAVEREVOLT: return "Sklavenaufstand";
-		case BRIBE: return "Schmiergeld";
-		case LION: return "Löwe";
-		case SURPRISEATTACK: return "Überraschungsangriff";
-		case ANNEXATION: return "Annexion";
-		case ABUSEOFPOWER: return "Machtmissbrauch";
-		case DENARI1000: return "1000 Denari";
-		case DENARI2000: return "2000 Denari";
-		case DENARI3000: return "3000 Denari";
-		case PROPAGANDA: return "Propaganda";
-		case FREEBUILDING: return "Freies Gebäude";
-		case GOLDENLION: return "Goldener Löwe";
-		case GOLDENCHARIOT: return "Goldener Wagen";
-		case JUGGLER: return "Gauklertruppe";
+			case PICKLOCK: return "Einbrecher";
+			case SPY: return "Spion";
+			case ASSASSINATION: return "Attentat";
+			case CATAPULT: return "Katapult";
+			case SLAVEREVOLT: return "Sklavenaufstand";
+			case BRIBE: return "Schmiergeld";
+			case LION: return "Löwe";
+			case SURPRISEATTACK: return "Überraschungsangriff";
+			case ANNEXATION: return "Annexion";
+			case ABUSEOFPOWER: return "Machtmissbrauch";
+			case DENARI1000: return "1000 Denari";
+			case DENARI2000: return "2000 Denari";
+			case DENARI3000: return "3000 Denari";
+			case PROPAGANDA: return "Propaganda";
+			case FREEBUILDING: return "Freies Gebäude";
+			case GOLDENLION: return "Goldener Löwe";
+			case GOLDENCHARIOT: return "Goldener Wagen";
+			case JUGGLER: return "Gauklertruppe";
 		}
 		return "unknown card";
 	}
