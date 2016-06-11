@@ -1,16 +1,31 @@
 package Client.gui;
 
+import java.util.regex.Pattern;
+
 public class Logic implements Observable{
 	
 	private Observer observer = null;	// wird durch GUi registriert
 	private View currentView = View.START;
 	
+	private MenuWindow gui = null;
+	
+	private static final Pattern IPPATTERN = Pattern.compile(
+	        "^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
+	
 	public Logic() {
 		
 	}
 	
+	public void setGUI(MenuWindow gui){
+		this.gui = gui;
+	}
+	
 	public View getCurrentView(){
 		return currentView;
+	}
+	
+	public static boolean validate(final String ip) {
+	    return IPPATTERN.matcher(ip).matches();
 	}
 	
 	// Views
@@ -38,13 +53,25 @@ public class Logic implements Observable{
 	}
 	
 	public void connectToGame(String ip, String playername){
-		System.out.println("Connect to a Game LOGIC");
-		System.out.println("ip: " + ip);
-		System.out.println("player name: " + playername);
-		// TODO test auf Fehlerangaben + fehelermeldung
+//		System.out.println("Connect to a Game LOGIC");
+//		System.out.println("ip: " + ip);
+//		System.out.println("player name: " + playername);
 		
-		currentView = View.LOBBY;
-		notifyObservers();
+		// TODO test auf Fehlerangaben + fehelermeldung
+		if(validate(ip) && !playername.equals("")){
+			System.out.println(".---------------------");
+			System.out.println("IP: OK");
+			System.out.println("Name: OK");
+			// TODO: oder connectingVEIW vor LOBBY 
+			currentView = View.LOBBY;
+			notifyObservers();
+		} else {
+			//TODO: fehlermeldung in GUI
+			gui.error();			
+			
+		}
+		
+		
 	}
 	
 	public void back(){

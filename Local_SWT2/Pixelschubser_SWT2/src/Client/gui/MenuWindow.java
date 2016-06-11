@@ -51,6 +51,11 @@ public class MenuWindow extends JFrame implements Observer, ActionListener{
 		this.setVisible(true);
 	}
 	
+	public void error(){
+		joinView.error();
+	}
+	
+	
 	@Override
 	public void update() {
 

@@ -9,6 +9,7 @@ public class Presentation {
 	
 	public static void createMenuWindow(Logic logic) {
 		menuWindow = new MenuWindow(logic);
+		logic.setGUI(menuWindow); // unsauber aber was solls
 	}
 
 	public static void createGameWindow(GameData gameData) {
