@@ -1,4 +1,5 @@
 package Client.gui;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,6 +19,8 @@ public class JoinView extends JPanel implements ActionListener{
 	private JTextField ip;
 	private JTextField playerName;
 	
+	private JLabel status;
+	
 	public JoinView(Logic logic) {
 		
 		this.logic = logic;
@@ -31,6 +34,7 @@ public class JoinView extends JPanel implements ActionListener{
 		nameLabel = new JLabel("Player Name:");
 		ip = new JTextField();
 		playerName = new JTextField();
+		status =  new JLabel();
 		
 		// set position
 		ipLabel.setLocation(200, 100);
@@ -42,6 +46,8 @@ public class JoinView extends JPanel implements ActionListener{
 		btnConnect.setLocation(350, 200);
 		btnBack.setLocation(350, 250);
 		
+		status.setLocation(325, 400);
+		
 		// size
 		ip.setSize(200, 25);
 		playerName.setSize(200, 25);
@@ -51,6 +57,9 @@ public class JoinView extends JPanel implements ActionListener{
 		
 		btnConnect.setSize(100, 25);
 		btnBack.setSize(100, 25);
+		status.setSize(200, 25);
+		
+		status.setForeground(Color.RED);
 		
 		// action command
 		btnConnect.setActionCommand("Connect");
@@ -67,7 +76,7 @@ public class JoinView extends JPanel implements ActionListener{
 		this.add(ip);
 		this.add(playerName);
 		this.add(nameLabel);
-		
+		this.add(status);
 	}
 
 	@Override
@@ -80,6 +89,9 @@ public class JoinView extends JPanel implements ActionListener{
 			logic.back();
 		}
 	}
-
+	
+	public void error(){
+		status.setText("IPfalsch oder Name leer!!!");
+	}
 	
 }
