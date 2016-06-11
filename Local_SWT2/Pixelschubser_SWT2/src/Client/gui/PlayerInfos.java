@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import Client.Client;
 import SharedData.PlayerData;
 
 public class PlayerInfos extends JPanel {
@@ -41,7 +42,7 @@ public class PlayerInfos extends JPanel {
 		setLayout(new BorderLayout());
 		bgColor = getBackgroundColor();
 		setBackground(bgColor);
-		//setBorder(BorderFactory.createLineBorder(Color.white, 5));
+		setBorder(BorderFactory.createLineBorder(playerID.equals(Client.getPlayerID()) ? Color.green : GameWindow.freeSpaceColor, 5));
 		setMinimumSize(new Dimension(preferredWidth, preferredHeight));
 		setSize(preferredWidth, preferredHeight);
 		setPreferredSize(new Dimension(preferredWidth, preferredHeight));
