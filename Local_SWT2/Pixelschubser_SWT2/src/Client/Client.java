@@ -65,7 +65,8 @@ public class Client {
 		}
 		
 		// test von CFR
-		if (playerID.equals("82687bf1-df0c-4bb2-af1a-d84a492f7501")) {
+		if (playerID.equals("_82687bf1-df0c-4bb2-af1a-d84a492f7501") ||
+				playerID.equals("_2d15d67e-5857-47a5-98cb-9bb06d6ca102")) {
 			// test of GameWindow
 			GameData g = new GameData();
 			// first player
@@ -202,7 +203,7 @@ public class Client {
 		game = new ClientGameLogic(com);
 		com.setAuth(playerID, "Nero", "test");
 		try {
-			com.setServer(JOptionPane.showInputDialog("Server IP"));
+			com.setServer(true ? "127.0.0.1" : JOptionPane.showInputDialog("Server IP"));
 			com.connect();
 			System.out.println("client up");
 		} catch (IOException e) {
@@ -254,5 +255,14 @@ public class Client {
 
 	public static String getPlayerID() {
 		return playerID;
+	}
+
+	public static void sendMessageToServer(String string) {
+		try {
+			com.sendMessage(string);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

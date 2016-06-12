@@ -19,13 +19,10 @@ public class ClientGameLogic {
 	 */
 	public void updateGameState(GameData g) {
 		if(game == null){
-			game = g;
-			Presentation.createGameWindow(game);
-		}else{
-			// TODO - implement ClientGameLogic.updateGameState
-			game = g;
-			Presentation.updateGameState(game);
+			Presentation.createGameWindow(g);
 		}
+		game = g;
+		Presentation.updateGameState(game);
 	}
 
 	/**

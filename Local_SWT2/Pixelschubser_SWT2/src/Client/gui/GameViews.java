@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Client.Client;
+import Client.gui.gameview.GV_JoinGame;
 import SharedData.GameData;
 
 public class GameViews extends JPanel {
@@ -28,7 +29,7 @@ public class GameViews extends JPanel {
 	private GameView currentView;
 	private CardLayout cardLayout = new CardLayout();
 	
-	private JLabel buildings;
+//	private JLabel buildings;
 
 	public GameViews() {
 		this.playerID = Client.getPlayerID();
@@ -55,15 +56,15 @@ public class GameViews extends JPanel {
 //		add(mercs, BorderLayout.WEST);
 		
 		// center for buildings
-		buildings = getIconLabel("/images/building.png");
-		// label is centered
-		buildings.setVerticalAlignment(JLabel.CENTER);
-		buildings.setHorizontalAlignment(JLabel.CENTER);
-		// with text above icon
-		buildings.setVerticalTextPosition(JLabel.TOP);
-		buildings.setHorizontalTextPosition(JLabel.CENTER);
-		//buildings.setText("-");
-		add(buildings, BorderLayout.CENTER);
+//		buildings = getIconLabel("/images/building.png");
+//		// label is centered
+//		buildings.setVerticalAlignment(JLabel.CENTER);
+//		buildings.setHorizontalAlignment(JLabel.CENTER);
+//		// with text above icon
+//		buildings.setVerticalTextPosition(JLabel.TOP);
+//		buildings.setHorizontalTextPosition(JLabel.CENTER);
+//		//buildings.setText("-");
+//		add(buildings, BorderLayout.CENTER);
 		
 //		// south for visual card list
 //		cards = new JPanel();
@@ -85,6 +86,9 @@ public class GameViews extends JPanel {
 		// create all used GameViews and add it to contentPane and cardLayout
 //		cardLayout.;
 		GameView view;
+		view = new GV_JoinGame();
+		add(view, view.getClass().getSimpleName());
+		currentView = view;
 //		view = new GV_DrawCards();
 //		add(view, View.DRAWCARDS);
 //		view = new GV_MakePromises();

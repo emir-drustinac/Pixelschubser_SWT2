@@ -8,15 +8,16 @@ public class PlayerData implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -5933512311142328024L;
-	public boolean isGameLeader;
+	public boolean isGameLeader = false;
 	public String name;
 	public final String playerID;
-	public boolean isProconsul;
+	public boolean isProconsul = false;
 	public int numberOfBuildings;
 	public int numberOfMercenaries;
 	private int combatPoints;
 	private ActionCardList promises;
 	private ActionCardList cards;
+	public boolean isReady = false;
 	 
 
 	public PlayerData(String playerID, String name) {
