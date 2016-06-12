@@ -1,9 +1,8 @@
 package Client.gui;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Dimension;
+import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -28,10 +27,12 @@ public class GameViews extends JPanel {
 	
 	private GameView currentView;
 	private CardLayout cardLayout = new CardLayout();
+
+	private HashMap<String, GameView> allGameViews = new HashMap<>();
 	
 //	private JLabel buildings;
 
-	public GameViews() {
+	public GameViews(GameData gameData) {
 		this.playerID = Client.getPlayerID();
 		// create all gui elements
 		setLayout(new CardLayout());
@@ -84,20 +85,24 @@ public class GameViews extends JPanel {
 //		add(proconsul, BorderLayout.EAST);
 		
 		// create all used GameViews and add it to contentPane and cardLayout
-//		cardLayout.;
-		GameView view;
-		view = new GV_JoinGame();
-		add(view, view.getClass().getSimpleName());
-		currentView = view;
-//		view = new GV_DrawCards();
-//		add(view, View.DRAWCARDS);
-//		view = new GV_MakePromises();
-//		view = new GV_CommandMercenaries();
-//		view = new GV_Combat();
-//		view = new GV_SpendMoney();
-//		view = new GV_CardLimit();
-//		add(view);
+		currentView = addGameView(new GV_JoinGame());
+//		addGameView(new GV_DrawCards());
+//		addGameView(new GV_MakePromises());
+//		addGameView(new GV_CommandMercenaries());
+//		addGameView(new GV_Combat());
+//		addGameView(new GV_SpendMoney());
+//		addGameView(new GV_CardLimit());
 	}
+
+/**
+ * @return
+ */
+private GameView addGameView(GameView view) {
+	String className = view.getClass().getSimpleName();
+	allGameViews.put(className, view);
+	add(view, className);
+	return view;
+}
 
 	/**
 	 * @return
@@ -109,8 +114,23 @@ public class GameViews extends JPanel {
 	}
 
 	public void updateGameData(GameData g) {
+		// translate g.phase => GameView
+		String className = getGameViewClassNameForPhase(g.phase);
+		// if view changed
+		if (!className.equals(currentView.getClass().getSimpleName())) {
+			currentView.deactivateView();
+			currentView = allGameViews.get(className);
+			currentView.activateView(g);
+			cardLayout.show(this, className);
+		}
 		// update the current view
 		currentView.updateGameData(g);
+	}
+
+	private String getGameViewClassNameForPhase(int phase) {
+		// TODO Auto-generated method stub
+		// if phase == x return GV_JoinGame.class.getSimpleName();
+		return GV_JoinGame.class.getSimpleName();
 	}
 
 	public String getPlayerID() {

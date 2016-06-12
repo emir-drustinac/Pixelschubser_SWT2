@@ -11,7 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import Client.Client;
 import SharedData.GameData;
 import SharedData.PlayerData;
 
@@ -60,7 +59,7 @@ public class GameWindow extends JFrame {
 		add(players, BorderLayout.NORTH);
 		
 		// add -myInfo- all GameViews
-		gameViews = new GameViews();
+		gameViews = new GameViews(gameData);
 		add(gameViews, BorderLayout.CENTER);
 		
 		// add gameInfo

@@ -3,7 +3,6 @@
  */
 package Client.gui.gameview;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -17,7 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Client.Client;
-import Client.ClientGameLogic;
 import Client.gui.ActionCardException;
 import Client.gui.GameView;
 import SharedData.ActionCard;
@@ -51,8 +49,10 @@ public class GV_JoinGame extends GameView {
 		// list of labels
 		JPanel labels = new JPanel(new GridLayout(0, 2, 10, 5));
 		for (int i = 0; i < MAX_NUMBER_OF_PLAYERS; i++) {
-			labels.add(nameLabels[i] = new JLabel("Player " + i + ":", JLabel.RIGHT));
-			labels.add(readyLabels[i] = new JLabel(lbl_wait.toLowerCase()));
+			nameLabels[i] = new JLabel("Player " + i + ":", JLabel.RIGHT);
+			readyLabels[i] = new JLabel(lbl_wait.toLowerCase());
+			labels.add(nameLabels[i]);
+			labels.add(readyLabels[i]);
 		}
 		labels.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 30));
 		add(labels);
