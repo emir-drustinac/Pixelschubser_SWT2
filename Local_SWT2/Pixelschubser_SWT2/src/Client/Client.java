@@ -12,7 +12,7 @@ import java.util.UUID;
 
 import javax.swing.JOptionPane;
 
-import Client.gui.Logic;
+import Client.gui.MenuWindowLogic;
 import Client.gui.Presentation;
 import SharedData.*;
 
@@ -51,7 +51,7 @@ public class Client {
 	}
 	private static ClientGameLogic game;
 	private static ClientCommunicator com;
-	private static Logic logic;
+	private static MenuWindowLogic logic;
 
 	/**
 	 * 
@@ -65,8 +65,8 @@ public class Client {
 		}
 		
 		// test von CFR
-		if (playerID.equals("_82687bf1-df0c-4bb2-af1a-d84a492f7501") ||
-				playerID.equals("_2d15d67e-5857-47a5-98cb-9bb06d6ca102")) {
+		if (playerID.equals("82687bf1-df0c-4bb2-af1a-d84a492f7501") ||
+				playerID.equals("2d15d67e-5857-47a5-98cb-9bb06d6ca102")) {
 			// test of GameWindow
 			GameData g = new GameData();
 			// first player
@@ -113,7 +113,7 @@ public class Client {
 			// test of MenuWindow
 			
 			// Create Logic for Start Menu
-			logic =  new Logic();
+			logic =  new MenuWindowLogic();
 			
 			Presentation.createMenuWindow(logic);
 		}
@@ -185,9 +185,6 @@ public class Client {
 				// wait for the connection
 				Thread.sleep(2500);
 				com.sendMessage("Hello World");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -203,6 +200,7 @@ public class Client {
 		game = new ClientGameLogic(com);
 		com.setAuth(playerID, "Nero", "test");
 		try {
+			// TODO: remove {true ? "127.0.0.1" : } for operative use
 			com.setServer(true ? "127.0.0.1" : JOptionPane.showInputDialog("Server IP"));
 			com.connect();
 			System.out.println("client up");
@@ -258,11 +256,6 @@ public class Client {
 	}
 
 	public static void sendMessageToServer(String string) {
-		try {
-			com.sendMessage(string);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		com.sendMessage(string);
 	}
 }

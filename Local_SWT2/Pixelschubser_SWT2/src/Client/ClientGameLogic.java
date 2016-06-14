@@ -17,7 +17,7 @@ public class ClientGameLogic {
 	 * 
 	 * @param g
 	 */
-	public void updateGameState(GameData g) {
+	public void receivedGameState(GameData g) {
 		if(game == null){
 			Presentation.createGameWindow(g);
 		}
@@ -45,7 +45,7 @@ public class ClientGameLogic {
 	 * 
 	 */
 	public void drawCards() {
-
+		com.sendMessage("i cant draw cards! server please could u draw for me and send me my cards per GameData or PlayerData?!");
 	}
 	
 	/* TODO MAKE PROMISES:

@@ -1,4 +1,5 @@
 package Client.gui;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -7,11 +8,15 @@ import javax.swing.JPanel;
 
 public class StartView extends JPanel implements ActionListener{
 	
-	private Logic logic;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1770847536897063795L;
+	private MenuWindowLogic logic;
 	private JButton btnJoin;
 	private JButton btnCreate;
 
-	public StartView(Logic logic) {
+	public StartView(MenuWindowLogic logic) {
 		
 		this.logic = logic;
 		

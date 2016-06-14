@@ -54,8 +54,8 @@ public class GameData implements Serializable{
 	 * removes the player with the given playerID from the list of players
 	 * @param playerID
 	 */
-	public void removePlayer(String playerID) {
-		players.removePlayer(playerID);
+	public boolean removePlayer(String playerID) {
+		return players.removePlayer(playerID);
 	}
 
 	public PlayerList getWinnerList() {
@@ -92,6 +92,14 @@ public class GameData implements Serializable{
 		for(PlayerData p : players) {
 			p.isProconsul = p.playerID.equals(playerID);
 		}
+	}
+
+	public PlayerData getPlayer(String playerID) {
+		for(PlayerData p : players) {
+			if(p.playerID.equals(playerID))
+				return p;
+		}
+		return null;
 	}
 
 }

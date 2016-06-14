@@ -1,5 +1,6 @@
 package Client.gui;
 
+
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.util.HashMap;
@@ -107,6 +108,7 @@ private GameView addGameView(GameView view) {
 	/**
 	 * @return
 	 */
+	@SuppressWarnings("unused")
 	private JLabel getIconLabel(String path) {
 		java.net.URL imgUrl = getClass().getResource(path);
 		ImageIcon icon = new ImageIcon(imgUrl);

@@ -2,7 +2,7 @@ package Client.gui;
 
 import java.util.regex.Pattern;
 
-public class Logic implements Observable{
+public class MenuWindowLogic implements Observable{
 	
 	private Observer observer = null;	// wird durch GUi registriert
 	private View currentView = View.START;
@@ -12,7 +12,7 @@ public class Logic implements Observable{
 	private static final Pattern IPPATTERN = Pattern.compile(
 	        "^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
 	
-	public Logic() {
+	public MenuWindowLogic() {
 		
 	}
 	

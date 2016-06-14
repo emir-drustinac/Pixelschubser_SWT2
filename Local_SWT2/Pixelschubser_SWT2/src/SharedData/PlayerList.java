@@ -33,4 +33,13 @@ public class PlayerList extends Vector<PlayerData> {
 		return false;
 	}
 
+	public PlayerData get(String clientID) {
+		for (PlayerData p : this) {
+			if (p.playerID.equals(clientID)) {
+				return p;
+			}
+		}
+		return null;
+	}
+
 }

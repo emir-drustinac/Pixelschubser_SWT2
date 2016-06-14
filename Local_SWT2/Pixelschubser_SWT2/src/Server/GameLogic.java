@@ -6,6 +6,7 @@ public class GameLogic {
 
 	private GameData game;
 	private ServerCommunicator com;
+	private Phase phase;
 	
 	public GameLogic(ServerCommunicator com) {
 		this.com = com;
@@ -13,12 +14,12 @@ public class GameLogic {
 	}
 
 	public void nextPhase() {
-		// TODO - implement GameLogic.nextPhase
-		throw new UnsupportedOperationException();
+		phase = phase.getNextPhase();
 	}
 
 	public void initNewGame() {
 		game = new GameData();
+		// TODO start with empty player list as every player will send "joinGame" message
 		// first player
 		game.addPlayer("a1000000-0000-0000-000000000000", "Alpha");
 		PlayerData p = game.players.lastElement();
@@ -38,19 +39,14 @@ public class GameLogic {
 	 * @param PID
 	 * @param m
 	 */
-	public void sendMessageToClient(String PID, String m) {
-		// TODO - implement GameLogic.sendMessageToClient
-		throw new UnsupportedOperationException();
+	public void receivedMessage(String PID, String m) {
+		phase.ReceivedMessageFromClient(PID, m);
+		System.out.println("Message from " + PID + " : " + m);
 	}
 
-	/**
-	 * 
-	 * @param PID
-	 * @param m
-	 */
-	public void receivedMessage(String PID, String m) {
-		// TODO - implement GameLogic.receivedMessage
-		throw new UnsupportedOperationException();
+	public void receivedGameData(String clientID, GameData g) {
+		phase.ReceivedGameStateFromClient(clientID, g);
+		System.out.println("GameData from " + clientID);
 	}
 
 	public boolean addPlayer(String playerID, String name) {
@@ -59,9 +55,12 @@ public class GameLogic {
 		return true;
 	}
 
-	public void removePlayer() {
-		// TODO - implement GameLogic.removePlayer
-		throw new UnsupportedOperationException();
+	public boolean removePlayer(String playerID) {
+		boolean b = game.removePlayer(playerID); 
+		if (b) {
+			com.sendGameDataToAllClients(game);
+		}
+		return b;
 	}
 
 	public boolean startGame() {

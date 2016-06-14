@@ -57,7 +57,8 @@ public class ClientCommunicator implements SocketWorkerManager{
 	 * @param g
 	 */
 	public void receivedGameState(GameData g) {
-		game.updateGameState(g);
+		System.out.println("Received GameData");
+		game.receivedGameState(g);
 	}
 
 	/**
@@ -65,7 +66,8 @@ public class ClientCommunicator implements SocketWorkerManager{
 	 * @param m
 	 */
 	public void receivedMessage(String m) {
-		System.out.println(m);
+		System.out.println("Received message: " + m);
+		game.receivedMessage(m);
 	}
 
 	/**
@@ -73,8 +75,13 @@ public class ClientCommunicator implements SocketWorkerManager{
 	 * @param m
 	 * @throws IOException 
 	 */
-	public void sendMessage(String m) throws IOException {
-		socketWorker.sendMessage(m);
+	public void sendMessage(String m) {
+		try {
+			socketWorker.sendMessage(m);
+		} catch (IOException e) {
+			// TODO sending Message failed, so cache message and try to send it later!
+			e.printStackTrace();
+		}
 	}
 
 }

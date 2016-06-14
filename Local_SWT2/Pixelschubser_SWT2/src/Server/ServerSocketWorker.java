@@ -28,12 +28,13 @@ public class ServerSocketWorker extends SocketWorker{
 	 * @param m
 	 */
 	public void receivedMessage(String m) {
+		((ServerCommunicator) parent).receivedMessage(getClientID(), m);
 		((ServerCommunicator) parent).sendMessageToAllClients(auth.getUsername()+": "+m);
 	}
 
 	@Override
 	public void receivedGameState(GameData g) {
-		// TODO Auto-generated method stub
+		((ServerCommunicator) parent).receivedGameData(getClientID(), g);
 	}
 	
 	public String getClientID(){

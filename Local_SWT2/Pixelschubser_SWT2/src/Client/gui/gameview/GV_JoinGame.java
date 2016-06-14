@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Client.gui.gameview;
 
 import java.awt.Color;

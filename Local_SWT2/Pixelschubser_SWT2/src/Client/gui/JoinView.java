@@ -1,4 +1,5 @@
 package Client.gui;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +11,12 @@ import javax.swing.JTextField;
 
 public class JoinView extends JPanel implements ActionListener{
 	
-	private Logic logic;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1857691018642354325L;
+
+	private MenuWindowLogic logic;
 	
 	private JButton btnConnect;
 	private JButton btnBack;
@@ -21,7 +27,7 @@ public class JoinView extends JPanel implements ActionListener{
 	
 	private JLabel status;
 	
-	public JoinView(Logic logic) {
+	public JoinView(MenuWindowLogic logic) {
 		
 		this.logic = logic;
 		

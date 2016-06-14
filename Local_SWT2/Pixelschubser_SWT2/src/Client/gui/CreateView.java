@@ -1,4 +1,5 @@
 package Client.gui;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,7 +10,12 @@ import javax.swing.JTextField;
 
 public class CreateView extends JPanel implements ActionListener{
 	
-	private Logic logic;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1126851702412773874L;
+
+	private MenuWindowLogic logic;
 	
 	private JButton btnCreate;
 	private JButton btnBack;
@@ -18,7 +24,7 @@ public class CreateView extends JPanel implements ActionListener{
 	private JTextField gameName;
 	private JTextField playerName;
 	
-	public CreateView(Logic logic) {
+	public CreateView(MenuWindowLogic logic) {
 
 		this.logic = logic;
 		

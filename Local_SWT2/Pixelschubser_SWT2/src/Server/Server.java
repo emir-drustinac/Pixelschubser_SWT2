@@ -33,13 +33,17 @@ public class Server {
 	}
 
 	public void loadGame() {
-		// TODO - implement Server.loadGame
-		throw new UnsupportedOperationException();
+		if (db == null) {
+			db = new Database();
+		}
+		// TODO game.setGameData(db.loadGameData());
 	}
 
 	public void saveGame() {
-		// TODO - implement Server.saveGame
-		throw new UnsupportedOperationException();
+		if (db == null) {
+			db = new Database();
+		}
+		db.saveGameData(game.getGameData());
 	}
 
 	public void quit() {

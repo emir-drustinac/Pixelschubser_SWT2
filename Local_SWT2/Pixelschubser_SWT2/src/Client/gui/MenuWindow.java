@@ -1,6 +1,6 @@
 package Client.gui;
 
-import java.awt.BorderLayout;
+
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -15,28 +15,27 @@ public class MenuWindow extends JFrame implements Observer, ActionListener{
 	 */
 	private static final long serialVersionUID = 4506602204785588655L;
 	private static final String windowName = "Proconsul - Liber qui praesunt - Menu - Client v0.1";
-	private static final int initialWidth = 580;
-	private static final int initialHeight = 660;
+	private static final int initialWidth = 800;
+	private static final int initialHeight = 500;
+	private static final int maxWidth = 800;
+	private static final int maxHeight = 500;
 	
-	private Logic logic;	// MenuWindow Logic nicht Clientgamelogic
-	
-	private static final String WINDOWNAME = "Proconsul";
-	private static final int WIDTH = 800;
-	private static final int HEIGHT = 500;
+	private MenuWindowLogic logic;	// MenuWindow Logic nicht Clientgamelogic
 
 	private StartView joinCreateView;
 	private JoinView joinView;
 	private CreateView createView;
 
-	public MenuWindow(Logic logic) {
+	public MenuWindow(MenuWindowLogic logic) {
 		this.logic = logic;
 		logic.registerObserver(this); // REGISTER OBSERVER
 
-		setBounds(200, 200, WIDTH, HEIGHT);
+		setBounds(200, 200, maxWidth, maxHeight);
+		setPreferredSize(new Dimension(initialWidth, initialHeight));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new CardLayout(0, 0));
 		setResizable(false);
-		setTitle(WINDOWNAME);
+		setTitle(windowName);
 		setLocationRelativeTo(null);
 
 		joinCreateView = new StartView(logic);

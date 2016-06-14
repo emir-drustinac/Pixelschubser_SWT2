@@ -101,6 +101,11 @@ public class ServerCommunicator implements Runnable, SocketWorkerManager{
 		// TODO - implement ServerCommunicator.receivedMessage
 		throw new UnsupportedOperationException();
 	}
+	
+	public void receivedGameData(String clientID, GameData g) {
+		game.receivedGameData(clientID, g);
+	}
+	
 	@Override
 	public void run() {
 		Socket connecting = null;

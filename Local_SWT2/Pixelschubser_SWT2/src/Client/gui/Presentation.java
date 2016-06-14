@@ -1,5 +1,6 @@
 package Client.gui;
 
+
 import SharedData.GameData;
 
 public class Presentation {
@@ -7,7 +8,7 @@ public class Presentation {
 	private static GameWindow gameWindow;
 	private static MenuWindow menuWindow;
 	
-	public static void createMenuWindow(Logic logic) {
+	public static void createMenuWindow(MenuWindowLogic logic) {
 		menuWindow = new MenuWindow(logic);
 		logic.setGUI(menuWindow); // unsauber aber was solls
 	}

@@ -1,5 +1,6 @@
 package Client.gui;
 
+
 public class ActionCardException extends Exception {
 	/**
 	 * 
