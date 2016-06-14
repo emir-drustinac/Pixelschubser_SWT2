@@ -1,8 +1,9 @@
 package SharedData;
 
+import java.io.Serializable;
 import java.util.Vector;
 
-public class PlayerList extends Vector<PlayerData> {
+public class PlayerList extends Vector<PlayerData> implements Serializable {
 
 	/**
 	 * 

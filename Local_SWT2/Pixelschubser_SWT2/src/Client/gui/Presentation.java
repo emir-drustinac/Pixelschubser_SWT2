@@ -35,4 +35,9 @@ public class Presentation {
 		throw new UnsupportedOperationException();
 	}
 
+	public static void ReceivedMessage(String m) {
+		if (gameWindow != null) gameWindow.ReceivedMessage(m);
+		
+	}
+
 }

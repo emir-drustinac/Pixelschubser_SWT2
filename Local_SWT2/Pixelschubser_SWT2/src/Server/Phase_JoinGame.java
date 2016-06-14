@@ -11,6 +11,7 @@ public class Phase_JoinGame extends Phase {
 
 	@Override
 	public void ReceivedMessageFromClient(String clientID, String message) {
+		System.out.print(" > " + this.getClass().getSimpleName() + " " + clientID + " " + message);
 		if (message.startsWith("joinGame")) {
 			String name = message.split(":", 2)[1];
 			logic.addPlayer(clientID, name);
@@ -22,7 +23,8 @@ public class Phase_JoinGame extends Phase {
 			String state = message.split(":", 2)[1];
 			PlayerData p = logic.getGameData().getPlayer(clientID);
 			if (p != null) {
-				p.isReady = Boolean.getBoolean(state);
+				p.isReady = Boolean.parseBoolean(state);
+				System.out.println(" > " + p.name + ".isReady = " + Boolean.parseBoolean(state) + " ("+state+")");
 			}
 			sendGameDataToAllClients();
 		}

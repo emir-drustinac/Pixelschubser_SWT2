@@ -57,7 +57,12 @@ public class ClientCommunicator implements SocketWorkerManager{
 	 * @param g
 	 */
 	public void receivedGameState(GameData g) {
-		System.out.println("Received GameData");
+		System.out.println("Received GameData: phase=" + g.phase + " numPlayers=" + g.players.size());
+		for (PlayerData p : g.players) {
+			System.out.println("  Player " + p.playerID + " : Name=" + p.name + " buildings=" + p.numberOfBuildings
+					+ " mercenaries=" + p.numberOfMercenaries + " numCards=" + p.getNumberOfCards()
+					+ " leader=" + p.isGameLeader + " proconsul=" + p.isProconsul + " ready=" + p.isReady);
+		}
 		game.receivedGameState(g);
 	}
 

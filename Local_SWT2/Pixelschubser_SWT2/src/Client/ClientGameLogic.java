@@ -30,8 +30,7 @@ public class ClientGameLogic {
 	 * @param m
 	 */
 	public void receivedMessage(String m) {
-		// TODO - implement ClientGameLogic.receivedMessage
-		throw new UnsupportedOperationException();
+		Presentation.ReceivedMessage(m);
 	}
 
 	// metheods for each phase

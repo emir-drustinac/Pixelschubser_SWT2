@@ -19,6 +19,7 @@ public class GameLogic {
 
 	public void initNewGame() {
 		game = new GameData();
+		phase = new Phase_JoinGame(this, com);
 		// TODO start with empty player list as every player will send "joinGame" message
 		// first player
 		game.addPlayer("a1000000-0000-0000-000000000000", "Alpha");

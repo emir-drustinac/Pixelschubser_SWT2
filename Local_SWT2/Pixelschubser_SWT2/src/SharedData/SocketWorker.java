@@ -10,6 +10,7 @@ abstract public class SocketWorker implements Runnable{
 	protected Socket socket;
 	private Thread workerThread;
 	protected String playerID;
+
 	protected ObjectOutputStream out;
 	protected ObjectInputStream in;
 	protected SocketWorkerManager parent;

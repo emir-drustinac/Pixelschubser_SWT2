@@ -65,8 +65,8 @@ public class Client {
 		}
 		
 		// test von CFR
-		if (playerID.equals("82687bf1-df0c-4bb2-af1a-d84a492f7501") ||
-				playerID.equals("2d15d67e-5857-47a5-98cb-9bb06d6ca102")) {
+		if (playerID.equals("_82687bf1-df0c-4bb2-af1a-d84a492f7501") ||
+				playerID.equals("_2d15d67e-5857-47a5-98cb-9bb06d6ca102")) {
 			// test of GameWindow
 			GameData g = new GameData();
 			// first player

@@ -5,9 +5,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.Random;
 
 import SharedData.GameData;
 import SharedData.NetworkProtocol;
+import SharedData.PlayerData;
 import SharedData.NetworkProtocol.AuthenticationPacket;
 import SharedData.SocketWorker;
 import SharedData.SocketWorkerManager;
@@ -53,9 +55,17 @@ public class ServerCommunicator implements Runnable, SocketWorkerManager{
 	}
 
 	public void sendGameDataToAllClients(GameData g) {
+		System.out.println("Sending GameData: phase=" + g.phase + " numPlayers=" + g.players.size());
+		for (PlayerData p : g.players) {
+			System.out.println("  Player " + p.playerID + " : Name=" + p.name + " buildings=" + p.numberOfBuildings
+					+ " mercenaries=" + p.numberOfMercenaries + " numCards=" + p.getNumberOfCards()
+					+ " leader=" + p.isGameLeader + " proconsul=" + p.isProconsul + " ready=" + p.isReady);
+		}
+		g.phase = (int) (Math.random() * 1000000);
 		synchronized (socketWorkers) {
 			for(ServerSocketWorker sw:socketWorkers){
 				try {
+					System.out.println(" > to " + sw.getClientID());
 					sw.sendGameData(g);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -71,7 +81,7 @@ public class ServerCommunicator implements Runnable, SocketWorkerManager{
 	 */
 	public void sendMessageToAllClients(String m) {
 		synchronized (socketWorkers) {
-			for(SocketWorker sw:socketWorkers){
+			for(ServerSocketWorker sw:socketWorkers){
 				try {
 					sw.sendMessage(m);
 				} catch (IOException e) {
@@ -88,8 +98,16 @@ public class ServerCommunicator implements Runnable, SocketWorkerManager{
 	 * @param m
 	 */
 	public void sendMessageToClient(String PID, String m) {
-		// TODO - implement ServerCommunicator.sendMessageToClient
-		throw new UnsupportedOperationException();
+		synchronized (socketWorkers) {
+			for(ServerSocketWorker sw:socketWorkers){
+				try {
+					if (sw.getClientID().equals(PID)) sw.sendMessage(m);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	/**
@@ -98,8 +116,7 @@ public class ServerCommunicator implements Runnable, SocketWorkerManager{
 	 * @param m
 	 */
 	public void receivedMessage(String PID, String m) {
-		// TODO - implement ServerCommunicator.receivedMessage
-		throw new UnsupportedOperationException();
+		game.receivedMessage(PID, m);
 	}
 	
 	public void receivedGameData(String clientID, GameData g) {

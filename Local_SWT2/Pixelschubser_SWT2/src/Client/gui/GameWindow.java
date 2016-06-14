@@ -18,8 +18,8 @@ import SharedData.PlayerData;
 public class GameWindow extends JFrame {
 	
 	private static final String windowName = "Proconsul - Liber qui praesunt - Client v0.1";
-	private static final int initialWidth = 1280;
-	private static final int initialHeight = 960;
+	private static final int initialWidth = 880;
+	private static final int initialHeight = 560;
 	
 	public static final Color freeSpaceColor = Color.white;
 
@@ -98,6 +98,12 @@ public class GameWindow extends JFrame {
 		
 		// add messages to log
 		// TODO
+	}
+
+	public void ReceivedMessage(String m) {
+		//gameInfo.
+		message.setText(m);
+		//gameViews.
 	}
 
 }
