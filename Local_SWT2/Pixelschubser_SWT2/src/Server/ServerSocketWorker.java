@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Arrays;
 
+import SharedData.AuthenticationPacket;
 import SharedData.GameData;
 import SharedData.NetworkProtocol;
 import SharedData.SocketWorker;
@@ -65,7 +66,7 @@ public class ServerSocketWorker extends SocketWorker{
 		out = new ObjectOutputStream(outRaw);
 		in = new ObjectInputStream(inRaw);
 		try {
-			NetworkProtocol.AuthenticationPacket auth = (NetworkProtocol.AuthenticationPacket)(in.readObject());
+			AuthenticationPacket auth = (AuthenticationPacket)(in.readObject());
 			if (!((ServerCommunicator) parent).authenticateClient(auth)){
 				s.close();
 			}else{

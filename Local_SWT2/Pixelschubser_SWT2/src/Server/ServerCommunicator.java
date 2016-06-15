@@ -7,10 +7,10 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Random;
 
+import SharedData.AuthenticationPacket;
 import SharedData.GameData;
 import SharedData.NetworkProtocol;
 import SharedData.PlayerData;
-import SharedData.NetworkProtocol.AuthenticationPacket;
 import SharedData.SocketWorker;
 import SharedData.SocketWorkerManager;
 

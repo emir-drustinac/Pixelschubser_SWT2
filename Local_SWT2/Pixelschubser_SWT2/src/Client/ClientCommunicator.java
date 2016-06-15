@@ -14,10 +14,10 @@ public class ClientCommunicator implements SocketWorkerManager{
 	private ClientSocketWorker socketWorker;
 	private InetSocketAddress serverAddress;
 	private int timeout = NetworkProtocol.CONNECT_TIMEOUT;
-	private NetworkProtocol.AuthenticationPacket auth;
+	private AuthenticationPacket auth;
 	
 	public void setAuth(String id, String name, String pass){
-		auth = new NetworkProtocol.AuthenticationPacket(id, name, pass);
+		auth = new AuthenticationPacket(id, name, pass);
 	}
 	public void setServer(String address){
 		serverAddress = new InetSocketAddress(address, NetworkProtocol.DEFAULT_PORT);
