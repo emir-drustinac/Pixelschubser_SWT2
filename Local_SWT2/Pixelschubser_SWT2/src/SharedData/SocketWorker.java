@@ -33,6 +33,7 @@ abstract public class SocketWorker implements Runnable{
 	 * @param m
 	 */
 	public void sendMessage(String m) throws IOException{
+		out.reset();
 		out.writeObject(m);
 	}
 
