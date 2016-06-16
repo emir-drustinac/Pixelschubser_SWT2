@@ -1,10 +1,11 @@
-package Client.gui;
+package Client.gui.gameview;
 
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import Client.gui.ActionCardException;
 import SharedData.ActionCard;
 import SharedData.GameData;
 

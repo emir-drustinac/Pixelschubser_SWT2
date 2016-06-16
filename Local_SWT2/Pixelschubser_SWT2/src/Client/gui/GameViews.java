@@ -6,12 +6,17 @@ import java.awt.Dimension;
 import java.util.HashMap;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Client.Client;
+import Client.gui.gameview.GV_CardLimit;
+import Client.gui.gameview.GV_Combat;
+import Client.gui.gameview.GV_CommandMercenaries;
+import Client.gui.gameview.GV_DrawCards;
 import Client.gui.gameview.GV_JoinGame;
+import Client.gui.gameview.GV_MakePromises;
+import Client.gui.gameview.GV_SpendMoney;
+import Client.gui.gameview.GameView;
 import SharedData.GameData;
 import SharedData.PhaseType;
 
@@ -30,7 +35,7 @@ public class GameViews extends JPanel {
 	private GameView currentView;
 	private CardLayout cardLayout = new CardLayout();
 
-	private HashMap<String, GameView> allGameViews = new HashMap<>();
+	private HashMap<PhaseType, GameView> allGameViews = new HashMap<>();
 	
 //	private JLabel buildings;
 
@@ -87,56 +92,57 @@ public class GameViews extends JPanel {
 //		add(proconsul, BorderLayout.EAST);
 		
 		// create all used GameViews and add it to contentPane and cardLayout
-		currentView = addGameView(new GV_JoinGame());
-//		addGameView(new GV_DrawCards());
-//		addGameView(new GV_MakePromises());
-//		addGameView(new GV_CommandMercenaries());
-//		addGameView(new GV_Combat());
-//		addGameView(new GV_SpendMoney());
-//		addGameView(new GV_CardLimit());
+		currentView = addGameView(PhaseType.JoinGame, new GV_JoinGame());
+		addGameView(PhaseType.DrawCards, new GV_DrawCards());
+		addGameView(PhaseType.MakePromises, new GV_MakePromises());
+		addGameView(PhaseType.CommandMercenaries, new GV_CommandMercenaries());
+		addGameView(PhaseType.Combat, new GV_Combat());
+		addGameView(PhaseType.SpendMoney, new GV_SpendMoney());
+		addGameView(PhaseType.CardLimit, new GV_CardLimit());
 	}
 
-/**
- * @return
- */
-private GameView addGameView(GameView view) {
-	String className = view.getClass().getSimpleName();
-	allGameViews.put(className, view);
-	add(view, className);
-	return view;
-}
-
 	/**
+	 * @param phase 
 	 * @return
 	 */
-	@SuppressWarnings("unused")
-	private JLabel getIconLabel(String path) {
-		java.net.URL imgUrl = getClass().getResource(path);
-		ImageIcon icon = new ImageIcon(imgUrl);
-		return new JLabel(icon);
+	private GameView addGameView(PhaseType phase, GameView view) {
+		//String className = view.getClass().getSimpleName();
+		allGameViews.put(phase, view);
+		add(view, phase.toString());
+		return view;
 	}
 
 	public void updateGameData(GameData g) {
 		// translate g.phase => GameView
-		String className = getGameViewClassNameForPhase(g.phase);
+		//String className = getGameViewClassNameForPhase(g.phase);
 		// if view changed
-		if (!className.equals(currentView.getClass().getSimpleName()) && allGameViews.containsKey(className)) {
+		//if (!className.equals(currentView.getClass().getSimpleName()) && allGameViews.containsKey(className)) {
+		if (allGameViews.containsKey(g.phase)) {
 			currentView.deactivateView();
-			currentView = allGameViews.get(className);
+			currentView = allGameViews.get(g.phase);
 			currentView.activateView(g);
-			cardLayout.show(this, className);
+			cardLayout.show(this, g.phase.toString());
+		} else {
+			System.out.println("ERROR: no GameView class defined in getGameViewClassNameForPhase for phase " + g.phase);
+			//throw new Exception("no GameView class found!");
 		}
 		// update the current view
 		currentView.updateGameData(g);
 	}
 
-	private String getGameViewClassNameForPhase(PhaseType phase) {
-		if (phase == PhaseType.JoinGame) return GV_JoinGame.class.getSimpleName();
-		// TODO add more GameViews
-		System.out.println("ERROR: no GameView class defined in getGameViewClassNameForPhase for phase " + phase);
-		return GV_JoinGame.class.getSimpleName();
-		//throw new Exception("no GameView class found!");
-	}
+//	private String getGameViewClassNameForPhase(PhaseType phase) {
+//		if (phase == PhaseType.JoinGame) return GV_JoinGame.class.getSimpleName();
+//		if (phase == PhaseType.DrawCards) return GV_DrawCards.class.getSimpleName();
+//		if (phase == PhaseType.MakePromises) return GV_MakePromises.class.getSimpleName();
+//		if (phase == PhaseType.JoinGame) return GV_JoinGame.class.getSimpleName();
+//		if (phase == PhaseType.JoinGame) return GV_JoinGame.class.getSimpleName();
+//		if (phase == PhaseType.JoinGame) return GV_JoinGame.class.getSimpleName();
+//		if (phase == PhaseType.JoinGame) return GV_JoinGame.class.getSimpleName();
+//		// TODO add more GameViews
+//		System.out.println("ERROR: no GameView class defined in getGameViewClassNameForPhase for phase " + phase);
+//		return GV_JoinGame.class.getSimpleName();
+//		//throw new Exception("no GameView class found!");
+//	}
 
 	public String getPlayerID() {
 		return playerID;

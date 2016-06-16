@@ -14,7 +14,6 @@ import javax.swing.JPanel;
 
 import Client.Client;
 import Client.gui.ActionCardException;
-import Client.gui.GameView;
 import SharedData.ActionCard;
 import SharedData.GameData;
 import SharedData.PlayerData;
