@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 
 abstract public class SocketWorker implements Runnable{
 
@@ -58,7 +59,10 @@ abstract public class SocketWorker implements Runnable{
 				if(data instanceof String)
 					receivedMessage((String)data);
 			}
-		}catch (IOException|ClassNotFoundException e){
+		} catch (SocketException e) {
+			// TODO: Connection is lost
+			e.printStackTrace();
+		} catch (IOException|ClassNotFoundException e){
 			e.printStackTrace();
 		}
 	}

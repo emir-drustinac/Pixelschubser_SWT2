@@ -6,7 +6,7 @@ public class Server {
 
 	private Database db;
 	private ServerCommunicator com;
-	private GameLogic game;
+	private ServerGameLogic game;
 
 	/**
 	 * 
@@ -19,7 +19,7 @@ public class Server {
 	public void initialize() {
 		try {
 			com = new ServerCommunicator(SharedData.NetworkProtocol.DEFAULT_PORT);
-			game = new GameLogic(com);
+			game = new ServerGameLogic(com);
 			game.initNewGame();
 			
 			com.start();

@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import Client.Client;
 import Client.gui.gameview.GV_JoinGame;
 import SharedData.GameData;
+import SharedData.PhaseType;
 
 public class GameViews extends JPanel {
 
@@ -119,7 +120,7 @@ private GameView addGameView(GameView view) {
 		// translate g.phase => GameView
 		String className = getGameViewClassNameForPhase(g.phase);
 		// if view changed
-		if (!className.equals(currentView.getClass().getSimpleName())) {
+		if (!className.equals(currentView.getClass().getSimpleName()) && allGameViews.containsKey(className)) {
 			currentView.deactivateView();
 			currentView = allGameViews.get(className);
 			currentView.activateView(g);
@@ -129,10 +130,12 @@ private GameView addGameView(GameView view) {
 		currentView.updateGameData(g);
 	}
 
-	private String getGameViewClassNameForPhase(int phase) {
-		// TODO Auto-generated method stub
-		// if phase == x return GV_JoinGame.class.getSimpleName();
+	private String getGameViewClassNameForPhase(PhaseType phase) {
+		if (phase == PhaseType.JoinGame) return GV_JoinGame.class.getSimpleName();
+		// TODO add more GameViews
+		System.out.println("ERROR: no GameView class defined in getGameViewClassNameForPhase for phase " + phase);
 		return GV_JoinGame.class.getSimpleName();
+		//throw new Exception("no GameView class found!");
 	}
 
 	public String getPlayerID() {

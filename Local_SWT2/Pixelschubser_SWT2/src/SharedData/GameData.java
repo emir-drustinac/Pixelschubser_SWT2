@@ -9,7 +9,8 @@ public class GameData implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -4237062929837830623L;
-	public int phase;
+	public int random = 0;
+	public PhaseType phase;
 	public PlayerList players;
 	private ActionCardList deck;
 	private ActionCardList discardPile;

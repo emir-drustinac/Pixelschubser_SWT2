@@ -48,7 +48,7 @@ public class MenuWindowLogic implements Observable{
 		
 		// TODO test auf Fehlerangaben + fehelermeldung
 		
-		currentView = View.LOBBY;	// hier anders machen, gameWindow
+		//currentView = View.LOBBY;	// hier anders machen, gameWindow
 		notifyObservers();
 	}
 	
@@ -63,7 +63,7 @@ public class MenuWindowLogic implements Observable{
 			System.out.println("IP: OK");
 			System.out.println("Name: OK");
 			// TODO: oder connectingVEIW vor LOBBY 
-			currentView = View.LOBBY;
+			//currentView = View.LOBBY;
 			notifyObservers();
 		} else {
 			//TODO: fehlermeldung in GUI

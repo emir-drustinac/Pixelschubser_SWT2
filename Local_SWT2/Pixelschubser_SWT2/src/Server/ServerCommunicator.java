@@ -16,7 +16,7 @@ import SharedData.SocketWorkerManager;
 
 public class ServerCommunicator implements Runnable, SocketWorkerManager{
 
-	private GameLogic game;
+	private ServerGameLogic game;
 	private ServerSocket serverSocket;
 	private Collection<ServerSocketWorker> socketWorkers;
 	private Thread workerThread;
@@ -51,11 +51,12 @@ public class ServerCommunicator implements Runnable, SocketWorkerManager{
 		}
 		String playerID = ((ServerSocketWorker)s).getClientID();
 		String name = ((ServerSocketWorker)s).getUsername();
+		// TODO player could already be in the player list after connection is lost
 		game.addPlayer(playerID, name);
 	}
 
 	public void sendGameDataToAllClients(GameData g) {
-		g.phase = (int) (Math.random() * 1000000);
+		g.random = (int) (Math.random() * 1000000);
 		System.out.println("Sending GameData: phase=" + g.phase + " numPlayers=" + g.players.size());
 		for (PlayerData p : g.players) {
 			System.out.println("  Player " + p.playerID + " : Name=" + p.name + " buildings=" + p.numberOfBuildings
@@ -140,7 +141,7 @@ public class ServerCommunicator implements Runnable, SocketWorkerManager{
 			}
 		}
 	}
-	public void setGameLogic(GameLogic g) {
+	public void setGameLogic(ServerGameLogic g) {
 		game = g;
 	}
 }

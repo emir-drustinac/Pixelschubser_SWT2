@@ -21,6 +21,8 @@ public class Client {
 	public static final Boolean DEBUG = true;
 	
 	// generate or load playerID of this client from file
+	private static String playerName = "Nero";
+	private static String password = "pw";
 	private static final String playerID;
 	static {
 		String pid = null;
@@ -58,58 +60,55 @@ public class Client {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		try {
-			new Client().initialize();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		
 		// test von CFR
-		if (playerID.equals("_82687bf1-df0c-4bb2-af1a-d84a492f7501") ||
-				playerID.equals("_2d15d67e-5857-47a5-98cb-9bb06d6ca102")) {
-			// test of GameWindow
-			GameData g = new GameData();
-			// first player
-			g.addPlayer(playerID, "Alpha");
-			PlayerData p = g.players.lastElement();
-			p.isGameLeader = true;
-			p.numberOfBuildings = 3;
-			p.numberOfMercenaries = 3;
-			// second player
-			g.addPlayer("b2000000-0000-0000-000000000000", "Beta");
-			g.makeProconsul("b2000000-0000-0000-000000000000");
-			p = g.players.lastElement();
-			p.numberOfBuildings = 1;
-			p.numberOfMercenaries = 4;
-			// third player
-			g.addPlayer("c3", "Gamma");
-			p = g.players.lastElement();
-			p.numberOfBuildings = 2;
-			p.numberOfMercenaries = 1;
-			g.makeProconsul("c3");
-			// fourth player
-			g.addPlayer("d4", "Delta");
-			p = g.players.lastElement();
-			p.numberOfBuildings = 1;
-			p.numberOfMercenaries = 2;
-			// create game window
-			Presentation.createGameWindow(g);
-			// and show gamedata
-			g.makeProconsul(playerID);
-			g.players.get(0).addCard(null);
-			g.players.get(0).addCard(null);
-			g.players.get(0).addCard(null);
-			g.players.get(0).addCard(null);
-			g.players.get(0).addCard(null);
-			g.players.get(0).addCard(null);
-			g.players.get(0).addCard(null);
-			g.players.get(0).addCard(null);
-			g.players.get(0).addCard(null);
-			updateGameState(g);
+		if (playerID.equals("82687bf1-df0c-4bb2-af1a-d84a492f7501") ||
+				playerID.equals("2d15d67e-5857-47a5-98cb-9bb06d6ca102")) {
+			playerName = "Christian";
+//			// test of GameWindow
+//			GameData g = new GameData();
+//			// first player
+//			g.addPlayer(playerID, "Alpha");
+//			PlayerData p = g.players.lastElement();
+//			p.isGameLeader = true;
+//			p.numberOfBuildings = 3;
+//			p.numberOfMercenaries = 3;
+//			// second player
+//			g.addPlayer("b2000000-0000-0000-000000000000", "Beta");
+//			g.makeProconsul("b2000000-0000-0000-000000000000");
+//			p = g.players.lastElement();
+//			p.numberOfBuildings = 1;
+//			p.numberOfMercenaries = 4;
+//			// third player
+//			g.addPlayer("c3", "Gamma");
+//			p = g.players.lastElement();
+//			p.numberOfBuildings = 2;
+//			p.numberOfMercenaries = 1;
+//			g.makeProconsul("c3");
+//			// fourth player
+//			g.addPlayer("d4", "Delta");
+//			p = g.players.lastElement();
+//			p.numberOfBuildings = 1;
+//			p.numberOfMercenaries = 2;
+//			// create game window
+//			Presentation.createGameWindow(g);
+//			// and show gamedata
+//			g.makeProconsul(playerID);
+//			g.players.get(0).addCard(null);
+//			g.players.get(0).addCard(null);
+//			g.players.get(0).addCard(null);
+//			g.players.get(0).addCard(null);
+//			g.players.get(0).addCard(null);
+//			g.players.get(0).addCard(null);
+//			g.players.get(0).addCard(null);
+//			g.players.get(0).addCard(null);
+//			g.players.get(0).addCard(null);
+//			updateGameState(g);
 		}
 
 		// test von ABO
 		if (playerID.equals("91fa3ab2-2280-4c90-b215-327b2a4b2be0")) {
+			playerName = "Alexander";
 			// test of MenuWindow
 			
 			// Create Logic for Start Menu
@@ -120,7 +119,7 @@ public class Client {
 		
 		//Test von Emir
 		if (playerID.equals("c6debb40-db95-45f7-afd8-83c954e39a27")) {
-			
+			playerName = "Emir";
 			// test of MenuWindow
 			GameData g = new GameData();
 			
@@ -178,9 +177,17 @@ public class Client {
 			
 			Presentation.createMenuWindow(logic);*/
 		}
+		
+		try {
+			initialize();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 
 		// Network test
 		if (playerID.equals("bfd15200-f2a8-40a0-ad1d-9f73eae6f3c8")) {
+			playerName = "Frank";
 			try {
 				// wait for the connection
 				Thread.sleep(2500);
@@ -192,13 +199,13 @@ public class Client {
 		}
 }
 	
-	private void initialize() {
+	private static void initialize() {
 		//String ip = JOptionPane.showInputDialog("Server IP");
 		//String username = JOptionPane.showInputDialog("Name");
 		//String userpass = JOptionPane.showInputDialog("Password");
 		com = new ClientCommunicator();
 		game = new ClientGameLogic(com);
-		com.setAuth(playerID, "Nero", "test");
+		com.setAuth(playerID, playerName, password);
 		try {
 			// TODO: remove {true ? "127.0.0.1" : } for operative use
 			com.setServer(true ? "127.0.0.1" : JOptionPane.showInputDialog("Server IP"));
@@ -210,6 +217,7 @@ public class Client {
 				System.err.println("Server not running, trying to start one.");
 				new Server.Server().initialize();
 				try {
+					com.setServer("127.0.0.1");
 					com.connect();
 					System.out.println("client up");
 				} catch (IOException ex) {

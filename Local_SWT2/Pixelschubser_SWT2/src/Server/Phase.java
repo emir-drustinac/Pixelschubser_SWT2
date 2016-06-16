@@ -1,14 +1,15 @@
 package Server;
 
 import SharedData.GameData;
+import SharedData.PhaseType;
 import SharedData.PlayerData;
 
 public abstract class Phase {
 	
-	protected GameLogic logic;
+	protected ServerGameLogic logic;
 	protected ServerCommunicator com;
 	
-	public Phase(GameLogic logic, ServerCommunicator com) {
+	public Phase(ServerGameLogic logic, ServerCommunicator com) {
 		this.logic = logic;
 		this.com = com;
 	}
@@ -62,9 +63,16 @@ public abstract class Phase {
 	 */
 	public abstract void ReceivedPlayerDataFromClient(String clientID, PlayerData p);
 	/**
+	 * sets the next phase of game
+	 * @return
+	 */
+	public abstract PhaseType getNextPhaseType();
+		/**
 	 * creates and returns an object of the next Phase dependent of current GameState
 	 * @return
 	 */
-	public abstract Phase getNextPhase();
-	
+	public Phase getNextPhase() {
+		logic.getGameData().phase = getNextPhaseType();
+		return logic.getPhaseForCurrentGameState();
+	}
 }

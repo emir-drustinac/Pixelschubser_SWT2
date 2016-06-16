@@ -1,11 +1,12 @@
 package Server;
 
 import SharedData.GameData;
+import SharedData.PhaseType;
 import SharedData.PlayerData;
 
 public class Phase_JoinGame extends Phase {
 
-	public Phase_JoinGame(GameLogic logic, ServerCommunicator com) {
+	public Phase_JoinGame(ServerGameLogic logic, ServerCommunicator com) {
 		super(logic, com);
 	}
 
@@ -25,11 +26,25 @@ public class Phase_JoinGame extends Phase {
 			if (p != null) {
 				p.isReady = Boolean.parseBoolean(state);
 				System.out.println(" > " + p.name + ".isReady = " + Boolean.parseBoolean(state) + " ("+state+")");
+				// check if all players are ready => startgame
+				if (p.isReady) {
+					boolean allready = true;
+					for (PlayerData p1 : logic.getGameData().players) {
+						if (!p1.isReady) allready = false;
+					}
+					if (allready) {
+						logic.startGame();
+						logic.nextPhase();
+					}
+				}
 			}
 			sendGameDataToAllClients();
+			// TODO: check if all ready, then next phase
+			//logic.nextPhase();
 		}
 		if (message.startsWith("startGame")) {
 			logic.startGame();
+			logic.nextPhase();
 		}
 	}
 
@@ -46,9 +61,8 @@ public class Phase_JoinGame extends Phase {
 	}
 
 	@Override
-	public Phase getNextPhase() {
-		//TODO return new Phase_DrawCards(logic, com);
-		return null;
+	public PhaseType getNextPhaseType() {
+		return PhaseType.DrawCards;
 	}
 
 }

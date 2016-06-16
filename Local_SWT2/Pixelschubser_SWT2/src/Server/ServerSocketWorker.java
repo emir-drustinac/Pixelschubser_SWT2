@@ -23,6 +23,7 @@ public class ServerSocketWorker extends SocketWorker{
 	public void sendGameData(GameData g) throws IOException {
 		out.reset();
 		out.writeObject(g);
+		out.flush();
 	}
 
 	/**
