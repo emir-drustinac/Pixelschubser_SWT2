@@ -6,7 +6,10 @@ import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-
+/**
+ * @author Emir
+ * 
+ */
 public class DiceAnimation {
 
 	private int timerCount;
@@ -14,6 +17,14 @@ public class DiceAnimation {
 	private final int DELAY = 100;
 	private int duration; //in ms
 	
+	/**
+	 * changes mercenary icon with dice icon that
+	 * randomly changes very quickly for 2 - 4 seconds.
+	 * Returns the number from the dice, where animation stopped.
+	 * @author Emir
+	 * @param mercLabel
+	 * @return
+	 */
 	public int runDiceAnimation(JLabel mercLabel) {
 		// duration between 2000ms and 4000ms
 		duration = new Random().nextInt(2000) + 2000; 

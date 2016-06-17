@@ -17,6 +17,8 @@ public class GameData implements Serializable{
 	
 	public GameData() {
 		players = new PlayerList();
+		deck = new ActionCardList();
+		discardPile = new ActionCardList();
 	}
 
 	/**
@@ -31,15 +33,28 @@ public class GameData implements Serializable{
 	public ActionCard takeCard() {
 		// if deck is empty, fill it with mixed discardPile
 		if (deck.size() == 0) {
+			System.out.println("Cards were mixed.");
 			int numCards = discardPile.size();
 			Random rnd = new Random();
 			for (int i = numCards; i > 0; i++) {
 				int r = rnd.nextInt(i);
 				deck.addCard( discardPile.remove(r) );
-			}
+			} 
 		}
 		// return first card on deck and remove it from deck 
 		return deck.remove(0);
+	}
+	
+	public void addCard2Deck(ActionCard a) {
+		if(a != null) {
+			deck.addCard(a);
+		}
+	}
+	
+	public void addCard2DeckAtIndex(ActionCard a, int index) {
+		if(a != null) {
+			deck.add(index, a);
+		}
 	}
 
 	/**
@@ -101,6 +116,14 @@ public class GameData implements Serializable{
 				return p;
 		}
 		return null;
+	}
+
+	public int getDeckSize() {
+		return deck.size();
+	}
+
+	public int getDiscardPileSize() {
+		return discardPile.size();
 	}
 
 }

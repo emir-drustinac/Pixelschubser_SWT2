@@ -3,6 +3,7 @@ package Server;
 import java.util.Random;
 
 import SharedData.*;
+import SharedData.ActionCard.CardType;
 
 public class ServerGameLogic {
 
@@ -75,10 +76,11 @@ public class ServerGameLogic {
 			
 			// all cards
 			// TODO create all cards and put em on to discard pile
-			for (int i = 0; i < 3; i++) {
+			createDeck();
+			/*for (int i = 0; i < 3; i++) {
 				ActionCard a = new ActionCard();
 				game.discardCard(a);
-			}
+			}*/
 			//on first call to game.takeCard() all cards are mixed and put into deck
 			
 			// a random proconsul
@@ -87,6 +89,48 @@ public class ServerGameLogic {
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * creates new Deck with 45 randomly distributed cards
+	 * @author Emir
+	 * 
+	 */
+	public void createDeck() {
+		
+		String allCards[] = new String[18];
+		allCards[0] = "JUGGLERx1";
+		allCards[1] = "LIONx1";
+		allCards[2] = "DENARI3000x3";
+		allCards[3] = "PICKLOCKx1";
+		allCards[4] = "SPYx1";
+		allCards[5] = "ASSASSINATIONx2";
+		allCards[6] = "CATAPULTx2";
+		allCards[7] = "SLAVEREVOLTx2";
+		allCards[8] = "BRIBEx1";
+		allCards[9] = "DENARI2000x11";
+		allCards[10] = "SURPRISEATTACKx1";
+		allCards[11] = "ANNEXATIONx1";
+		allCards[12] = "ABUSEOFPOWERx2";
+		allCards[13] = "PROPAGANDAx1";
+		allCards[14] = "FREEBUILDINGx1";
+		allCards[15] = "GOLDENLIONx1";
+		allCards[16] = "GOLDENCHARIOTx1";
+		allCards[17] = "DENARI1000x12"; 
+										
+		int count, pos;
+		
+		for(int i = 0; i < 18; i++) {
+			pos = allCards[i].indexOf('x');
+			count = Integer.parseInt(allCards[i].substring(pos+1));
+			while(count-- > 0) {
+				allCards[i] = allCards[i].substring(0, pos);
+				game.addCard2DeckAtIndex(new ActionCard(CardType.valueOf(allCards[i])), 
+						new Random().nextInt(game.getDeckSize() + (game.getDeckSize() == 0 ? 1 : 0)));
+				System.out.println("Deck size: " + game.getDeckSize());
+			}
+			allCards[i] = "";
+		}
 	}
 
 	// cards are mixed on takeCard when deck is empty

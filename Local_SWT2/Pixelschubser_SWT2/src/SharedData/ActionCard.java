@@ -44,34 +44,44 @@ public class ActionCard {
 
 	public enum CardType {
 		/* welche Phase? */
-		PICKLOCK, // Einbrecher - darf wann gespielt werden? - bewirkt was?
+		PICKLOCK, //X1 Einbrecher - darf wann gespielt werden? - bewirkt was?
 		/* Kampfplanungsphase */
-		SPY, // ? - ? - ?
+		SPY, //X1 ? - ? - ?
 		/* Kampfphase */
 		// Offender
-		ASSASSINATION, // ? - ? - ?
-		CATAPULT, // ? - ? - ?
-		SLAVEREVOLT, // ? - ? - ?
-		BRIBE, // ? - ? - ?
-		LION, // ? - ? - ?
+		ASSASSINATION, //X2 ? - ? - ?
+		CATAPULT, //X2 ? - ? - ?
+		SLAVEREVOLT, //X2 ? - ? - ?
+		BRIBE, //X1 ? - ? - ?
+		LION, //X1 ? - ? - ?
 		// Defender
-		SURPRISEATTACK, // ? - ? - ?
-		ANNEXATION, // ? - ? - ?
+		SURPRISEATTACK, //X1 ? - ? - ?
+		ANNEXATION, //X1 ? - ? - ?
 		// 
-		ABUSEOFPOWER, // Machtmissbrauch - ? - ? 
+		ABUSEOFPOWER, //X2 Machtmissbrauch - ? - ? 
 		/* Geld ausgeben Phase */
 		// Geldkarten
-		DENARI1000, DENARI2000, DENARI3000,
+		DENARI1000/*X12*/, DENARI2000/*X11*/, DENARI3000/*X3*/,
 		// 
-		PROPAGANDA, // Propaganda - ? - ?
-		FREEBUILDING, // ? - ? - ?
+		PROPAGANDA, //X1 Propaganda - ? - ?
+		FREEBUILDING, //X1 ? - ? - ?
 		// Extra Point Cards
-		GOLDENLION, // Goldener Löwe - kann nicht ausgespielt werden - gibt einen extra Machtpunkt
-		GOLDENCHARIOT, // Goldener Wagen - kann nicht ausgespielt werden - gibt einen extra Machtpunkt
+		GOLDENLION, //X1 Goldener Löwe - kann nicht ausgespielt werden - gibt einen extra Machtpunkt
+		GOLDENCHARIOT, //X1 Goldener Wagen - kann nicht ausgespielt werden - gibt einen extra Machtpunkt
 		// Junk Karte
-		JUGGLER // Gauklertruppe - kann nicht ausgespielt werden - bewirkt nichts 
+		JUGGLER //X1 Gauklertruppe - kann nicht ausgespielt werden - bewirkt nichts 
+		//************************TOTAL OF 45 ActionCards*****************************
 	}
 	private CardType type;
+	
+	public ActionCard(CardType cardT) {
+		
+		this.type = cardT;
+	}
+	
+	public ActionCard() {
+		// Emir: macht das Sinn, Karte ohne Kartentyp?
+	}
 	
 	/* 
 	 * TODO: #### wenn die Karten shon sowieso ENUM sind, 
@@ -79,6 +89,7 @@ public class ActionCard {
 	 * CFR: die Methoden unterstützen die Logic dabei zu entscheiden, welche Karte nutzbar ist
 	 */
 	
+
 	public boolean addsFightPoints() {
 		return 
 				type == CardType.CATAPULT;

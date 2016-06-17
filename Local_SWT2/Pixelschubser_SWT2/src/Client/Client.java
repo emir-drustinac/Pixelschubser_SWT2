@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import Client.gui.MenuWindowLogic;
 import Client.gui.Presentation;
 import SharedData.*;
+import SharedData.ActionCard.CardType;
 
 public class Client {
 	
@@ -120,7 +121,7 @@ public class Client {
 		//Test von Emir
 		if (playerID.equals("c6debb40-db95-45f7-afd8-83c954e39a27")) {
 			playerName = "Emir";
-			// test of MenuWindow
+			/*// test of MenuWindow
 			GameData g = new GameData();
 			
 			// first player
@@ -165,17 +166,11 @@ public class Client {
 			p.addCard(new ActionCard());
 			
 			// create game window
-			Presentation.createGameWindow(g);
+			//Presentation.createGameWindow(g);
 			g.players.elementAt(0).addCard(new ActionCard());
 			g.players.elementAt(0).addCard(new ActionCard());
 			g.players.elementAt(0).addCard(new ActionCard());
-			updateGameState(g);
-			
-			/*
-			// Create Logic for Start Menu
-			logic =  new Logic();
-			
-			Presentation.createMenuWindow(logic);*/
+			updateGameState(g);*/
 		}
 		
 		try {

@@ -36,6 +36,7 @@ public class GameWindow extends JFrame {
 	public GameWindow(GameData gameData) {
 		//JFrame f = this;
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		setTitle(windowName);
 		setSize(initialWidth, initialHeight);
 		setMinimumSize(new Dimension(600, 500));
