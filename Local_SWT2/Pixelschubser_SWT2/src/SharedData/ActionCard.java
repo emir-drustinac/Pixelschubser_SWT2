@@ -22,7 +22,7 @@ public class ActionCard {
 	 * 			# Annexation
 	 * 
 	 * 		Dice
-	 * 			# Abuse of Power??? (Machtmissbrauch/Ablenkungsmanöver)
+	 * 			# Abuse of Power??? (Machtmissbrauch/Ablenkungsmanï¿½ver)
 	 * 
 	 * SpendMoneyCards
 	 * 		MoneyCards
@@ -43,18 +43,19 @@ public class ActionCard {
 	 */
 
 	public enum CardType {
-		/* welche Phase? */
+		/* welche Phase? - NACH VERPRECHUNGEN */
 		PICKLOCK, //X1 Einbrecher - darf wann gespielt werden? - bewirkt was?
+			 		// schaue dir die Handkarten eines Spielers und nimm dir eine davon
 		/* Kampfplanungsphase */
 		SPY, //X1 ? - ? - ?
 		/* Kampfphase */
-		// Offender
+		// BOTH Defender AND Offender
 		ASSASSINATION, //X2 ? - ? - ?
 		CATAPULT, //X2 ? - ? - ?
 		SLAVEREVOLT, //X2 ? - ? - ?
 		BRIBE, //X1 ? - ? - ?
 		LION, //X1 ? - ? - ?
-		// Defender
+		// ONLY AS Offender
 		SURPRISEATTACK, //X1 ? - ? - ?
 		ANNEXATION, //X1 ? - ? - ?
 		// 
@@ -66,7 +67,7 @@ public class ActionCard {
 		PROPAGANDA, //X1 Propaganda - ? - ?
 		FREEBUILDING, //X1 ? - ? - ?
 		// Extra Point Cards
-		GOLDENLION, //X1 Goldener Löwe - kann nicht ausgespielt werden - gibt einen extra Machtpunkt
+		GOLDENLION, //X1 Goldener Lï¿½we - kann nicht ausgespielt werden - gibt einen extra Machtpunkt
 		GOLDENCHARIOT, //X1 Goldener Wagen - kann nicht ausgespielt werden - gibt einen extra Machtpunkt
 		// Junk Karte
 		JUGGLER //X1 Gauklertruppe - kann nicht ausgespielt werden - bewirkt nichts 
@@ -86,7 +87,7 @@ public class ActionCard {
 	/* 
 	 * TODO: #### wenn die Karten shon sowieso ENUM sind, 
 	 * vlt die ganzen Methoden streichen und Logic entscheiden lassen was mit welcher Karte tun?
-	 * CFR: die Methoden unterstützen die Logic dabei zu entscheiden, welche Karte nutzbar ist
+	 * CFR: die Methoden unterstï¿½tzen die Logic dabei zu entscheiden, welche Karte nutzbar ist
 	 */
 	
 
@@ -147,16 +148,16 @@ public class ActionCard {
 			case CATAPULT: return "Katapult";
 			case SLAVEREVOLT: return "Sklavenaufstand";
 			case BRIBE: return "Schmiergeld";
-			case LION: return "Löwe";
-			case SURPRISEATTACK: return "Überraschungsangriff";
+			case LION: return "Lï¿½we";
+			case SURPRISEATTACK: return "ï¿½berraschungsangriff";
 			case ANNEXATION: return "Annexion";
 			case ABUSEOFPOWER: return "Machtmissbrauch";
 			case DENARI1000: return "1000 Denari";
 			case DENARI2000: return "2000 Denari";
 			case DENARI3000: return "3000 Denari";
 			case PROPAGANDA: return "Propaganda";
-			case FREEBUILDING: return "Freies Gebäude";
-			case GOLDENLION: return "Goldener Löwe";
+			case FREEBUILDING: return "Freies Gebï¿½ude";
+			case GOLDENLION: return "Goldener Lï¿½we";
 			case GOLDENCHARIOT: return "Goldener Wagen";
 			case JUGGLER: return "Gauklertruppe";
 		}
