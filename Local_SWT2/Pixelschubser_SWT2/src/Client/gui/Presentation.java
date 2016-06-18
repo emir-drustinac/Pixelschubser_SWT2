@@ -9,8 +9,8 @@ public class Presentation {
 	private static MenuWindow menuWindow;
 	
 	public static void createMenuWindow(MenuWindowLogic logic) {
-		menuWindow = new MenuWindow(logic);
-		logic.setGUI(menuWindow); // unsauber aber was solls
+		menuWindow = new MenuWindow(logic); //TODO
+		//logic.setGUI(menuWindow); // unsauber aber was solls
 	}
 
 	public static void createGameWindow(GameData gameData) {

@@ -12,15 +12,16 @@ import java.util.UUID;
 
 import javax.swing.JOptionPane;
 
+import Client.gui.MenuWindow;
 import Client.gui.MenuWindowLogic;
 import Client.gui.Presentation;
 import SharedData.*;
 import SharedData.ActionCard.CardType;
 
 public class Client {
-	
+
 	public static final Boolean DEBUG = true;
-	
+
 	// generate or load playerID of this client from file
 	private static String playerName = "Nero";
 	private static String password = "pw";
@@ -61,124 +62,113 @@ public class Client {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		
+
+		// Create Logic for Start Menu
+		logic = new MenuWindowLogic();
+		Presentation.createMenuWindow(logic);
+
 		// test von CFR
-		if (playerID.equals("82687bf1-df0c-4bb2-af1a-d84a492f7501") ||
-				playerID.equals("2d15d67e-5857-47a5-98cb-9bb06d6ca102")) {
+		if (playerID.equals("82687bf1-df0c-4bb2-af1a-d84a492f7501")
+				|| playerID.equals("2d15d67e-5857-47a5-98cb-9bb06d6ca102")) {
 			playerName = "Christian";
-//			// test of GameWindow
-//			GameData g = new GameData();
-//			// first player
-//			g.addPlayer(playerID, "Alpha");
-//			PlayerData p = g.players.lastElement();
-//			p.isGameLeader = true;
-//			p.numberOfBuildings = 3;
-//			p.numberOfMercenaries = 3;
-//			// second player
-//			g.addPlayer("b2000000-0000-0000-000000000000", "Beta");
-//			g.makeProconsul("b2000000-0000-0000-000000000000");
-//			p = g.players.lastElement();
-//			p.numberOfBuildings = 1;
-//			p.numberOfMercenaries = 4;
-//			// third player
-//			g.addPlayer("c3", "Gamma");
-//			p = g.players.lastElement();
-//			p.numberOfBuildings = 2;
-//			p.numberOfMercenaries = 1;
-//			g.makeProconsul("c3");
-//			// fourth player
-//			g.addPlayer("d4", "Delta");
-//			p = g.players.lastElement();
-//			p.numberOfBuildings = 1;
-//			p.numberOfMercenaries = 2;
-//			// create game window
-//			Presentation.createGameWindow(g);
-//			// and show gamedata
-//			g.makeProconsul(playerID);
-//			g.players.get(0).addCard(null);
-//			g.players.get(0).addCard(null);
-//			g.players.get(0).addCard(null);
-//			g.players.get(0).addCard(null);
-//			g.players.get(0).addCard(null);
-//			g.players.get(0).addCard(null);
-//			g.players.get(0).addCard(null);
-//			g.players.get(0).addCard(null);
-//			g.players.get(0).addCard(null);
-//			updateGameState(g);
+			// // test of GameWindow
+			// GameData g = new GameData();
+			// // first player
+			// g.addPlayer(playerID, "Alpha");
+			// PlayerData p = g.players.lastElement();
+			// p.isGameLeader = true;
+			// p.numberOfBuildings = 3;
+			// p.numberOfMercenaries = 3;
+			// // second player
+			// g.addPlayer("b2000000-0000-0000-000000000000", "Beta");
+			// g.makeProconsul("b2000000-0000-0000-000000000000");
+			// p = g.players.lastElement();
+			// p.numberOfBuildings = 1;
+			// p.numberOfMercenaries = 4;
+			// // third player
+			// g.addPlayer("c3", "Gamma");
+			// p = g.players.lastElement();
+			// p.numberOfBuildings = 2;
+			// p.numberOfMercenaries = 1;
+			// g.makeProconsul("c3");
+			// // fourth player
+			// g.addPlayer("d4", "Delta");
+			// p = g.players.lastElement();
+			// p.numberOfBuildings = 1;
+			// p.numberOfMercenaries = 2;
+			// // create game window
+			// Presentation.createGameWindow(g);
+			// // and show gamedata
+			// g.makeProconsul(playerID);
+			// g.players.get(0).addCard(null);
+			// g.players.get(0).addCard(null);
+			// g.players.get(0).addCard(null);
+			// g.players.get(0).addCard(null);
+			// g.players.get(0).addCard(null);
+			// g.players.get(0).addCard(null);
+			// g.players.get(0).addCard(null);
+			// g.players.get(0).addCard(null);
+			// g.players.get(0).addCard(null);
+			// updateGameState(g);
 		}
 
 		// test von ABO
-		if (playerID.equals("91fa3ab2-2280-4c90-b215-327b2a4b2be0")) {
+		if (playerID.equals("91fa3ab2-2280-4c90-b215-327b2a4b2be0")
+				|| playerID.equals("2a861719-9a4c-4467-98b2-6bdaaba358a6")) {
 			playerName = "Alexander";
 			// test of MenuWindow
-			
-			// Create Logic for Start Menu
-			logic =  new MenuWindowLogic();
-			
-			Presentation.createMenuWindow(logic);
-		}
-		
-		//Test von Emir
-		if (playerID.equals("c6debb40-db95-45f7-afd8-83c954e39a27")) {
-			playerName = "Emir";
-			/*// test of MenuWindow
-			GameData g = new GameData();
-			
-			// first player
-			g.addPlayer(playerID, "Emir");
-			PlayerData p = g.players.lastElement();
-			p.isGameLeader = true;
-			p.numberOfBuildings = 3;
-			p.numberOfMercenaries = 3;
-			p.addCard(new ActionCard());
-			//p.addCard(new ActionCard());
-			//p.addCard(new ActionCard());
-			
-			// second player
-			g.addPlayer("ID0002", "Spieler2");
-			g.makeProconsul("ID0002");
-			p = g.players.lastElement();
-			p.numberOfBuildings = 1;
-			p.numberOfMercenaries = 4;
-			
-			// third player
-			g.addPlayer("ID0003", "Spieler3");
-			p = g.players.lastElement();
-			p.numberOfBuildings = 2;
-			p.numberOfMercenaries = 1;
-			p.addCard(new ActionCard());
-			p.addCard(new ActionCard());
-			p.addCard(new ActionCard());
-			p.addCard(new ActionCard());
-			p.addCard(new ActionCard());
-			
-			// fourth player
-			g.addPlayer("ID0004", "Spieler4");
-			p = g.players.lastElement();
-			p.numberOfBuildings = 1;
-			p.numberOfMercenaries = 2;
-			
-			// fifth player
-			g.addPlayer("ID0005", "Spieler5");
-			p = g.players.lastElement();
-			p.numberOfBuildings = 1;
-			p.numberOfMercenaries = 2;
-			p.addCard(new ActionCard());
-			
-			// create game window
-			//Presentation.createGameWindow(g);
-			g.players.elementAt(0).addCard(new ActionCard());
-			g.players.elementAt(0).addCard(new ActionCard());
-			g.players.elementAt(0).addCard(new ActionCard());
-			updateGameState(g);*/
-		}
-		
-		try {
-			initialize();
-		} catch (Exception e) {
-			e.printStackTrace();
+
+			// // Create Logic for Start Menu
+			// logic = new MenuWindowLogic();
+			// Presentation.createMenuWindow(logic);
+
 		}
 
+		// Test von Emir
+		if (playerID.equals("c6debb40-db95-45f7-afd8-83c954e39a27")) {
+			playerName = "Emir";
+			/*
+			 * // test of MenuWindow GameData g = new GameData();
+			 * 
+			 * // first player g.addPlayer(playerID, "Emir"); PlayerData p =
+			 * g.players.lastElement(); p.isGameLeader = true;
+			 * p.numberOfBuildings = 3; p.numberOfMercenaries = 3; p.addCard(new
+			 * ActionCard()); //p.addCard(new ActionCard()); //p.addCard(new
+			 * ActionCard());
+			 * 
+			 * // second player g.addPlayer("ID0002", "Spieler2");
+			 * g.makeProconsul("ID0002"); p = g.players.lastElement();
+			 * p.numberOfBuildings = 1; p.numberOfMercenaries = 4;
+			 * 
+			 * // third player g.addPlayer("ID0003", "Spieler3"); p =
+			 * g.players.lastElement(); p.numberOfBuildings = 2;
+			 * p.numberOfMercenaries = 1; p.addCard(new ActionCard());
+			 * p.addCard(new ActionCard()); p.addCard(new ActionCard());
+			 * p.addCard(new ActionCard()); p.addCard(new ActionCard());
+			 * 
+			 * // fourth player g.addPlayer("ID0004", "Spieler4"); p =
+			 * g.players.lastElement(); p.numberOfBuildings = 1;
+			 * p.numberOfMercenaries = 2;
+			 * 
+			 * // fifth player g.addPlayer("ID0005", "Spieler5"); p =
+			 * g.players.lastElement(); p.numberOfBuildings = 1;
+			 * p.numberOfMercenaries = 2; p.addCard(new ActionCard());
+			 * 
+			 * // create game window //Presentation.createGameWindow(g);
+			 * g.players.elementAt(0).addCard(new ActionCard());
+			 * g.players.elementAt(0).addCard(new ActionCard());
+			 * g.players.elementAt(0).addCard(new ActionCard());
+			 * updateGameState(g);
+			 */
+		}
+
+		// hier auskommentieren um ohne menu zu starten
+
+		// try {
+		// initialize();
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
 
 		// Network test
 		if (playerID.equals("bfd15200-f2a8-40a0-ad1d-9f73eae6f3c8")) {
@@ -192,12 +182,12 @@ public class Client {
 				e.printStackTrace();
 			}
 		}
-}
-	
+	}
+
 	private static void initialize() {
-		//String ip = JOptionPane.showInputDialog("Server IP");
-		//String username = JOptionPane.showInputDialog("Name");
-		//String userpass = JOptionPane.showInputDialog("Password");
+		// String ip = JOptionPane.showInputDialog("Server IP");
+		// String username = JOptionPane.showInputDialog("Name");
+		// String userpass = JOptionPane.showInputDialog("Password");
 		com = new ClientCommunicator();
 		game = new ClientGameLogic(com);
 		com.setAuth(playerID, playerName, password);
@@ -207,7 +197,7 @@ public class Client {
 			com.connect();
 			System.out.println("client up");
 		} catch (IOException e) {
-			if (DEBUG){
+			if (DEBUG) {
 				// Manually call the server
 				System.err.println("Server not running, trying to start one.");
 				new Server.Server().initialize();
@@ -219,21 +209,40 @@ public class Client {
 					System.err.println("Failed to start server.");
 					ex.printStackTrace();
 				}
-			}else{
+			} else {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
 
 	/**
 	 * 
 	 * @param Address
 	 */
-	public void connect(String Address) {
+	public static void connect(String Address, String playerNameXXX) {
 		// TODO - implement Client.connect
-		throw new UnsupportedOperationException();
+		// throw new UnsupportedOperationException();
+
+		com = new ClientCommunicator();
+		game = new ClientGameLogic(com);
+		com.setAuth(playerID, playerNameXXX, password);
+
+		try {
+			com.setServer(Address);
+			com.connect();
+			System.out.println("client up");
+		} catch (IOException e) {
+			System.err.println("Could not connect");
+			e.printStackTrace();
+		}
+
+	}
+
+	public static void create(String playerNameXXX) {
+		new Server.Server().initialize();
+		connect("127.0.0.1", playerNameXXX);
 	}
 
 	/**
@@ -250,7 +259,7 @@ public class Client {
 	}
 
 	public static Object getGameLogic() {
-		//if (game == null) game = new ClientGameLogic();
+		// if (game == null) game = new ClientGameLogic();
 		return game;
 	}
 
