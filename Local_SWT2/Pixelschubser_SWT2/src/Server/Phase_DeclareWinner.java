@@ -3,35 +3,41 @@ package Server;
 import SharedData.GameData;
 import SharedData.PhaseType;
 import SharedData.PlayerData;
+import SharedData.PlayerList;
 
-public class Phase_SpendMoney extends Phase {
+public class Phase_DeclareWinner extends Phase {
 
-	public Phase_SpendMoney(ServerGameLogic logic, ServerCommunicator com) {
+	private PlayerList winners;
+	
+	public Phase_DeclareWinner(ServerGameLogic logic, ServerCommunicator com) {
 		super(logic, com);
+		winners = logic.getWinners();
 	}
 
 	@Override
 	public void ReceivedMessageFromClient(String clientID, String message) {
-		System.out.print(" > " + this.getClass().getSimpleName() + " " + clientID + " " + message);
-		if (message.startsWith("MessageString:")) {
-			String name = message.split(":", 2)[1];
-			logic.addPlayer(clientID, name);
-		}
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public void ReceivedGameStateFromClient(String clientID, GameData g) {
 		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public void ReceivedPlayerDataFromClient(String clientID, PlayerData p) {
 		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public PhaseType getNextPhaseType() {
-		return PhaseType.DeclareWinner;
+		if(winners.size()==0)
+			return PhaseType.CardLimit;
+		else 
+			return PhaseType.GameOver;
 	}
 
 }

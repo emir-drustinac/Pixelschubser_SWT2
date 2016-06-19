@@ -73,6 +73,14 @@ public class PlayerData implements Serializable{
 	}
 
 	/**
+	 * checks if the player holds a card 
+	 * @param a
+	 */
+	public boolean hasCard(ActionCard a) {
+		return cards.contains(a);
+	}
+
+	/**
 	 * returns the promised card with index i
 	 * @param i
 	 */
@@ -111,7 +119,7 @@ public class PlayerData implements Serializable{
 		return combatPoints;
 	}
 
-	public void addCombatPoints(int fightPoints) {
+	public void addCombatPoints(int combatPoints) {
 		this.combatPoints += combatPoints;
 	}
 

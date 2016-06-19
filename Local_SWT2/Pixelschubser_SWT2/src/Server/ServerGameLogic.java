@@ -1,7 +1,6 @@
 package Server;
 
 import java.util.Random;
-
 import SharedData.*;
 import SharedData.ActionCard.CardType;
 
@@ -154,9 +153,17 @@ public class ServerGameLogic {
 		case CommandMercenaries: return new Phase_CommandMercenaries(this, com);
 		case Combat: return new Phase_Combat(this, com);
 		case SpendMoney: return new Phase_SpendMoney(this, com);
+		case DeclareWinner: return new Phase_DeclareWinner(this, com);
 		case CardLimit: return new Phase_CardLimit(this, com);
+		case GameOver: return new Phase_GameOver(this, com);
 		default: return new Phase_DrawCards(this, com);
 		}
+	}
+	
+	public PlayerList getWinners() {  
+		PlayerList w = (PlayerList)(game.players.clone());
+		w.removeIf( p->(p.getNumberOfVictoryPoints() < GameRules.VICTORY_POINTS_NEEDED) );
+		return w;
 	}
 
 }

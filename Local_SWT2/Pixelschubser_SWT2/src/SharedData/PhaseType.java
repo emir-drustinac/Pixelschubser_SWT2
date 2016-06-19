@@ -7,5 +7,7 @@ public enum PhaseType {
 	CommandMercenaries,
 	Combat,
 	SpendMoney,
-	CardLimit // karten wegschmeiﬂen, wenn man zu viele hat
+	DeclareWinner, // nachdem alle spieler geld ausgegeben haben, kann ein sieger bestimmt werden
+	CardLimit, // karten wegschmeiﬂen, wenn man zu viele hat
+	GameOver
 }
