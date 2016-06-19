@@ -117,6 +117,18 @@ public class GameData implements Serializable{
 		}
 		return null;
 	}
+	
+	public boolean isValidMove(PlayerCommand c){
+		if(c instanceof PlayerCommand_UseCard){
+			PlayerData p = getPlayer(((PlayerCommand_UseCard) c).getPlayerID());
+			ActionCard card = ((PlayerCommand_UseCard) c).getCard();
+			PlayerData target = ((PlayerCommand_UseCard) c).getTargetID()==null ? null :getPlayer(((PlayerCommand_UseCard) c).getTargetID()); 
+			if(!p.hasCard(card)) return false;
+			if(!card.isValidPhase(phase)) return false;
+			return card.isValidTarget(p, target);
+		}
+		return false;
+	}
 
 	public int getDeckSize() {
 		return deck.size();

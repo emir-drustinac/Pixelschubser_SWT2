@@ -175,4 +175,28 @@ public class ActionCard {
 		return 0;
 	}
 
+	public boolean isValidPhase(PhaseType pt) {
+		switch(pt){
+		case JoinGame:
+		case DrawCards:
+		case MakePromises:
+			return false;
+		case CommandMercenaries:
+			return type == CardType.SPY;
+		case Combat:
+			return usableDuringFight();
+		case SpendMoney:
+			return isMoneyCard() || type==CardType.FREEBUILDING || type==CardType.PROPAGANDA;
+		case CardLimit:
+		case DeclareWinner:
+		case GameOver:
+		default:
+			return false;
+		}
+	}
+
+	public boolean isValidTarget(PlayerData player, PlayerData target) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
