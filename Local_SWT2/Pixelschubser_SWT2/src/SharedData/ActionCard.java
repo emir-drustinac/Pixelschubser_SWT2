@@ -1,7 +1,14 @@
 package SharedData;
 
-public class ActionCard {
+import java.io.Serializable;
+
+public class ActionCard implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -783616116266345006L;
+
 	/*
 	 * PromisesCard (After the Phase)
 	 * 		# Picklock (Einbrecher)
@@ -101,16 +108,16 @@ public class ActionCard {
 				type == CardType.GOLDENCHARIOT ||
 				type == CardType.GOLDENLION;			
 	}
-
+	
+	// Alex: ist damit DICE Phase gemeint? 
+	// Weil sonst redundant viele Karten die es schon in usableForOffender/usableByDefender schon gibt
 	public boolean usableDuringFight() {
 		return 
-				type == CardType.ASSASSINATION ||
-				type == CardType.CATAPULT ||
-				type == CardType.SLAVEREVOLT ||
-				type == CardType.BRIBE ||
-				type == CardType.LION ||
-				type == CardType.SURPRISEATTACK ||
-				type == CardType.ANNEXATION ||
+//				type == CardType.ASSASSINATION ||
+//				type == CardType.CATAPULT ||
+//				type == CardType.SLAVEREVOLT ||
+//				type == CardType.BRIBE ||
+//				type == CardType.LION ||
 				type == CardType.ABUSEOFPOWER;
 	}
 
@@ -121,7 +128,9 @@ public class ActionCard {
 				type == CardType.SLAVEREVOLT ||
 				type == CardType.BRIBE ||
 				type == CardType.LION ||
-				type == CardType.ABUSEOFPOWER;
+				type == CardType.SURPRISEATTACK ||
+				type == CardType.ANNEXATION;
+//				type == CardType.ABUSEOFPOWER;
 	}
 
 	public boolean usableByDefender() {
@@ -130,10 +139,8 @@ public class ActionCard {
 				type == CardType.CATAPULT ||
 				type == CardType.SLAVEREVOLT ||
 				type == CardType.BRIBE ||
-				type == CardType.LION ||
-				type == CardType.SURPRISEATTACK ||
-				type == CardType.ANNEXATION ||
-				type == CardType.ABUSEOFPOWER;
+				type == CardType.LION;
+				//type == CardType.ABUSEOFPOWER;
 	}
 
 	public CardType getType() {
