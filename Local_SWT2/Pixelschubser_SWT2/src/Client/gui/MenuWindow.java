@@ -46,9 +46,9 @@ public class MenuWindow extends JFrame implements /* Observer, */ ActionListener
 	// Create View
 	private JButton btnCreate;
 	private JButton btnBackCreate;
-	private JLabel gameNameLabel;
+//	private JLabel gameNameLabel;
 	private JLabel nameLabelCreate;
-	private JTextField gameName;
+//	private JTextField gameName;
 	private JTextField playerNameCreate;
 	private JLabel statusCreate;
 	private static final String CREATE = "Create";
@@ -102,8 +102,8 @@ public class MenuWindow extends JFrame implements /* Observer, */ ActionListener
 
 	private void initStartView() {
 		viewStart.setLayout(null);
-		btnJoinView = new JButton("Join");
-		btnCreateView = new JButton("Create");
+		btnJoinView = new JButton("Beitreten");
+		btnCreateView = new JButton("Erstellen");
 
 		btnJoinView.setLocation(350, 200);
 		btnCreateView.setLocation(350, 250);
@@ -125,8 +125,8 @@ public class MenuWindow extends JFrame implements /* Observer, */ ActionListener
 	private void initJoinView() {
 		viewJoin.setLayout(null);
 
-		btnConnect = new JButton("Connect");
-		btnBack = new JButton("Back");
+		btnConnect = new JButton("Beitreten");
+		btnBack = new JButton("Zurück");
 		ipLabel = new JLabel("IP:");
 		nameLabel = new JLabel("Player Name:");
 		ip = new JTextField(STANDARDIP);
@@ -175,18 +175,18 @@ public class MenuWindow extends JFrame implements /* Observer, */ ActionListener
 		viewCreate.setLayout(null);
 
 		// init
-		btnCreate = new JButton("Create");
-		btnBackCreate = new JButton("Back");
-		gameNameLabel = new JLabel("GameName:");
+		btnCreate = new JButton("Erstellen");
+		btnBackCreate = new JButton("Zurück");
+//		gameNameLabel = new JLabel("GameName:");
 		nameLabelCreate = new JLabel("Player Name:");
-		gameName = new JTextField();
+//		gameName = new JTextField();
 		playerNameCreate = new JTextField();
 		
 		statusCreate = new JLabel();
 
 		// set position
-		gameNameLabel.setLocation(200, 100);
-		gameName.setLocation(300, 100);
+//		gameNameLabel.setLocation(200, 100);
+//		gameName.setLocation(300, 100);
 		nameLabelCreate.setLocation(200, 150);
 		playerNameCreate.setLocation(300, 150);
 		btnCreate.setLocation(350, 200);
@@ -195,9 +195,9 @@ public class MenuWindow extends JFrame implements /* Observer, */ ActionListener
 		statusCreate.setLocation(325, 400);
 
 		// size
-		gameName.setSize(200, 25);
+//		gameName.setSize(200, 25);
 		playerNameCreate.setSize(200, 25);
-		gameNameLabel.setSize(100, 25);
+//		gameNameLabel.setSize(100, 25);
 		nameLabelCreate.setSize(100, 25);
 		btnCreate.setSize(100, 25);
 		btnBackCreate.setSize(100, 25);
@@ -215,8 +215,8 @@ public class MenuWindow extends JFrame implements /* Observer, */ ActionListener
 
 		viewCreate.add(btnCreate);
 		viewCreate.add(btnBackCreate);
-		viewCreate.add(gameNameLabel);
-		viewCreate.add(gameName);
+//		viewCreate.add(gameNameLabel);
+//		viewCreate.add(gameName);
 		viewCreate.add(playerNameCreate);
 		viewCreate.add(nameLabelCreate);
 		viewCreate.add(statusCreate);
@@ -252,7 +252,7 @@ public class MenuWindow extends JFrame implements /* Observer, */ ActionListener
 
 		} else if (e.getActionCommand().equals(CREATE)) {
 			
-			if(logic.createGame(gameName.getText(), playerNameCreate.getText())){
+			if(logic.createGame(playerNameCreate.getText())){
 				viewStart.setVisible(false);
 				viewCreate.setVisible(false);
 				viewJoin.setVisible(false);

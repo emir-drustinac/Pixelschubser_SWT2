@@ -23,9 +23,9 @@ public class MenuWindowLogic {
 		return IPPATTERN.matcher(ip).matches();
 	}
 
-	public boolean createGame(String gameName, String playerName){
+	public boolean createGame(String playerName){
 		
-		if(!playerName.equals("") && !gameName.equals("")){
+		if(!playerName.equals("")){
 			// TODO: create + connect
 			Client.create(playerName);
 			return true;

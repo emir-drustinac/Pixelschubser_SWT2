@@ -23,7 +23,8 @@ public class GameWindow extends JFrame {
 	
 	public static final Color freeSpaceColor = Color.white;
 
-	private HashMap<String, PlayerInfos> playerPanels = new HashMap<String, PlayerInfos>();
+	private HashMap<String, PlayerInfos> playerInfos = new HashMap<String, PlayerInfos>();
+	private JPanel players;
 	private GameViews gameViews;
 	private GameInfos gameInfo;
 	private JLabel message;
@@ -43,7 +44,7 @@ public class GameWindow extends JFrame {
 		setLayout(new BorderLayout());
 		
 		// add playerInfos
-		JPanel players = new JPanel(new GridLayout(1, 0, 0, 0));
+		players = new JPanel(new GridLayout(1, 0, 0, 0));
 		players.setBackground(freeSpaceColor);
 		players.setBorder(BorderFactory.createLineBorder(freeSpaceColor, 5));
 		for (PlayerData p : gameData.players) {
@@ -52,7 +53,7 @@ public class GameWindow extends JFrame {
 				// create playerInfos
 				PlayerInfos pi = new PlayerInfos(p.playerID);
 				// add to list
-				playerPanels.put(p.playerID, pi);
+				playerInfos.put(p.playerID, pi);
 				// add to panel
 				players.add(pi);
 			//}
@@ -85,9 +86,17 @@ public class GameWindow extends JFrame {
 	public void updateGameState(GameData g) {
 		// update playerInfos
 		for (PlayerData p : g.players) {
-			if (playerPanels.containsKey(p.playerID)) {
+			if (playerInfos.containsKey(p.playerID)) {
 				// update playerInfos
-				playerPanels.get(p.playerID).updatePlayerInfos(p);
+				playerInfos.get(p.playerID).updatePlayerInfos(p);
+			} else {
+				// #######
+				// create playerInfos
+				PlayerInfos pi = new PlayerInfos(p.playerID);
+				// add to list
+				playerInfos.put(p.playerID, pi);
+				// add to panel
+				players.add(pi);
 			}
 		}
 		

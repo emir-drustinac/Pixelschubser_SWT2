@@ -25,34 +25,35 @@ public class Client {
 	// generate or load playerID of this client from file
 	private static String playerName = "Nero";
 	private static String password = "pw";
-	private static final String playerID;
-	static {
-		String pid = null;
-		File pf = new File(System.getProperty("user.home") + "\\.proconsul\\playerID");
-		if (pf.exists() && pf.canRead() && pf.length() >= 8) {
-			try {
-				BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(pf)));
-				pid = br.readLine();
-				br.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		if (pid == null) {
-			// generate new playerID
-			pid = UUID.randomUUID().toString();
-			try {
-				pf.getParentFile().mkdirs();
-				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(pf)));
-				bw.write(pid);
-				bw.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		playerID = pid;
-		System.out.println("playerID: " + playerID);
-	}
+//	private static final String playerID;
+	private static String playerID = "id";
+//	static {
+//		String pid = null;
+//		File pf = new File(System.getProperty("user.home") + "\\.proconsul\\playerID");
+//		if (pf.exists() && pf.canRead() && pf.length() >= 8) {
+//			try {
+//				BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(pf)));
+//				pid = br.readLine();
+//				br.close();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		if (pid == null) {
+//			// generate new playerID
+//			pid = UUID.randomUUID().toString();
+//			try {
+//				pf.getParentFile().mkdirs();
+//				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(pf)));
+//				bw.write(pid);
+//				bw.close();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		playerID = pid;
+//		System.out.println("playerID: " + playerID);
+//	}
 	private static ClientGameLogic game;
 	private static ClientCommunicator com;
 	private static MenuWindowLogic logic;
@@ -221,13 +222,15 @@ public class Client {
 	 * 
 	 * @param Address
 	 */
-	public static void connect(String Address, String playerNameXXX) {
+	public static void connect(String Address, String playerName) {
 		// TODO - implement Client.connect
 		// throw new UnsupportedOperationException();
-
+		
+		playerID = playerName;
+		
 		com = new ClientCommunicator();
 		game = new ClientGameLogic(com);
-		com.setAuth(playerID, playerNameXXX, password);
+		com.setAuth(playerID, playerName, password);
 
 		try {
 			com.setServer(Address);
