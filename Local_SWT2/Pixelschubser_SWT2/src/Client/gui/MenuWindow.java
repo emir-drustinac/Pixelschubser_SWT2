@@ -108,8 +108,8 @@ public class MenuWindow extends JFrame implements /* Observer, */ ActionListener
 		btnJoinView.setLocation(350, 200);
 		btnCreateView.setLocation(350, 250);
 
-		btnJoinView.setSize(100, 25);
-		btnCreateView.setSize(100, 25);
+		btnJoinView.setSize(120, 25);
+		btnCreateView.setSize(120, 25);
 
 		btnJoinView.setActionCommand(JOINVIEW);
 		btnCreateView.setActionCommand(CREATEVIEW);
@@ -126,9 +126,9 @@ public class MenuWindow extends JFrame implements /* Observer, */ ActionListener
 		viewJoin.setLayout(null);
 
 		btnConnect = new JButton("Beitreten");
-		btnBack = new JButton("ZurÃ¼ck");
+		btnBack = new JButton("Zurück");
 		ipLabel = new JLabel("IP:");
-		nameLabel = new JLabel("Player Name:");
+		nameLabel = new JLabel("Spielername:");
 		ip = new JTextField(STANDARDIP);
 		playerName = new JTextField();
 		status = new JLabel();
@@ -147,8 +147,8 @@ public class MenuWindow extends JFrame implements /* Observer, */ ActionListener
 		playerName.setSize(200, 25);
 		ipLabel.setSize(100, 25);
 		nameLabel.setSize(100, 25);
-		btnConnect.setSize(100, 25);
-		btnBack.setSize(100, 25);
+		btnConnect.setSize(120, 25);
+		btnBack.setSize(120, 25);
 		status.setSize(200, 25);
 		status.setForeground(Color.RED);
 
@@ -176,9 +176,9 @@ public class MenuWindow extends JFrame implements /* Observer, */ ActionListener
 
 		// init
 		btnCreate = new JButton("Erstellen");
-		btnBackCreate = new JButton("ZurÃ¼ck");
+		btnBackCreate = new JButton("Zurück");
 //		gameNameLabel = new JLabel("GameName:");
-		nameLabelCreate = new JLabel("Player Name:");
+		nameLabelCreate = new JLabel("Spielername:");
 //		gameName = new JTextField();
 		playerNameCreate = new JTextField();
 		
@@ -199,8 +199,8 @@ public class MenuWindow extends JFrame implements /* Observer, */ ActionListener
 		playerNameCreate.setSize(200, 25);
 //		gameNameLabel.setSize(100, 25);
 		nameLabelCreate.setSize(100, 25);
-		btnCreate.setSize(100, 25);
-		btnBackCreate.setSize(100, 25);
+		btnCreate.setSize(120, 25);
+		btnBackCreate.setSize(120, 25);
 		
 		statusCreate.setSize(200, 25);
 		statusCreate.setForeground(Color.RED);

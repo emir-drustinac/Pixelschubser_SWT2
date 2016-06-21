@@ -25,8 +25,7 @@ public class Client {
 	// generate or load playerID of this client from file
 	private static String playerName = "Nero";
 	private static String password = "pw";
-//	private static final String playerID;
-	private static String playerID = "id";
+	private static /*final*/ String playerID = "id";
 //	static {
 //		String pid = null;
 //		File pf = new File(System.getProperty("user.home") + "\\.proconsul\\playerID");
@@ -126,40 +125,15 @@ public class Client {
 		}
 
 		// Test von Emir
-		if (playerID.equals("c6debb40-db95-45f7-afd8-83c954e39a27")) {
-			playerName = "Emir";
+		if (playerID.equals("c6debb40-db95-45f7-afd8-83c954e39a27")||
+				playerID.equals("39ab2c11-82a0-4513-8827-0f0bd12a78ed")) {
+			//playerName = "Emir";
 			/*
-			 * // test of MenuWindow GameData g = new GameData();
-			 * 
 			 * // first player g.addPlayer(playerID, "Emir"); PlayerData p =
 			 * g.players.lastElement(); p.isGameLeader = true;
 			 * p.numberOfBuildings = 3; p.numberOfMercenaries = 3; p.addCard(new
 			 * ActionCard()); //p.addCard(new ActionCard()); //p.addCard(new
 			 * ActionCard());
-			 * 
-			 * // second player g.addPlayer("ID0002", "Spieler2");
-			 * g.makeProconsul("ID0002"); p = g.players.lastElement();
-			 * p.numberOfBuildings = 1; p.numberOfMercenaries = 4;
-			 * 
-			 * // third player g.addPlayer("ID0003", "Spieler3"); p =
-			 * g.players.lastElement(); p.numberOfBuildings = 2;
-			 * p.numberOfMercenaries = 1; p.addCard(new ActionCard());
-			 * p.addCard(new ActionCard()); p.addCard(new ActionCard());
-			 * p.addCard(new ActionCard()); p.addCard(new ActionCard());
-			 * 
-			 * // fourth player g.addPlayer("ID0004", "Spieler4"); p =
-			 * g.players.lastElement(); p.numberOfBuildings = 1;
-			 * p.numberOfMercenaries = 2;
-			 * 
-			 * // fifth player g.addPlayer("ID0005", "Spieler5"); p =
-			 * g.players.lastElement(); p.numberOfBuildings = 1;
-			 * p.numberOfMercenaries = 2; p.addCard(new ActionCard());
-			 * 
-			 * // create game window //Presentation.createGameWindow(g);
-			 * g.players.elementAt(0).addCard(new ActionCard());
-			 * g.players.elementAt(0).addCard(new ActionCard());
-			 * g.players.elementAt(0).addCard(new ActionCard());
-			 * updateGameState(g);
 			 */
 		}
 

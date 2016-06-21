@@ -24,20 +24,23 @@ public class ServerGameLogic {
 		game = new GameData();
 		currentPhase = new Phase_JoinGame(this, com);
 		// TODO start with empty player list as every player will send "joinGame" message
+		/*
 		// first player
 		game.addPlayer("a1000000-0000-0000-000000000000", "Alpha");
 		PlayerData p = game.players.lastElement();
 		p.isGameLeader = true;
-		p.numberOfBuildings = 3;
-		p.numberOfMercenaries = 3;
+		p.numberOfBuildings = 1;
+		p.numberOfMercenaries = 1;
+	    
 		p.isReady = true;
 		// second player
 		game.addPlayer("b2000000-0000-0000-000000000000", "Beta");
 		game.makeProconsul("b2000000-0000-0000-000000000000");
 		p = game.players.lastElement();
 		p.numberOfBuildings = 1;
-		p.numberOfMercenaries = 4;
+		p.numberOfMercenaries = 1;
 		p.isReady = true;
+		*/
 	}
 
 	/**
@@ -124,9 +127,10 @@ public class ServerGameLogic {
 			count = Integer.parseInt(allCards[i].substring(pos+1));
 			while(count-- > 0) {
 				allCards[i] = allCards[i].substring(0, pos);
-				game.addCard2DeckAtIndex(new ActionCard(CardType.valueOf(allCards[i])), 
-						new Random().nextInt(game.getDeckSize() + (game.getDeckSize() == 0 ? 1 : 0)));
-				System.out.println("Deck size: " + game.getDeckSize());
+				ActionCard a = new ActionCard(CardType.valueOf(allCards[i]));
+				int r = new Random().nextInt(game.getDeckSize() + (game.getDeckSize() == 0 ? 1 : 0));
+				game.addCard2DeckAtIndex(a, r);
+				//System.out.println("Deck size: " + game.getDeckSize());
 			}
 			allCards[i] = "";
 		}

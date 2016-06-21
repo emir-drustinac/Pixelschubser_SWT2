@@ -44,7 +44,7 @@ public class GameWindow extends JFrame {
 		setLayout(new BorderLayout());
 		
 		// add playerInfos
-		players = new JPanel(new GridLayout(1, 0, 0, 0));
+		/*JPanel*/ players = new JPanel(new GridLayout(1, 0, 0, 0));
 		players.setBackground(freeSpaceColor);
 		players.setBorder(BorderFactory.createLineBorder(freeSpaceColor, 5));
 		for (PlayerData p : gameData.players) {

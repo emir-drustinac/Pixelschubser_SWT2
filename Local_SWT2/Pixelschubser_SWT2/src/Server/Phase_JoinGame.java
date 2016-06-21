@@ -32,7 +32,7 @@ public class Phase_JoinGame extends Phase {
 					for (PlayerData p1 : logic.getGameData().players) {
 						if (!p1.isReady) allready = false;
 					}
-					if (allready) {
+					if (allready && logic.getGameData().players.size() > 2) {
 						logic.startGame();
 						logic.nextPhase();
 					}
