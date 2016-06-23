@@ -29,7 +29,7 @@ public class ActionCard implements Serializable{
 	 * 			# Annexation
 	 * 
 	 * 		Dice
-	 * 			# Abuse of Power??? (Machtmissbrauch/Ablenkungsmanï¿½ver)
+	 * 			# Abuse of Power??? (Machtmissbrauch/Ablenkungsmanöver)
 	 * 
 	 * SpendMoneyCards
 	 * 		MoneyCards
@@ -80,24 +80,19 @@ public class ActionCard implements Serializable{
 		JUGGLER //X1 Gauklertruppe - kann nicht ausgespielt werden - bewirkt nichts 
 		//************************TOTAL OF 45 ActionCards*****************************
 	}
-	private CardType type;
+
+	private final CardType type;
 	
-	public ActionCard(CardType cardT) {
-		
-		this.type = cardT;
-	}
-	
-	public ActionCard() {
-		// Emir: macht das Sinn, Karte ohne Kartentyp?
+	public ActionCard(CardType type) {
+		this.type = type;
 	}
 	
 	/* 
 	 * TODO: #### wenn die Karten shon sowieso ENUM sind, 
 	 * vlt die ganzen Methoden streichen und Logic entscheiden lassen was mit welcher Karte tun?
-	 * CFR: die Methoden unterstï¿½tzen die Logic dabei zu entscheiden, welche Karte nutzbar ist
+	 * CFR: die Methoden unterstützen die Logic dabei zu entscheiden, welche Karte nutzbar ist
 	 */
 	
-
 	public boolean addsFightPoints() {
 		return 
 				type == CardType.CATAPULT;
@@ -155,16 +150,16 @@ public class ActionCard implements Serializable{
 			case CATAPULT: return "Katapult";
 			case SLAVEREVOLT: return "Sklavenaufstand";
 			case BRIBE: return "Schmiergeld";
-			case LION: return "Lï¿½we";
-			case SURPRISEATTACK: return "ï¿½berraschungsangriff";
+			case LION: return "Löwe";
+			case SURPRISEATTACK: return "Überraschungsangriff";
 			case ANNEXATION: return "Annexion";
 			case ABUSEOFPOWER: return "Machtmissbrauch";
-			case DENARI1000: return "1000 Denari";
-			case DENARI2000: return "2000 Denari";
-			case DENARI3000: return "3000 Denari";
+			case DENARI1000: return "Tribut";
+			case DENARI2000: return "Tribut";
+			case DENARI3000: return "Tribut";
 			case PROPAGANDA: return "Propaganda";
-			case FREEBUILDING: return "Freies Gebï¿½ude";
-			case GOLDENLION: return "Goldener Lï¿½we";
+			case FREEBUILDING: return "Freies Gebäude";
+			case GOLDENLION: return "Goldener Löwe";
 			case GOLDENCHARIOT: return "Goldener Wagen";
 			case JUGGLER: return "Gauklertruppe";
 		}
@@ -182,6 +177,85 @@ public class ActionCard implements Serializable{
 		return 0;
 	}
 
+	public String getTimeUsableHTML() {
+		return "<html>" + getTimeUsableText() + "</html>";
+	}
+	public String getTimeUsableText() {
+		String preFight = "Spiele vor einem Kampf";
+		switch (type) {
+		case PICKLOCK: return "Spiele unmittelbar, nachdem der Präsident seine Versprechungen gemacht hat";
+		case SPY: return "Spiele unmittelbar, nachdem alle Spieler ihre Söldner befehligt haben";
+		case ASSASSINATION: return preFight;
+		case CATAPULT: return preFight;
+		case SLAVEREVOLT: return preFight;
+		case BRIBE: return preFight;
+		case LION: return preFight;
+		case SURPRISEATTACK: return "Spiele als Angreifer vor einem Kampf";
+		case ANNEXATION: return "Spiele als Angreifer vor einem Kampf, wenn der Verteidiger mehr Gebäude hat als du";
+		case ABUSEOFPOWER: return "Spiele beim Geld ausgeben";
+		case DENARI1000: return "";
+		case DENARI2000: return "";
+		case DENARI3000: return "";
+		case PROPAGANDA: return "Spiele beim Geld ausgeben";
+		case FREEBUILDING: return ":Freies Gebäude";
+		case GOLDENLION: return "";
+		case GOLDENCHARIOT: return "";
+		case JUGGLER: return "";
+		}
+		return "";
+	}
+
+	public String getActionConsequencesHTML() {
+		return "<html>" + getActionConsequencesText() + "</html>";
+	}
+	public String getActionConsequencesText() {
+		switch (type) {
+		case PICKLOCK: return "Schau dir die Handkarten eines Spielers deiner Wahl an und nimm eine davon auf deine Hand";
+		case SPY: return "Schau dir die Söldner aller Mitspieler an, bevor du deine eigenen befehligst";
+		case ASSASSINATION: return "Zerstöre 1 gegnerischen Söldner deiner Wahl";
+		case CATAPULT: return "Dein Kampfwert erhöht sich um +3";
+		case SLAVEREVOLT: return "Alle verteidigenden Söldner würfeln eine 2";
+		case BRIBE: return "Ignoriere die Söldner des Proconsuls";
+		case LION: return "Schlägt alleine angreifende Söldner jedes Angreifers in die Flucht";
+		case SURPRISEATTACK: return "Ignoriere in diesem Kampf alle Gebäude des Verteidigers";
+		case ANNEXATION: return "Ist dein Angriff erfolgreich, übernimm 1 Gebäude des Verteidigers und verzichte auf seine Handkarte";
+		case ABUSEOFPOWER: return "Du erhältst einen Söldner gratis";
+		case DENARI1000: return "1000 Denari";
+		case DENARI2000: return "2000 Denari";
+		case DENARI3000: return "3000 Denari";
+		case PROPAGANDA: return "Du erhältst ein Gebäude gratis";
+		case FREEBUILDING: return ">Freies Gebäude";
+		case GOLDENLION: return "1 Siegpunkt";
+		case GOLDENCHARIOT: return "1 Siegpunkt";
+		case JUGGLER: return "Keine Auswirkungen";
+		}
+		return "";
+	}
+
+	public String getImagePath() {
+		switch (type) {
+		case PICKLOCK: return "";
+		case SPY: return "";
+		case ASSASSINATION: return "";
+		case CATAPULT: return "";
+		case SLAVEREVOLT: return "";
+		case BRIBE: return "";
+		case LION: return "";
+		case SURPRISEATTACK: return "";
+		case ANNEXATION: return "/images/actioncards/annexion.png";
+		case ABUSEOFPOWER: return "";
+		case DENARI1000: return "/images/building.png";
+		case DENARI2000: return "/images/building.png";
+		case DENARI3000: return "/images/building.png";
+		case PROPAGANDA: return "";
+		case FREEBUILDING: return "";
+		case GOLDENLION: return "";
+		case GOLDENCHARIOT: return "";
+		case JUGGLER: return "";
+		}
+		return "/images/card.png";
+	}
+	
 	public boolean isValidPhase(PhaseType pt) {
 		switch(pt){
 		case JoinGame:
@@ -206,4 +280,5 @@ public class ActionCard implements Serializable{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 }

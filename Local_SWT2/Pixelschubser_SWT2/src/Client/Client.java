@@ -1,5 +1,7 @@
 package Client;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -10,9 +12,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.UUID;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import Client.gui.MenuWindow;
+import Client.gui.GuiActionCard;
 import Client.gui.MenuWindowLogic;
 import Client.gui.Presentation;
 import SharedData.*;
@@ -110,6 +113,19 @@ public class Client {
 			// g.players.get(0).addCard(null);
 			// g.players.get(0).addCard(null);
 			// updateGameState(g);
+			
+			// test action card frame
+			JFrame f = new JFrame("ac test");
+			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			ActionCard a = new ActionCard(CardType.ANNEXATION);
+			Component p = new GuiActionCard(a);
+			f.getContentPane().setLayout(new BorderLayout());
+			f.getContentPane().add(p, BorderLayout.CENTER);
+			//f.setSize(200, 300);
+			f.pack();
+			f.setLocationRelativeTo(null);
+			f.setVisible(true);
+			return;
 		}
 
 		// test von ABO
