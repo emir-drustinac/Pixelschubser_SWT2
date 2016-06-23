@@ -52,6 +52,7 @@ public class PlayerInfos extends JPanel {
 		JPanel b1 = new JPanel();
 		b1.setBackground(bgColor);
 		//b1.setLayout(new BorderLayout());
+		setOpaque(false); // hiermit Graphicfehler gelöst
 		
 		// playername and proconsul icon
 		name = new JLabel(playerID, JLabel.CENTER);
@@ -60,6 +61,7 @@ public class PlayerInfos extends JPanel {
 		proconsul = new JLabel(icon);
 		proconsul.setVerticalAlignment(JLabel.CENTER);
 		proconsul.setHorizontalAlignment(JLabel.CENTER);
+		//proconsul.setOpaque(false);
 		proconsul.setVisible(false);
 		//proconsul.setText("-");
 		//b1.add();

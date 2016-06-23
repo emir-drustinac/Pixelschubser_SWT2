@@ -106,6 +106,7 @@ public class GameWindow extends JFrame {
 		// update gameInfos
 		gameInfo.updateGameInfos(g);
 		
+		repaint();
 		// add messages to log
 		// TODO
 	}
