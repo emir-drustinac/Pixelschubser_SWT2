@@ -126,12 +126,21 @@ public class PlayerInfos extends JPanel {
 	
 	private static int nextColor = 0;
 	private static Color[] backgroundColors = new Color[]{
-			new Color(255,  0,255,50),
-			new Color(255,  0,  0,50),
+//			new Color(255,  0,255,100),
+//			new Color(255,  0,  0,100),
+//			//new Color(  0,255,  0,50),
+//			new Color(  0,  0,255,100),
+//			new Color(255,255,  0,100),
+//			new Color(  0,255,255,100)
+			
+			// Selben farben nur ohne ALPHA wert damir setOpaque keine komische Farben liefert
+			new Color(254,  155,254),
+			new Color(254,  155,  155),
 			//new Color(  0,255,  0,50),
-			new Color(  0,  0,255,50),
-			new Color(255,255,  0,50),
-			new Color(  0,255,255,50)
+			new Color(  155,  155,254),
+			new Color(254,254,  155),
+			new Color(  155,254,254)
+			
 		};
 	private static Color getBackgroundColor() {
 		return backgroundColors[nextColor = (nextColor + 1) % backgroundColors.length];
