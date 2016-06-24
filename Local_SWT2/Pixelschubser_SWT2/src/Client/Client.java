@@ -28,34 +28,44 @@ public class Client {
 	// generate or load playerID of this client from file
 	private static String playerName = "Nero";
 	private static String password = "pw";
-	private static /*final*/ String playerID = "id";
-//	static {
-//		String pid = null;
-//		File pf = new File(System.getProperty("user.home") + "\\.proconsul\\playerID");
-//		if (pf.exists() && pf.canRead() && pf.length() >= 8) {
-//			try {
-//				BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(pf)));
-//				pid = br.readLine();
-//				br.close();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		if (pid == null) {
-//			// generate new playerID
-//			pid = UUID.randomUUID().toString();
-//			try {
-//				pf.getParentFile().mkdirs();
-//				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(pf)));
-//				bw.write(pid);
-//				bw.close();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		playerID = pid;
-//		System.out.println("playerID: " + playerID);
-//	}
+	private static /* final */ String playerID = "id";
+	private static short nrOfClientsOnSamePC = 0;
+	static {
+		nrOfClientsOnSamePC++;
+		String pid = null;
+		File pf = new File(System.getProperty("user.home") + "\\.proconsul\\playerID");
+		System.out.println("pf.length(): " + pf.length());
+		System.out.println("Client Nr: " + nrOfClientsOnSamePC);
+		if (pf.exists() && pf.canRead() && pf.length() >= nrOfClientsOnSamePC * 38) {
+			System.out.println("*****1.IF******");
+			try {
+				BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(pf)));
+				pid = br.readLine();
+				br.lines();
+				br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		if (pf.length() < nrOfClientsOnSamePC * 38) {
+			System.out.println("*****2.IF******");
+			// generate new playerID
+			pid = UUID.randomUUID().toString();
+			try {
+				if(!pf.exists()) {
+					pf.getParentFile().mkdirs();
+				}
+				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(pf)));
+				bw.append(pid); //write(pid + "\n");
+				bw.newLine();
+				bw.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		playerID = pid;
+		System.out.println("playerID: " + playerID);
+	}
 	private static ClientGameLogic game;
 	private static ClientCommunicator com;
 	private static MenuWindowLogic logic;
@@ -65,7 +75,7 @@ public class Client {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-
+		
 		// Create Logic for Start Menu
 		logic = new MenuWindowLogic();
 		Presentation.createMenuWindow(logic);
@@ -141,9 +151,9 @@ public class Client {
 		}
 
 		// Test von Emir
-		if (playerID.equals("c6debb40-db95-45f7-afd8-83c954e39a27")||
-				playerID.equals("39ab2c11-82a0-4513-8827-0f0bd12a78ed")) {
-			//playerName = "Emir";
+		if (playerID.equals("c6debb40-db95-45f7-afd8-83c954e39a27")
+				|| playerID.equals("39ab2c11-82a0-4513-8827-0f0bd12a78ed")) {
+			// playerName = "Emir";
 			/*
 			 * // first player g.addPlayer(playerID, "Emir"); PlayerData p =
 			 * g.players.lastElement(); p.isGameLeader = true;
@@ -174,7 +184,7 @@ public class Client {
 			}
 		}
 	}
-
+	
 	private static void initialize() {
 		// String ip = JOptionPane.showInputDialog("Server IP");
 		// String username = JOptionPane.showInputDialog("Name");
@@ -215,9 +225,9 @@ public class Client {
 	public static void connect(String Address, String playerName) {
 		// TODO - implement Client.connect
 		// throw new UnsupportedOperationException();
-		
+
 		playerID = playerName;
-		
+
 		com = new ClientCommunicator();
 		game = new ClientGameLogic(com);
 		com.setAuth(playerID, playerName, password);
