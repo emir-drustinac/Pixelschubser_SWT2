@@ -9,6 +9,10 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Arrays;
 
+import javax.swing.JOptionPane;
+
+import Client.gui.MenuWindow;
+import Client.gui.MenuWindowLogic;
 import SharedData.*;
 
 public class ClientSocketWorker extends SocketWorker{
@@ -17,8 +21,14 @@ public class ClientSocketWorker extends SocketWorker{
 		super(s, parent);
 	}
 	
-	public void connect(InetSocketAddress address, int timeout) throws IOException{
-		socket.connect(address, timeout);
+	public void connect(InetSocketAddress address, int timeout) /*throws IOException*/{
+		try {
+			socket.connect(address, timeout);
+		} catch (IOException e) {
+			String message = "Der Server läuft nicht! Bitte einen anderen Server eingeben.";
+			JOptionPane.showMessageDialog(new MenuWindow(new MenuWindowLogic()), message, "Falscher Server", JOptionPane.WARNING_MESSAGE);
+			e.printStackTrace();
+		}
 		start();
 	}
 
@@ -48,7 +58,8 @@ public class ClientSocketWorker extends SocketWorker{
 		
 		in = new ObjectInputStream(inRaw);
 		out = new ObjectOutputStream(outRaw);
+		System.out.println("################# negotiate() - Client ###################");
 		out.writeObject(auth);
-		
+		negotiated = true;
 	}
 }

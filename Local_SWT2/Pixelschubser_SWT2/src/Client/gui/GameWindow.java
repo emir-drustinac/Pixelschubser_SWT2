@@ -51,7 +51,7 @@ public class GameWindow extends JFrame {
 			// create PlayerInfo for other players
 			//if (!p.playerID.equals(Client.getPlayerID())) {
 				// create playerInfos
-				PlayerInfos pi = new PlayerInfos(p.playerID);
+				PlayerInfos pi = new PlayerInfos(p.playerID, p.name);
 				// add to list
 				playerInfos.put(p.playerID, pi);
 				// add to panel
@@ -92,7 +92,7 @@ public class GameWindow extends JFrame {
 			} else {
 				// #######
 				// create playerInfos
-				PlayerInfos pi = new PlayerInfos(p.playerID);
+				PlayerInfos pi = new PlayerInfos(p.playerID, p.name);
 				// add to list
 				playerInfos.put(p.playerID, pi);
 				// add to panel

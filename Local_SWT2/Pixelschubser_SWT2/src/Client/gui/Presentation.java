@@ -39,5 +39,13 @@ public class Presentation {
 		if (gameWindow != null) gameWindow.ReceivedMessage(m);
 		
 	}
+	
+	public static GameWindow getGameWindow() {
+		return gameWindow;
+	}
+	
+	public static MenuWindow getMenuWindow() {
+		return menuWindow;
+	}
 
 }

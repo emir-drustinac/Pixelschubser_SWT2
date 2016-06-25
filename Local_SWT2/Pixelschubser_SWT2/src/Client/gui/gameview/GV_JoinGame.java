@@ -32,7 +32,7 @@ public class GV_JoinGame extends GameView {
 	private static String lbl_wait = "Warte";
 	private static Color col_ready = new Color(99, 255, 99);
 	private static Color col_wait = new Color(255, 99, 99);
-	private static final int MAX_NUMBER_OF_PLAYERS = 6;
+	private static final int MAX_NUMBER_OF_PLAYERS = 5;
 	
 	private JButton btn_ready;
 	private boolean isReady = false;

@@ -22,6 +22,7 @@ public class PlayerInfos extends JPanel {
 	private static final long serialVersionUID = 8348601529424747225L;
 	
 	private final String playerID;
+	private String playerName;
 	
 	private static final int preferredWidth = 150;
 	private static final int preferredHeight = 100;
@@ -37,8 +38,9 @@ public class PlayerInfos extends JPanel {
 	private JLabel building;
 	private JLabel cards;
 
-	public PlayerInfos(String playerID) {
+	public PlayerInfos(String playerID, String playerName) {
 		this.playerID = playerID;
+		this.playerName = playerName;
 		// create all gui elements
 		setLayout(new BorderLayout());
 		bgColor = getBackgroundColor();
@@ -52,10 +54,10 @@ public class PlayerInfos extends JPanel {
 		JPanel b1 = new JPanel();
 		b1.setBackground(bgColor);
 		//b1.setLayout(new BorderLayout());
-		setOpaque(false); // hiermit Graphicfehler gelÃ¶st
+		setOpaque(false); // hiermit Graphicfehler gelöst
 		
 		// playername and proconsul icon
-		name = new JLabel(playerID, JLabel.CENTER);
+		name = new JLabel(playerName, JLabel.CENTER);
 		java.net.URL imgUrl = getClass().getResource("/images/proconsul.png");
 		ImageIcon icon = new ImageIcon(imgUrl);
 		proconsul = new JLabel(icon);
