@@ -1,8 +1,23 @@
 package Client.gui.gameview;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.EnumSet;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import Client.Client;
 import Client.gui.ActionCardException;
+import Client.gui.GuiActionCard;
 import SharedData.ActionCard;
+import SharedData.ActionCard.CardType;
 import SharedData.GameData;
+import SharedData.PlayerData;
 
 /**
  * @author chris
@@ -11,15 +26,50 @@ import SharedData.GameData;
 public class GV_DrawCards extends GameView {
 	
 	private static final long serialVersionUID = -4000887215527920683L;
-
+	private final JPanel cards;
 	
 	public GV_DrawCards() {
-		// TODO build gui
+		this.setLayout(new BorderLayout());
+		
+		// text label
+		JLabel la = new JLabel("gezogene Karten");
+		la.setHorizontalAlignment(JLabel.CENTER);
+		la.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+		this.add(la, BorderLayout.NORTH);
+		
+		// card grid
+		cards = new JPanel();
+		cards.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 15));
+		this.add(cards, BorderLayout.CENTER);
+		
+		// proconsul gets button to proceed in game
+		JButton btn = new JButton("weiter");
+		btn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Client.sendMessageToServer("confirm:drawcards");
+			}
+		});
+		this.add(btn, BorderLayout.SOUTH);
 	}
 
 	@Override
 	public void updateGameData(GameData g) {
 		// TODO update gui
+		// show cards drawn in this round
+		EnumSet<CardType> types = EnumSet.noneOf(CardType.class);
+		PlayerData p = g.players.get(myClientID());
+		for (int i = 0; i < p.getNumberOfCards(); i++) {
+			ActionCard a = p.getCard(i);
+			if (a.drawnInRound == g.round) {
+				cards.add(new GuiActionCard(a, p.isProconsul));
+				types.add(a.getType());
+			}
+		}
+		
+		// mark cards drawn in this round in deck bar
+		markCardTypes(types);
 	}
 
 	@Override

@@ -1,13 +1,18 @@
 package Client.gui.gameview;
 
 
+import java.util.EnumSet;
+import java.util.Vector;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import Client.Client;
 import Client.gui.ActionCardException;
 import SharedData.ActionCard;
 import SharedData.GameData;
+import SharedData.ActionCard.CardType;
 
 public abstract class GameView extends JPanel {
 	/**
@@ -34,6 +39,16 @@ public abstract class GameView extends JPanel {
 	 * Player wants to use an ActionCard c
 	 */
 	public abstract ActionCardException useActionCard(ActionCard c);
+	
+	protected String myClientID() {
+		return Client.getPlayerID();
+	}
+	
+
+	protected void markCardTypes(EnumSet<CardType> types) {
+		// TODO mark cards drawn in this round in deck bar
+		
+	}
 	
 	public static JLabel getIconLabel(String path) {
 		java.net.URL imgUrl = GameView.class.getResource(path);

@@ -82,6 +82,8 @@ public class ActionCard implements Serializable{
 	}
 
 	private final CardType type;
+	private ActionCardList currentCardList;
+	public int drawnInRound = 0;
 	
 	public ActionCard(CardType type) {
 		this.type = type;
@@ -142,18 +144,28 @@ public class ActionCard implements Serializable{
 		return this.type;
 	}
 
+	public String getNameHTML(boolean centered, boolean wrapped) {
+		String name = getNameText();
+		name = name.replace("-", wrapped ? "<br>" : "");
+		if (wrapped) name = name.replace(" ", "<br>");
+		return "<html>" + (centered ? "<center>" : "")
+				+ name + (centered ? "</center>" : "") + "</html>";
+	}
 	public String getName() {
+		return getNameText().replace("-", "");
+	}
+	public String getNameText() {
 		switch (type) {
 			case PICKLOCK: return "Einbrecher";
 			case SPY: return "Spion";
 			case ASSASSINATION: return "Attentat";
 			case CATAPULT: return "Katapult";
-			case SLAVEREVOLT: return "Sklavenaufstand";
+			case SLAVEREVOLT: return "Sklaven-aufstand";
 			case BRIBE: return "Schmiergeld";
 			case LION: return "Löwe";
-			case SURPRISEATTACK: return "Überraschungsangriff";
+			case SURPRISEATTACK: return "Überraschungs-angriff";
 			case ANNEXATION: return "Annexion";
-			case ABUSEOFPOWER: return "Machtmissbrauch";
+			case ABUSEOFPOWER: return "Macht-missbrauch";
 			case DENARI1000: return "Tribut";
 			case DENARI2000: return "Tribut";
 			case DENARI3000: return "Tribut";
@@ -161,7 +173,7 @@ public class ActionCard implements Serializable{
 			case FREEBUILDING: return "Freies Gebäude";
 			case GOLDENLION: return "Goldener Löwe";
 			case GOLDENCHARIOT: return "Goldener Wagen";
-			case JUGGLER: return "Gauklertruppe";
+			case JUGGLER: return "Gaukler-truppe";
 		}
 		return "unknown card";
 	}
@@ -279,6 +291,20 @@ public class ActionCard implements Serializable{
 	public boolean isValidTarget(PlayerData player, PlayerData target) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public boolean removeFromCardList() {
+		// take card in "hand"
+		if (currentCardList == null) return false;
+		return currentCardList.remove(this);
+	}
+
+	public void putInCardList(ActionCardList actionCardList) {
+		// remove from currentList
+		removeFromCardList();
+		// add to new list
+		currentCardList = actionCardList;
+		currentCardList.add(this);
 	}
 
 }

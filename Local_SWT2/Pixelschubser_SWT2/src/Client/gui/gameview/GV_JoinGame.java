@@ -16,6 +16,7 @@ import Client.Client;
 import Client.gui.ActionCardException;
 import SharedData.ActionCard;
 import SharedData.GameData;
+import SharedData.GameRules;
 import SharedData.PlayerData;
 
 /**
@@ -32,19 +33,17 @@ public class GV_JoinGame extends GameView {
 	private static String lbl_wait = "Warte";
 	private static Color col_ready = new Color(99, 255, 99);
 	private static Color col_wait = new Color(255, 99, 99);
-	private static final int MAX_NUMBER_OF_PLAYERS = 5;
-	
 	private JButton btn_ready;
 	private boolean isReady = false;
-	private JLabel[] nameLabels = new JLabel[MAX_NUMBER_OF_PLAYERS];
-	private JLabel[] readyLabels = new JLabel[MAX_NUMBER_OF_PLAYERS];
+	private JLabel[] nameLabels = new JLabel[GameRules.MAX_NUMBER_OF_PLAYERS];
+	private JLabel[] readyLabels = new JLabel[GameRules.MAX_NUMBER_OF_PLAYERS];
 	
 	public GV_JoinGame() {
 		setLayout(new FlowLayout());
 		
 		// list of labels
 		JPanel labels = new JPanel(new GridLayout(0, 2, 10, 5));
-		for (int i = 0; i < MAX_NUMBER_OF_PLAYERS; i++) {
+		for (int i = 0; i < GameRules.MAX_NUMBER_OF_PLAYERS; i++) {
 			nameLabels[i] = new JLabel("Player " + i + ":", JLabel.RIGHT);
 			readyLabels[i] = new JLabel(lbl_wait.toLowerCase());
 			labels.add(nameLabels[i]);

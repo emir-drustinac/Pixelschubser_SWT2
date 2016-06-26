@@ -9,8 +9,8 @@ public class GameData implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -4237062929837830623L;
-	public int random = 0;
-	public PhaseType phase;
+	public int round = 0;
+	public PhaseType phase = PhaseType.JoinGame;
 	public PlayerList players;
 	private ActionCardList deck;
 	private ActionCardList discardPile;
@@ -42,7 +42,8 @@ public class GameData implements Serializable{
 			} 
 		}
 		// return first card on deck and remove it from deck 
-		return deck.remove(0);
+		if (deck.size() == 0) System.out.println("Can't draw card from empty deck!");
+		return deck.size() == 0 ? null : deck.remove(0);
 	}
 	
 	public void addCard2Deck(ActionCard a) {
@@ -136,6 +137,27 @@ public class GameData implements Serializable{
 
 	public int getDiscardPileSize() {
 		return discardPile.size();
+	}
+
+	public void printDeck() {
+		System.out.println("Deck contains " + deck.size() + " cards:");
+		for (ActionCard a : deck) {
+			System.out.print(a.getType() + " ");
+		}
+		System.out.println("");
+	}
+
+	public boolean allPlayersAreReady() {
+		for (PlayerData p : players) {
+			if (!p.isReady) return false;
+		}
+		return true;
+	}
+
+	public void setAllPlayersReady(boolean ready) {
+		for (PlayerData p : players) {
+			p.isReady = ready;
+		}
 	}
 
 }

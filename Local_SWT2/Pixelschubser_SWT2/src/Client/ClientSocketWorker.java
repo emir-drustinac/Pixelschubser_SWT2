@@ -60,6 +60,6 @@ public class ClientSocketWorker extends SocketWorker{
 		out = new ObjectOutputStream(outRaw);
 		System.out.println("################# negotiate() - Client ###################");
 		out.writeObject(auth);
-		negotiated = true;
+//		negotiated = true;
 	}
 }

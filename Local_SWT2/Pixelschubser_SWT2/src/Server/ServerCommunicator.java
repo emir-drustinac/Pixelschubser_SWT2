@@ -5,7 +5,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.Random;
 
 import SharedData.AuthenticationPacket;
 import SharedData.GameData;
@@ -56,7 +55,6 @@ public class ServerCommunicator implements Runnable, SocketWorkerManager{
 	}
 
 	public void sendGameDataToAllClients(GameData g) {
-		g.random = (int) (Math.random() * 1000000);
 		System.out.println("Sending GameData: phase=" + g.phase + " numPlayers=" + g.players.size());
 		for (PlayerData p : g.players) {
 			System.out.println("  Player " + p.playerID + " : Name=" + p.name + " buildings=" + p.numberOfBuildings

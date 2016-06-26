@@ -1,5 +1,7 @@
-package Server;
+package Server.phase;
 
+import Server.ServerCommunicator;
+import Server.ServerGameLogic;
 import SharedData.GameData;
 import SharedData.PhaseType;
 import SharedData.PlayerData;

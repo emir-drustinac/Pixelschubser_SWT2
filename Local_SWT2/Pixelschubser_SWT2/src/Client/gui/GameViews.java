@@ -42,7 +42,7 @@ public class GameViews extends JPanel {
 	public GameViews(GameData gameData) {
 		this.playerID = Client.getPlayerID();
 		// create all gui elements
-		setLayout(new CardLayout());
+		setLayout(cardLayout);
 		setBorder(BorderFactory.createMatteBorder(0, 10, 10, 10, GameWindow.freeSpaceColor));
 		setMinimumSize(new Dimension(preferredWidth, preferredHeight));
 		setSize(preferredWidth, preferredHeight);

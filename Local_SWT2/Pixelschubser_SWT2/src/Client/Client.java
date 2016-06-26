@@ -1,7 +1,5 @@
 package Client;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,14 +10,11 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.UUID;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import Client.gui.GuiActionCard;
 import Client.gui.MenuWindowLogic;
 import Client.gui.Presentation;
-import SharedData.*;
-import SharedData.ActionCard.CardType;
+import SharedData.GameData;
 
 public class Client {
 
@@ -29,33 +24,33 @@ public class Client {
 	private static String playerName = "Nero";
 	private static String password = "pw";
 	private static /*final*/ String playerID /*= "id"*/;
-//	static {
-//		String pid = null;
-//		File pf = new File(System.getProperty("user.home") + "\\.proconsul\\playerID");
-//		if (pf.exists() && pf.canRead() && pf.length() >= 8) {
-//			try {
-//				BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(pf)));
-//				pid = br.readLine();
-//				br.close();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		if (pid == null) {
-//			// generate new playerID
-//			pid = UUID.randomUUID().toString();
-//			try {
-//				pf.getParentFile().mkdirs();
-//				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(pf)));
-//				bw.write(pid);
-//				bw.close();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		playerID = pid;
-//		System.out.println("playerID: " + playerID);
-//	}
+	static {
+		String pid = null;
+		File pf = new File(System.getProperty("user.home") + "\\.proconsul\\playerID");
+		if (pf.exists() && pf.canRead() && pf.length() >= 8) {
+			try {
+				BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(pf)));
+				pid = br.readLine();
+				br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		if (pid == null) {
+			// generate new playerID
+			pid = UUID.randomUUID().toString();
+			try {
+				pf.getParentFile().mkdirs();
+				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(pf)));
+				bw.write(pid);
+				bw.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		playerID = pid;
+		System.out.println("playerID: " + playerID);
+	}
 	
 	static {
 		playerID = UUID.randomUUID().toString();
@@ -72,12 +67,16 @@ public class Client {
 
 		// Create Logic for Start Menu
 		logic = new MenuWindowLogic();
-		Presentation.createMenuWindow(logic);
+		//Presentation.createMenuWindow(logic);
+		
+		// directly enter new game on local host
+		logic.createGame(playerName + " " + playerID.substring(1, 4));
 
 		// test von CFR
-		if (playerID.equals("82687bf1-df0c-4bb2-af1a-d84a492f7501")
-				|| playerID.equals("2d15d67e-5857-47a5-98cb-9bb06d6ca102")) {
+		if (playerID.equals("82687bf1-df0c-4bb2-af1a-d84a492f7501") /* Laptop */
+				|| playerID.equals("2d15d67e-5857-47a5-98cb-9bb06d6ca102") /* PC */) {
 			playerName = "Christian";
+			logic.createGame(playerName);
 			// // test of GameWindow
 			// GameData g = new GameData();
 			// // first player
@@ -119,17 +118,25 @@ public class Client {
 			// updateGameState(g);
 			
 			// test action card frame
-			JFrame f = new JFrame("ac test");
-			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			ActionCard a = new ActionCard(CardType.ANNEXATION);
-			Component p = new GuiActionCard(a);
-			f.getContentPane().setLayout(new BorderLayout());
-			f.getContentPane().add(p, BorderLayout.CENTER);
-			//f.setSize(200, 300);
-			f.pack();
-			f.setLocationRelativeTo(null);
-			f.setVisible(true);
-			return;
+//			JFrame f = new JFrame("ac test");
+//			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//			ActionCard a = new ActionCard(CardType.SURPRISEATTACK);
+//			f.getContentPane().setLayout(new BorderLayout());
+//			f.getContentPane().add(new GuiActionCard(a, true), BorderLayout.CENTER);
+//			//f.setSize(200, 300);
+//			f.pack();
+//			f.setLocationRelativeTo(null);
+//			f.setVisible(true);
+//			// test action card frame
+//			JFrame g = new JFrame("ac test");
+//			g.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//			g.getContentPane().setLayout(new BorderLayout());
+//			g.getContentPane().add(new GuiActionCard(a, false), BorderLayout.CENTER);
+//			//f.setSize(200, 300);
+//			g.pack();
+//			g.setLocationRelativeTo(f);
+//			g.setVisible(true);
+//			return;
 		}
 
 		// test von ABO

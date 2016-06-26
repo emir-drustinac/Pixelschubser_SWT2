@@ -14,7 +14,8 @@ public class ActionCardList extends Vector<ActionCard> {
 	 * @param c
 	 */
 	public boolean removeCard(ActionCard c) {
-		return this.remove(c);
+		if (c == null) return false;
+		return c.removeFromCardList() | remove(c);
 	}
 
 	/**
@@ -22,7 +23,7 @@ public class ActionCardList extends Vector<ActionCard> {
 	 * @param c
 	 */
 	public void addCard(ActionCard c) {
-		this.add(c);
+		if (c != null) c.putInCardList(this);
 	}
 
 	/**

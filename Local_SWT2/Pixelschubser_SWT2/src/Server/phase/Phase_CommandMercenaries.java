@@ -1,5 +1,7 @@
-package Server;
+package Server.phase;
 
+import Server.ServerCommunicator;
+import Server.ServerGameLogic;
 import SharedData.GameData;
 import SharedData.PhaseType;
 import SharedData.PlayerData;
@@ -13,10 +15,13 @@ public class Phase_CommandMercenaries extends Phase {
 	@Override
 	public void ReceivedMessageFromClient(String clientID, String message) {
 		System.out.print(" > " + this.getClass().getSimpleName() + " " + clientID + " " + message);
-		if (message.startsWith("MessageString:")) {
-			String name = message.split(":", 2)[1];
-			logic.addPlayer(clientID, name);
-		}
+//		if (message.startsWith("MessageString:")) {
+//			String name = message.split(":", 2)[1];
+//			logic.addPlayer(clientID, name);
+//		}
+		
+		// next phase
+		//logic.nextPhase();
 	}
 
 	@Override

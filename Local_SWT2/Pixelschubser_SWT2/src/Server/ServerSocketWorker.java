@@ -32,7 +32,7 @@ public class ServerSocketWorker extends SocketWorker{
 	 */
 	public void receivedMessage(String m) {
 		((ServerCommunicator) parent).receivedMessage(getClientID(), m);
-		((ServerCommunicator) parent).sendMessageToAllClients(auth.getUsername()+": "+m);
+		//((ServerCommunicator) parent).sendMessageToAllClients(auth.getUsername()+": "+m);
 	}
 
 	@Override

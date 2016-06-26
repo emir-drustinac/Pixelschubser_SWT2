@@ -6,8 +6,13 @@ import javax.swing.JOptionPane;
 
 import Client.gui.MenuWindow;
 import Client.gui.MenuWindowLogic;
-import SharedData.*;
+import Server.phase.*;
+import SharedData.ActionCard;
 import SharedData.ActionCard.CardType;
+import SharedData.GameData;
+import SharedData.GameRules;
+import SharedData.PhaseType;
+import SharedData.PlayerList;
 
 public class ServerGameLogic {
 
@@ -84,7 +89,7 @@ public class ServerGameLogic {
 	}
 
 	public boolean startGame() {
-		if (game.phase == null) {
+		if (game.phase == PhaseType.JoinGame) {
 			// to start game we need:
 			
 			// all cards
@@ -111,39 +116,33 @@ public class ServerGameLogic {
 	 */
 	public void createDeck() {
 		
-		String allCards[] = new String[18];
-		allCards[0] = "JUGGLERx1";
-		allCards[1] = "LIONx1";
-		allCards[2] = "DENARI3000x3";
-		allCards[3] = "PICKLOCKx1";
-		allCards[4] = "SPYx1";
-		allCards[5] = "ASSASSINATIONx2";
-		allCards[6] = "CATAPULTx2";
-		allCards[7] = "SLAVEREVOLTx2";
-		allCards[8] = "BRIBEx1";
-		allCards[9] = "DENARI2000x11";
-		allCards[10] = "SURPRISEATTACKx1";
-		allCards[11] = "ANNEXATIONx1";
-		allCards[12] = "ABUSEOFPOWERx2";
-		allCards[13] = "PROPAGANDAx1";
-		allCards[14] = "FREEBUILDINGx1";
-		allCards[15] = "GOLDENLIONx1";
-		allCards[16] = "GOLDENCHARIOTx1";
-		allCards[17] = "DENARI1000x12"; 
+		createCardsInDeck(CardType.DENARI1000, 		12	); 
+		createCardsInDeck(CardType.DENARI2000, 		11	);
+		createCardsInDeck(CardType.DENARI3000, 		3	);
+		createCardsInDeck(CardType.LION, 			1	);
+		createCardsInDeck(CardType.JUGGLER, 		1	);
+		createCardsInDeck(CardType.PICKLOCK, 		1	);
+		createCardsInDeck(CardType.SPY, 			1	);
+		createCardsInDeck(CardType.BRIBE, 			1	);
+		createCardsInDeck(CardType.SURPRISEATTACK, 	1	);
+		createCardsInDeck(CardType.PROPAGANDA, 		1	);
+		createCardsInDeck(CardType.FREEBUILDING, 	1	);
+		createCardsInDeck(CardType.ANNEXATION, 		1	);
+		createCardsInDeck(CardType.GOLDENCHARIOT, 	1	);
+		createCardsInDeck(CardType.GOLDENLION, 		1	);
+		createCardsInDeck(CardType.ASSASSINATION, 	2	);
+		createCardsInDeck(CardType.CATAPULT, 		2	);
+		createCardsInDeck(CardType.SLAVEREVOLT, 	2	);
+		createCardsInDeck(CardType.ABUSEOFPOWER, 	2	);
 										
-		int count, pos;
-		
-		for(int i = 0; i < 18; i++) {
-			pos = allCards[i].indexOf('x');
-			count = Integer.parseInt(allCards[i].substring(pos+1));
-			while(count-- > 0) {
-				allCards[i] = allCards[i].substring(0, pos);
-				ActionCard a = new ActionCard(CardType.valueOf(allCards[i]));
-				int r = new Random().nextInt(game.getDeckSize() + (game.getDeckSize() == 0 ? 1 : 0));
-				game.addCard2DeckAtIndex(a, r);
-				//System.out.println("Deck size: " + game.getDeckSize());
-			}
-			allCards[i] = "";
+		//System.out.println("Deck size: " + game.getDeckSize());
+	}
+	private void createCardsInDeck(CardType type, int n) {
+		Random rnd = new Random();
+		for (int i = 0; i < n; i++) {
+			ActionCard a = new ActionCard(type);
+			int r = rnd.nextInt(game.getDeckSize() + 1);
+			game.addCard2DeckAtIndex(a, r);
 		}
 	}
 
@@ -179,6 +178,14 @@ public class ServerGameLogic {
 		PlayerList w = (PlayerList)(game.players.clone());
 		w.removeIf( p->(p.getNumberOfVictoryPoints() < GameRules.VICTORY_POINTS_NEEDED) );
 		return w;
+	}
+
+	/**
+	 * called on every start of new round
+	 */
+	public void nextRound() {
+		// prepare next round
+		game.round++;
 	}
 
 }
