@@ -54,6 +54,7 @@ public class ServerSocketWorker extends SocketWorker{
 
 	@Override
 	protected void negotiate(Socket s) throws IOException {
+		System.out.println("################# negotiate() - Server ###################");
 		InputStream inRaw = s.getInputStream();
 		OutputStream outRaw = s.getOutputStream();
 		outRaw.write(NetworkProtocol.SERVER_HELLO);

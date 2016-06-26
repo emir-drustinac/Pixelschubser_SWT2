@@ -217,9 +217,6 @@ public class Client {
 	 * @param Address
 	 */
 	public static void connect(String Address, String playerName) {
-		// TODO - implement Client.connect
-		// throw new UnsupportedOperationException();
-		
 		//playerID = playerName;
 		Client.playerName = playerName;
 		

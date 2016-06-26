@@ -1,6 +1,11 @@
 package Server;
 
 import java.util.Random;
+
+import javax.swing.JOptionPane;
+
+import Client.gui.MenuWindow;
+import Client.gui.MenuWindowLogic;
 import SharedData.*;
 import SharedData.ActionCard.CardType;
 
@@ -59,9 +64,15 @@ public class ServerGameLogic {
 	}
 
 	public boolean addPlayer(String playerID, String name) {
-		game.addPlayer(playerID, name);
-		com.sendGameDataToAllClients(game);
-		return true;
+		if(game.players.size() >= 5) {
+			String msg = "Maximale Anzahl an Spielern(5) sind schon im Spiel! Bitte einem anderen Spiel beitreten.";
+			JOptionPane.showMessageDialog(new MenuWindow(new MenuWindowLogic()), msg, "Beitreten nicht möglich", JOptionPane.WARNING_MESSAGE);
+			return false;
+		} else {
+			game.addPlayer(playerID, name);
+			com.sendGameDataToAllClients(game);
+			return true;
+		}
 	}
 
 	public boolean removePlayer(String playerID) {

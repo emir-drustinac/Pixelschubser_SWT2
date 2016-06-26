@@ -16,7 +16,7 @@ abstract public class SocketWorker implements Runnable{
 	protected ObjectInputStream in;
 	protected SocketWorkerManager parent;
 	protected AuthenticationPacket auth;
-
+	
 	public SocketWorker(Socket s, SocketWorkerManager parent) throws IOException{
 		this.socket = s;
 		this.parent = parent;
@@ -33,9 +33,13 @@ abstract public class SocketWorker implements Runnable{
 	 * 
 	 * @param m
 	 */
-	public void sendMessage(String m) throws IOException{
-		out.reset();
-		out.writeObject(m);
+	public void sendMessage(String m) throws IOException {
+		if(out != null) {
+			out.reset();
+			out.writeObject(m);
+		} else {
+			System.out.println("Die Nachricht \"" + m + "\" konnte nicht verschickt werden!");
+		}
 	}
 
 	/**
