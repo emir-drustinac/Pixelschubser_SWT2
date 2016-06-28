@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -100,6 +101,12 @@ public class GV_JoinGame extends GameView {
 	@Override
 	public ActionCardException useActionCard(ActionCard c) {
 		return new ActionCardException();
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO react on mouse clicks
+		
 	}
 
 }

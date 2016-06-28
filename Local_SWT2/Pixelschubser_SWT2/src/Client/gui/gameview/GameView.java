@@ -1,6 +1,7 @@
 package Client.gui.gameview;
 
 
+import java.awt.event.MouseEvent;
 import java.util.EnumSet;
 
 import javax.swing.ImageIcon;
@@ -38,6 +39,7 @@ public abstract class GameView extends JPanel {
 	 * Player wants to use an ActionCard c
 	 */
 	public abstract ActionCardException useActionCard(ActionCard c);
+	public abstract void mouseClicked(MouseEvent e);
 	
 	protected String myClientID() {
 		return Client.getPlayerID();

@@ -28,6 +28,7 @@ public class GameWindow extends JFrame {
 	private GameViews gameViews;
 	private GameInfos gameInfo;
 	private JLabel message;
+	private CardPanel cardpanel;
 	
 	/**
 	 * 
@@ -68,6 +69,10 @@ public class GameWindow extends JFrame {
 		// add gameInfo
 		gameInfo = new GameInfos(gameData);
 		add(gameInfo, BorderLayout.EAST);
+		gameInfo.setVisible(false);
+		
+		cardpanel = new CardPanel();
+		add(cardpanel, BorderLayout.SOUTH);
 		
 		// add status message panel
 		message = new JLabel();
@@ -107,15 +112,19 @@ public class GameWindow extends JFrame {
 		// update gameInfos
 		gameInfo.updateGameInfos(g);
 		
-		//repaint();
+		validate();
 		// add messages to log
-		// TODO
+		// TODO message to log
 	}
 
 	public void ReceivedMessage(String m) {
 		//gameInfo.
 		message.setText(m);
 		//gameViews.
+	}
+
+	public GameViews getGameViews() {
+		return gameViews;
 	}
 
 }

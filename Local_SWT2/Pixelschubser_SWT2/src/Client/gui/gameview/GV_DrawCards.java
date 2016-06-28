@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.util.EnumSet;
 
 import javax.swing.BorderFactory;
@@ -89,6 +90,12 @@ public class GV_DrawCards extends GameView {
 	public ActionCardException useActionCard(ActionCard c) {
 		// TODO players uses an ActionCard
 		return new ActionCardException();
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO react on mouse clicks
+		
 	}
 
 }

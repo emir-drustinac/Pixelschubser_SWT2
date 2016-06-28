@@ -3,6 +3,8 @@ package Client.gui;
 
 import java.awt.CardLayout;
 import java.awt.Dimension;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashMap;
 
 import javax.swing.BorderFactory;
@@ -20,7 +22,7 @@ import Client.gui.gameview.GameView;
 import SharedData.GameData;
 import SharedData.PhaseType;
 
-public class GameViews extends JPanel {
+public class GameViews extends JPanel implements MouseListener {
 
 	/**
 	 * 
@@ -146,5 +148,34 @@ public class GameViews extends JPanel {
 
 	public String getPlayerID() {
 		return playerID;
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		currentView.mouseClicked(e);
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

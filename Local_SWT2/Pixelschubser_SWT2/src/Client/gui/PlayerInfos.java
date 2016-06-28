@@ -5,6 +5,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -94,6 +96,9 @@ public class PlayerInfos extends JPanel {
 		b2.add(cards, BorderLayout.EAST);
 		
 		add(b2, BorderLayout.CENTER);
+		
+		// register mouse listener
+		addMouseListener(Presentation.getGameWindow().getGameViews());
 	}
 
 	/**
