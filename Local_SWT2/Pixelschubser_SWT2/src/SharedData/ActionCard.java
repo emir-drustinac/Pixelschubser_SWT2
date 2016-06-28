@@ -71,8 +71,8 @@ public class ActionCard implements Serializable{
 		// Geldkarten
 		DENARI1000/*X12*/, DENARI2000/*X11*/, DENARI3000/*X3*/,
 		// 
-		PROPAGANDA, //X1 Propaganda - ? - ?
-		FREEBUILDING, //X1 ? - ? - ?
+		//PROPAGANDA, //X1 Propaganda same as freebuilding - ? - ?
+		FREEBUILDING, //X1+1 ? - ? - ?
 		// Extra Point Cards
 		GOLDENLION, //X1 Goldener Lï¿½we - kann nicht ausgespielt werden - gibt einen extra Machtpunkt
 		GOLDENCHARIOT, //X1 Goldener Wagen - kann nicht ausgespielt werden - gibt einen extra Machtpunkt
@@ -169,7 +169,7 @@ public class ActionCard implements Serializable{
 			case DENARI1000: return "Tribut";
 			case DENARI2000: return "Tribut";
 			case DENARI3000: return "Tribut";
-			case PROPAGANDA: return "Propaganda";
+			//case PROPAGANDA: return "Propaganda";
 			case FREEBUILDING: return "Freies Gebäude";
 			case GOLDENLION: return "Goldener Löwe";
 			case GOLDENCHARIOT: return "Goldener Wagen";
@@ -208,8 +208,8 @@ public class ActionCard implements Serializable{
 		case DENARI1000: return "";
 		case DENARI2000: return "";
 		case DENARI3000: return "";
-		case PROPAGANDA: return "Spiele beim Geld ausgeben";
-		case FREEBUILDING: return ":Freies Gebäude";
+		//case PROPAGANDA: return "Spiele beim Geld ausgeben";
+		case FREEBUILDING: return "Spiele beim Geld ausgeben";
 		case GOLDENLION: return "";
 		case GOLDENCHARIOT: return "";
 		case JUGGLER: return "";
@@ -235,8 +235,7 @@ public class ActionCard implements Serializable{
 		case DENARI1000: return "1000 Denari";
 		case DENARI2000: return "2000 Denari";
 		case DENARI3000: return "3000 Denari";
-		case PROPAGANDA: return "Du erhältst ein Gebäude gratis";
-		case FREEBUILDING: return ">Freies Gebäude";
+		case FREEBUILDING: return "Du erhältst ein Gebäude gratis";
 		case GOLDENLION: return "1 Siegpunkt";
 		case GOLDENCHARIOT: return "1 Siegpunkt";
 		case JUGGLER: return "Keine Auswirkungen";
@@ -246,24 +245,24 @@ public class ActionCard implements Serializable{
 
 	public String getImagePath() {
 		switch (type) {
-		case PICKLOCK: return "";
-		case SPY: return "";
-		case ASSASSINATION: return "";
-		case CATAPULT: return "";
-		case SLAVEREVOLT: return "";
-		case BRIBE: return "";
-		case LION: return "";
-		case SURPRISEATTACK: return "";
+		case PICKLOCK: return "/images/actioncards/picklock.png";
+		case SPY: return "/images/actioncards/spion.png";
+		case ASSASSINATION: return "/images/actioncards/attentat.png";
+		case CATAPULT: return "/images/actioncards/catapult.png";
+		case SLAVEREVOLT: return "/images/actioncards/slaverage.png";
+		case BRIBE: return "/images/actioncards/bribe.png";
+		case LION: return "/images/actioncards/lion.png";
+		case SURPRISEATTACK: return "/images/actioncards/surpriseattack.png";
 		case ANNEXATION: return "/images/actioncards/annexion.png";
-		case ABUSEOFPOWER: return "";
-		case DENARI1000: return "/images/building.png";
-		case DENARI2000: return "/images/building.png";
-		case DENARI3000: return "/images/building.png";
-		case PROPAGANDA: return "";
-		case FREEBUILDING: return "";
-		case GOLDENLION: return "";
-		case GOLDENCHARIOT: return "";
-		case JUGGLER: return "";
+		case ABUSEOFPOWER: return "/images/actioncards/abuse_of_power.png";
+		case DENARI1000: return "/images/actioncards/denari1000.png";
+		case DENARI2000: return "/images/actioncards/denari2000.png";
+		case DENARI3000: return "/images/actioncards/denari3000.png";
+		//case PROPAGANDA: return "";
+		case FREEBUILDING: return "/images/actioncards/free_building.png";
+		case GOLDENLION: return "/images/actioncards/golden_lion.png";
+		case GOLDENCHARIOT: return "/images/actioncards/golden_wagon.png";
+		case JUGGLER: return "/images/actioncards/juggler.png";
 		}
 		return "/images/card.png";
 	}
@@ -279,7 +278,7 @@ public class ActionCard implements Serializable{
 		case Combat:
 			return usableDuringFight();
 		case SpendMoney:
-			return isMoneyCard() || type==CardType.FREEBUILDING || type==CardType.PROPAGANDA;
+			return isMoneyCard() || type==CardType.FREEBUILDING /*|| type==CardType.PROPAGANDA*/;
 		case CardLimit:
 		case DeclareWinner:
 		case GameOver:

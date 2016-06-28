@@ -13,12 +13,14 @@ public class Phase_DeclareWinner extends Phase {
 	
 	public Phase_DeclareWinner(ServerGameLogic logic, ServerCommunicator com) {
 		super(logic, com);
+		System.out.println("# " + this.getClass().getSimpleName() + " entered");
 		winners = logic.getWinners();
 	}
 
 	@Override
 	public void ReceivedMessageFromClient(String clientID, String message) {
 		// TODO Auto-generated method stub
+		System.out.println("# " + this.getClass().getSimpleName() + " " + clientID + " " + message + " #");
 
 	}
 

@@ -11,6 +11,7 @@ public class Phase_DrawCards extends Phase {
 
 	public Phase_DrawCards(ServerGameLogic logic, ServerCommunicator com) {
 		super(logic, com);
+		System.out.println("# " + this.getClass().getSimpleName() + " entered");
 		
 		//logic.getGameData().printDeck();
 		
@@ -61,7 +62,7 @@ public class Phase_DrawCards extends Phase {
 
 	@Override
 	public void ReceivedMessageFromClient(String clientID, String message) {
-		System.out.print(" > " + this.getClass().getSimpleName() + " " + clientID + " " + message);
+		System.out.println("# " + this.getClass().getSimpleName() + " " + clientID + " " + message + " #");
 		if (message.startsWith("confirm")) {
 			logic.getGameData().getPlayer(clientID).isReady = true;
 			// next phase

@@ -10,11 +10,12 @@ public class Phase_Combat extends Phase {
 
 	public Phase_Combat(ServerGameLogic logic, ServerCommunicator com) {
 		super(logic, com);
+		System.out.println("# " + this.getClass().getSimpleName() + " entered");
 	}
 
 	@Override
 	public void ReceivedMessageFromClient(String clientID, String message) {
-		System.out.print(" > " + this.getClass().getSimpleName() + " " + clientID + " " + message);
+		System.out.println("# " + this.getClass().getSimpleName() + " " + clientID + " " + message + " #");
 //		if (message.startsWith("MessageString:")) {
 //			String name = message.split(":", 2)[1];
 //			logic.addPlayer(clientID, name);

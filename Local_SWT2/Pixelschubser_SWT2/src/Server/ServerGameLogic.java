@@ -116,24 +116,24 @@ public class ServerGameLogic {
 	 */
 	public void createDeck() {
 		
-		createCardsInDeck(CardType.DENARI1000, 		12	); 
-		createCardsInDeck(CardType.DENARI2000, 		11	);
-		createCardsInDeck(CardType.DENARI3000, 		3	);
-		createCardsInDeck(CardType.LION, 			1	);
-		createCardsInDeck(CardType.JUGGLER, 		1	);
-		createCardsInDeck(CardType.PICKLOCK, 		1	);
-		createCardsInDeck(CardType.SPY, 			1	);
-		createCardsInDeck(CardType.BRIBE, 			1	);
-		createCardsInDeck(CardType.SURPRISEATTACK, 	1	);
-		createCardsInDeck(CardType.PROPAGANDA, 		1	);
-		createCardsInDeck(CardType.FREEBUILDING, 	1	);
-		createCardsInDeck(CardType.ANNEXATION, 		1	);
-		createCardsInDeck(CardType.GOLDENCHARIOT, 	1	);
-		createCardsInDeck(CardType.GOLDENLION, 		1	);
-		createCardsInDeck(CardType.ASSASSINATION, 	2	);
-		createCardsInDeck(CardType.CATAPULT, 		2	);
-		createCardsInDeck(CardType.SLAVEREVOLT, 	2	);
-		createCardsInDeck(CardType.ABUSEOFPOWER, 	2	);
+		createCardsInDeck(CardType.DENARI1000,		12	); 
+		createCardsInDeck(CardType.DENARI2000,		11	);
+		createCardsInDeck(CardType.DENARI3000,		3	);
+		createCardsInDeck(CardType.LION,			1	);
+		createCardsInDeck(CardType.JUGGLER,			1	);
+		createCardsInDeck(CardType.PICKLOCK,		1	);
+		createCardsInDeck(CardType.SPY,				1	);
+		createCardsInDeck(CardType.BRIBE,			1	);
+		createCardsInDeck(CardType.SURPRISEATTACK,	1	);
+		//createCardsInDeck(CardType.PROPAGANDA,	1	); + 1 free building instead
+		createCardsInDeck(CardType.FREEBUILDING,	2	);
+		createCardsInDeck(CardType.ANNEXATION,		1	);
+		createCardsInDeck(CardType.GOLDENCHARIOT,	1	);
+		createCardsInDeck(CardType.GOLDENLION,		1	);
+		createCardsInDeck(CardType.ASSASSINATION,	2	);
+		createCardsInDeck(CardType.CATAPULT,		2	);
+		createCardsInDeck(CardType.SLAVEREVOLT,		2	);
+		createCardsInDeck(CardType.ABUSEOFPOWER,	2	);
 										
 		//System.out.println("Deck size: " + game.getDeckSize());
 	}

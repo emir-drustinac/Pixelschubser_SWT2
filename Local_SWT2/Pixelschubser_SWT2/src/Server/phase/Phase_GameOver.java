@@ -10,12 +10,13 @@ public class Phase_GameOver extends Phase {
 
 	public Phase_GameOver(ServerGameLogic logic, ServerCommunicator com) {
 		super(logic, com);
-		// TODO Auto-generated constructor stub
+		System.out.println("# " + this.getClass().getSimpleName() + " entered");
 	}
 
 	@Override
 	public void ReceivedMessageFromClient(String clientID, String message) {
 		// TODO Auto-generated method stub
+		System.out.println("# " + this.getClass().getSimpleName() + " " + clientID + " " + message + " #");
 
 	}
 

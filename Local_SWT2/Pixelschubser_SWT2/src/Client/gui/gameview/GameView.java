@@ -2,7 +2,6 @@ package Client.gui.gameview;
 
 
 import java.util.EnumSet;
-import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -11,8 +10,8 @@ import javax.swing.JPanel;
 import Client.Client;
 import Client.gui.ActionCardException;
 import SharedData.ActionCard;
-import SharedData.GameData;
 import SharedData.ActionCard.CardType;
+import SharedData.GameData;
 
 public abstract class GameView extends JPanel {
 	/**
