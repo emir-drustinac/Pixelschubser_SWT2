@@ -2,6 +2,7 @@ package Server.phase;
 
 import Server.ServerCommunicator;
 import Server.ServerGameLogic;
+import SharedData.ActionCard;
 import SharedData.GameData;
 import SharedData.PhaseType;
 import SharedData.PlayerData;
@@ -16,13 +17,32 @@ public class Phase_MakePromises extends Phase {
 	@Override
 	public void ReceivedMessageFromClient(String clientID, String message) {
 		System.out.println("# " + this.getClass().getSimpleName() + " " + clientID + " " + message + " #");
-//		if (message.startsWith("MessageString:")) {
-//			String name = message.split(":", 2)[1];
-//			logic.addPlayer(clientID, name);
-//		}
-		
-		// next phase
-		//logic.nextPhase();
+		PlayerData proconsul = logic.getGameData().getPlayer(clientID);
+		if (proconsul != null && proconsul.isProconsul) {
+			//promise_card:cardid:playerid
+			if (message.startsWith("promise_card:")) {
+				String[] s = message.split(":", 3);
+				ActionCard a = proconsul.getCardByID(s[1]);
+				PlayerData p = logic.getGameData().getPlayer(s[2]);
+				if (a != null && p != null) {
+					// check for enough cards to promise all players
+					if (proconsul.getNumberOfCards() > logic.getGameData().numberOfPlayersWithPromisedCards()
+						|| p.getNumberOfPromisedCards() == 0 ) {
+						p.addCard(a);
+						com.sendMessageToClient(clientID, "promise_ack:true:u promised a card!");
+						com.sendPlayerDataToClient(p.playerID, p);
+						com.sendPlayerDataToClient(clientID, p);
+					} else {
+						com.sendMessageToClient(clientID, "promise_ack:false:Warning: you would not have enough cards left!");
+					}
+				} else {
+					com.sendMessageToClient(clientID, "promise_ack:false:ERROR: Card or Player not found!");
+				}
+			}
+
+			// next phase
+			//logic.nextPhase();
+		}
 	}
 
 	@Override

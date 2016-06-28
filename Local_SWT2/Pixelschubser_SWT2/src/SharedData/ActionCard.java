@@ -8,6 +8,7 @@ public class ActionCard implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -783616116266345006L;
+	private static int nextCardID = 1;
 
 	/*
 	 * PromisesCard (After the Phase)
@@ -40,7 +41,7 @@ public class ActionCard implements Serializable{
 	 * 			# Propaganda (free Mercenary)
 	 * 			# Free Building
 	 * 
-	 * VictoryPintsCards
+	 * VictoryPointsCards
 	 * 		# Golden Statue
 	 * 		# Golden Chariot
 	 * 
@@ -71,8 +72,8 @@ public class ActionCard implements Serializable{
 		// Geldkarten
 		DENARI1000/*X12*/, DENARI2000/*X11*/, DENARI3000/*X3*/,
 		// 
-		//PROPAGANDA, //X1 Propaganda same as freebuilding - ? - ?
-		FREEBUILDING, //X1+1 ? - ? - ?
+		PROPAGANDA, //X1 - ? - ?
+		FREEBUILDING, //X1 ? - ? - ?
 		// Extra Point Cards
 		GOLDENLION, //X1 Goldener Lï¿½we - kann nicht ausgespielt werden - gibt einen extra Machtpunkt
 		GOLDENCHARIOT, //X1 Goldener Wagen - kann nicht ausgespielt werden - gibt einen extra Machtpunkt
@@ -81,11 +82,13 @@ public class ActionCard implements Serializable{
 		//************************TOTAL OF 45 ActionCards*****************************
 	}
 
+	private final String cardID;
 	private final CardType type;
 	private ActionCardList currentCardList;
 	public int drawnInRound = 0;
 	
 	public ActionCard(CardType type) {
+		this.cardID = "card" + nextCardID++;
 		this.type = type;
 	}
 	
@@ -169,7 +172,7 @@ public class ActionCard implements Serializable{
 			case DENARI1000: return "Tribut";
 			case DENARI2000: return "Tribut";
 			case DENARI3000: return "Tribut";
-			//case PROPAGANDA: return "Propaganda";
+			case PROPAGANDA: return "Propaganda";
 			case FREEBUILDING: return "Freies Gebäude";
 			case GOLDENLION: return "Goldener Löwe";
 			case GOLDENCHARIOT: return "Goldener Wagen";
@@ -195,20 +198,20 @@ public class ActionCard implements Serializable{
 	public String getTimeUsableText() {
 		String preFight = "Spiele vor einem Kampf";
 		switch (type) {
-		case PICKLOCK: return "Spiele unmittelbar, nachdem der Präsident seine Versprechungen gemacht hat";
-		case SPY: return "Spiele unmittelbar, nachdem alle Spieler ihre Söldner befehligt haben";
+		case PICKLOCK: return "Nachdem alle Versprechungen gemacht wurden";
+		case SPY: return "Nachdem alle ihre Söldner befehligt haben";
 		case ASSASSINATION: return preFight;
 		case CATAPULT: return preFight;
 		case SLAVEREVOLT: return preFight;
 		case BRIBE: return preFight;
 		case LION: return preFight;
 		case SURPRISEATTACK: return "Spiele als Angreifer vor einem Kampf";
-		case ANNEXATION: return "Spiele als Angreifer vor einem Kampf, wenn der Verteidiger mehr Gebäude hat als du";
+		case ANNEXATION: return "Als Angreifer vor einem Kampf, wenn Verteidiger mehr Gebäude hat";
 		case ABUSEOFPOWER: return "Spiele beim Geld ausgeben";
 		case DENARI1000: return "";
 		case DENARI2000: return "";
 		case DENARI3000: return "";
-		//case PROPAGANDA: return "Spiele beim Geld ausgeben";
+		case PROPAGANDA: return "Spiele beim Geld ausgeben";
 		case FREEBUILDING: return "Spiele beim Geld ausgeben";
 		case GOLDENLION: return "";
 		case GOLDENCHARIOT: return "";
@@ -222,7 +225,7 @@ public class ActionCard implements Serializable{
 	}
 	public String getActionConsequencesText() {
 		switch (type) {
-		case PICKLOCK: return "Schau dir die Handkarten eines Spielers deiner Wahl an und nimm eine davon auf deine Hand";
+		case PICKLOCK: return "Wähle eine Karte eines Spielers aus und nimm sie";
 		case SPY: return "Schau dir die Söldner aller Mitspieler an, bevor du deine eigenen befehligst";
 		case ASSASSINATION: return "Zerstöre 1 gegnerischen Söldner deiner Wahl";
 		case CATAPULT: return "Dein Kampfwert erhöht sich um +3";
@@ -235,6 +238,7 @@ public class ActionCard implements Serializable{
 		case DENARI1000: return "1000 Denari";
 		case DENARI2000: return "2000 Denari";
 		case DENARI3000: return "3000 Denari";
+		case PROPAGANDA: return "Du erhältst einen Soldaten gratis";
 		case FREEBUILDING: return "Du erhältst ein Gebäude gratis";
 		case GOLDENLION: return "1 Siegpunkt";
 		case GOLDENCHARIOT: return "1 Siegpunkt";
@@ -258,7 +262,7 @@ public class ActionCard implements Serializable{
 		case DENARI1000: return "/images/actioncards/denari1000.png";
 		case DENARI2000: return "/images/actioncards/denari2000.png";
 		case DENARI3000: return "/images/actioncards/denari3000.png";
-		//case PROPAGANDA: return "";
+		case PROPAGANDA: return "/images/actioncards/propaganda.png";
 		case FREEBUILDING: return "/images/actioncards/free_building.png";
 		case GOLDENLION: return "/images/actioncards/golden_lion.png";
 		case GOLDENCHARIOT: return "/images/actioncards/golden_wagon.png";
@@ -278,7 +282,7 @@ public class ActionCard implements Serializable{
 		case Combat:
 			return usableDuringFight();
 		case SpendMoney:
-			return isMoneyCard() || type==CardType.FREEBUILDING /*|| type==CardType.PROPAGANDA*/;
+			return isMoneyCard() || type==CardType.FREEBUILDING || type==CardType.PROPAGANDA;
 		case CardLimit:
 		case DeclareWinner:
 		case GameOver:
@@ -301,9 +305,15 @@ public class ActionCard implements Serializable{
 	public void putInCardList(ActionCardList actionCardList) {
 		// remove from currentList
 		removeFromCardList();
-		// add to new list
-		currentCardList = actionCardList;
-		currentCardList.add(this);
+		if (actionCardList != null) {
+			// add to new list
+			currentCardList = actionCardList;
+			currentCardList.add(this);
+		}
+	}
+
+	public String getCardID() {
+		return cardID;
 	}
 
 }

@@ -85,6 +85,7 @@ public class GameWindow extends JFrame {
 
 	public void updateGameState(GameData g) {
 		// update playerInfos
+		// TODO remove playerInfos not existing in GameData?
 		for (PlayerData p : g.players) {
 			if (playerInfos.containsKey(p.playerID)) {
 				// update playerInfos
@@ -106,7 +107,7 @@ public class GameWindow extends JFrame {
 		// update gameInfos
 		gameInfo.updateGameInfos(g);
 		
-		repaint();
+		//repaint();
 		// add messages to log
 		// TODO
 	}

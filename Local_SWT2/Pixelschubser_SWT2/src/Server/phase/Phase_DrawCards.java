@@ -1,5 +1,8 @@
 package Server.phase;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import Server.ServerCommunicator;
 import Server.ServerGameLogic;
 import SharedData.ActionCard;
@@ -8,6 +11,8 @@ import SharedData.PhaseType;
 import SharedData.PlayerData;
 
 public class Phase_DrawCards extends Phase {
+	
+	private static Timer timer;
 
 	public Phase_DrawCards(ServerGameLogic logic, ServerCommunicator com) {
 		super(logic, com);
@@ -66,8 +71,21 @@ public class Phase_DrawCards extends Phase {
 		if (message.startsWith("confirm")) {
 			logic.getGameData().getPlayer(clientID).isReady = true;
 			// next phase
-			if (logic.getGameData().allPlayersAreReady())
+			if (logic.getGameData().allPlayersAreReady()) {
 				logic.nextPhase();
+			}
+			// auto next after x Seconds
+			if (timer == null) {
+				timer = new Timer();
+				timer.schedule(new TimerTask() {
+
+					@Override
+					public void run() {
+						System.out.println("<Timer>");
+						logic.nextPhase();
+					}
+				}, 5000);
+			}
 		}
 	}
 

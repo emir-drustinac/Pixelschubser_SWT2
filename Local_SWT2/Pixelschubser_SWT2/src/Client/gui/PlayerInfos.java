@@ -125,6 +125,10 @@ public class PlayerInfos extends JPanel {
 	public String getPlayerID() {
 		return playerID;
 	}
+
+	public String getPlayerName() {
+		return playerName;
+	}
 	
 	private static int nextColor = 0;
 	private static Color[] backgroundColors = new Color[]{

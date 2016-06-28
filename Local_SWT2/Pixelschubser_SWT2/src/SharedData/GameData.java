@@ -160,4 +160,12 @@ public class GameData implements Serializable{
 		}
 	}
 
+	public int numberOfPlayersWithPromisedCards() {
+		int n = 0;
+		for (PlayerData p : players) {
+			if (p.getNumberOfPromisedCards() > 0) n++;
+		}
+		return n;
+	}
+
 }

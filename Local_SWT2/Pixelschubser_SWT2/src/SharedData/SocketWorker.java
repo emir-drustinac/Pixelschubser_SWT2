@@ -47,6 +47,7 @@ abstract public class SocketWorker implements Runnable{
 	 * @param g
 	 */
 	public abstract void receivedGameState(GameData g);
+	public abstract void receivedPlayerData(PlayerData p);
 	public abstract void receivedMessage(String m);
 
 	protected abstract void negotiate(Socket s) throws IOException;
@@ -60,6 +61,8 @@ abstract public class SocketWorker implements Runnable{
 				Object data = in.readObject();
 				if(data instanceof GameData)
 					receivedGameState((GameData)data);
+				if(data instanceof PlayerData)
+					receivedPlayerData((PlayerData)data);
 				if(data instanceof String)
 					receivedMessage((String)data);
 			}

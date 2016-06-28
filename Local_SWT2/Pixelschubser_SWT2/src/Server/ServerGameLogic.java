@@ -12,6 +12,7 @@ import SharedData.ActionCard.CardType;
 import SharedData.GameData;
 import SharedData.GameRules;
 import SharedData.PhaseType;
+import SharedData.PlayerData;
 import SharedData.PlayerList;
 
 public class ServerGameLogic {
@@ -60,12 +61,17 @@ public class ServerGameLogic {
 	 */
 	public void receivedMessage(String PID, String m) {
 		currentPhase.ReceivedMessageFromClient(PID, m);
-		System.out.println("Message from " + PID + " : " + m);
+		//System.out.println("Message from " + PID + " : " + m);
 	}
 
 	public void receivedGameData(String clientID, GameData g) {
 		currentPhase.ReceivedGameStateFromClient(clientID, g);
-		System.out.println("GameData from " + clientID);
+		System.out.println("<< GameData from " + clientID);
+	}
+
+	public void receivedPlayerData(String clientID, PlayerData p) {
+		currentPhase.ReceivedPlayerDataFromClient(clientID, p);
+		System.out.println("<< PlayerData from " + clientID);
 	}
 
 	public boolean addPlayer(String playerID, String name) {
@@ -125,8 +131,8 @@ public class ServerGameLogic {
 		createCardsInDeck(CardType.SPY,				1	);
 		createCardsInDeck(CardType.BRIBE,			1	);
 		createCardsInDeck(CardType.SURPRISEATTACK,	1	);
-		//createCardsInDeck(CardType.PROPAGANDA,	1	); + 1 free building instead
-		createCardsInDeck(CardType.FREEBUILDING,	2	);
+		createCardsInDeck(CardType.PROPAGANDA,		1	);
+		createCardsInDeck(CardType.FREEBUILDING,	1	);
 		createCardsInDeck(CardType.ANNEXATION,		1	);
 		createCardsInDeck(CardType.GOLDENCHARIOT,	1	);
 		createCardsInDeck(CardType.GOLDENLION,		1	);

@@ -3,7 +3,6 @@ package Client;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -14,7 +13,7 @@ import javax.swing.JLabel;
  */
 public class DiceAnimation {
 
-	private int timerCount;
+	private int timerCount = 0;
 	private int rndDiceNr;
 	private final int DELAY = 100;
 	private int duration; // in ms

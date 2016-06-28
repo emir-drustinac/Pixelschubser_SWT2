@@ -14,6 +14,7 @@ public class PlayerData implements Serializable{
 	public boolean isProconsul = false;
 	public int numberOfBuildings;
 	public int numberOfMercenaries;
+	public MercenaryList mercenaries;
 	private int combatPoints;
 	private ActionCardList promises;
 	private ActionCardList cards;
@@ -25,7 +26,10 @@ public class PlayerData implements Serializable{
 		this.playerID = playerID;
 		promises = new ActionCardList();
 		cards = new ActionCardList();
+		mercenaries = new MercenaryList();
 		combatPoints = 0;
+		numberOfMercenaries = 1;
+		numberOfBuildings = 1;
 	}
 
 	/**
@@ -33,6 +37,13 @@ public class PlayerData implements Serializable{
 	 */
 	public int getNumberOfCards() {
 		return cards.size();
+	}
+
+	/**
+	 * returns the number of promised cards this player has
+	 */
+	public int getNumberOfPromisedCards() {
+		return promises.size();
 	}
 
 	/**
@@ -121,6 +132,13 @@ public class PlayerData implements Serializable{
 
 	public void addCombatPoints(int combatPoints) {
 		this.combatPoints += combatPoints;
+	}
+
+	public ActionCard getCardByID(String cardID) {
+		for (ActionCard a : cards) {
+			if (a.getCardID().equals(cardID)) return a;
+		}
+		return null;
 	}
 
 }

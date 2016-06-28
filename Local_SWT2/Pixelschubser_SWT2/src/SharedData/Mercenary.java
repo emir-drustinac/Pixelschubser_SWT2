@@ -1,12 +1,16 @@
 package SharedData;
 
-public class Mercenary {
+import java.io.Serializable;
 
+public class Mercenary implements Serializable {
+
+	private static final long serialVersionUID = 3494795381040939978L;
 	private String target;
 	private boolean defendingProconsul;		// to separate defending merc from offending one on Proconsul
 	
 	public Mercenary() {
-		// TODO Auto-generated constructor stub
+		target = "";
+		defendingProconsul = false;
 	}
 
 	public String getTarget() {

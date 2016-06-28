@@ -11,6 +11,7 @@ import java.util.Arrays;
 import SharedData.AuthenticationPacket;
 import SharedData.GameData;
 import SharedData.NetworkProtocol;
+import SharedData.PlayerData;
 import SharedData.SocketWorker;
 import SharedData.SocketWorkerManager;
 
@@ -38,6 +39,11 @@ public class ServerSocketWorker extends SocketWorker{
 	@Override
 	public void receivedGameState(GameData g) {
 		((ServerCommunicator) parent).receivedGameData(getClientID(), g);
+	}
+
+	@Override
+	public void receivedPlayerData(PlayerData p) {
+		((ServerCommunicator) parent).receivedPlayerData(getClientID(), p);
 	}
 	
 	public String getClientID(){
@@ -79,6 +85,12 @@ public class ServerSocketWorker extends SocketWorker{
 		} catch (ClassNotFoundException e) {
 			throw new IOException("Bad protocol or bad version.", e);
 		}
+	}
+
+	public void sendPlayerData(PlayerData p) throws IOException {
+		out.reset();
+		out.writeObject(p);
+		out.flush();
 	}
 
 }

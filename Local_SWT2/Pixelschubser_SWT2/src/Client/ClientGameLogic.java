@@ -25,6 +25,13 @@ public class ClientGameLogic {
 		Presentation.updateGameState(game);
 	}
 
+	public void receivedPlayerData(PlayerData p) {
+		game.players.removePlayer(p.playerID);
+		game.players.add(p);
+		//Presentation.updatePlayerData(p);
+		Presentation.updateGameState(game);
+	}
+
 	/**
 	 * 
 	 * @param m

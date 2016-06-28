@@ -57,13 +57,16 @@ public class GV_DrawCards extends GameView {
 	@Override
 	public void updateGameData(GameData g) {
 		// TODO update gui
+		System.out.println("@ " + this.getClass().getSimpleName() + ".updateGameData @");
 		// show cards drawn in this round
 		EnumSet<CardType> types = EnumSet.noneOf(CardType.class);
 		PlayerData p = g.players.get(myClientID());
+		cards.removeAll();
 		for (int i = 0; i < p.getNumberOfCards(); i++) {
 			ActionCard a = p.getCard(i);
 			if (a.drawnInRound == g.round) {
-				cards.add(new GuiActionCard(a, p.isProconsul));
+				cards.add(new GuiActionCard(a, !p.isProconsul));
+				//cards.add(new GuiActionCard(null, true));
 				types.add(a.getType());
 			}
 		}

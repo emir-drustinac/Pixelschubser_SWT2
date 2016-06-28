@@ -55,7 +55,7 @@ public class ServerCommunicator implements Runnable, SocketWorkerManager{
 	}
 
 	public void sendGameDataToAllClients(GameData g) {
-		System.out.println("Sending GameData: phase=" + g.phase + " numPlayers=" + g.players.size());
+		System.out.println(">>Sending GameData: phase=" + g.phase + " numPlayers=" + g.players.size());
 		for (PlayerData p : g.players) {
 			System.out.println("  Player " + p.playerID + " : Name=" + p.name + " buildings=" + p.numberOfBuildings
 					+ " mercenaries=" + p.numberOfMercenaries + " numCards=" + p.getNumberOfCards()
@@ -66,6 +66,23 @@ public class ServerCommunicator implements Runnable, SocketWorkerManager{
 				try {
 					System.out.println(" > to " + sw.getClientID());
 					sw.sendGameData(g);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	public void sendPlayerDataToClient(String clientID, PlayerData p) {
+		System.out.println(">>Sending PlayerData: playerID=" + p.playerID);
+		synchronized (socketWorkers) {
+			for(ServerSocketWorker sw : socketWorkers){
+				try {
+					if (sw.getClientID().equals(clientID)) {
+						System.out.println(" > to " + sw.getClientID());
+						sw.sendPlayerData(p);
+					}
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -120,6 +137,10 @@ public class ServerCommunicator implements Runnable, SocketWorkerManager{
 	
 	public void receivedGameData(String clientID, GameData g) {
 		game.receivedGameData(clientID, g);
+	}
+	
+	public void receivedPlayerData(String clientID, PlayerData p) {
+		game.receivedPlayerData(clientID, p);
 	}
 	
 	@Override

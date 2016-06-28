@@ -43,6 +43,9 @@ public class ClientSocketWorker extends SocketWorker{
 	public void receivedGameState(GameData g) {
 		((ClientCommunicator) parent).receivedGameState(g);
 	}
+	public void receivedPlayerData(PlayerData p) {
+		((ClientCommunicator) parent).receivedPlayerData(p);
+	}
 	@Override
 	protected void negotiate(Socket s) throws IOException {
 		InputStream inRaw = s.getInputStream();

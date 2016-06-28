@@ -38,7 +38,7 @@ public class Phase_JoinGame extends Phase {
 						if (p1.isReady) readyPlayers++;
 					}
 					// start game if all are ready
-					if (readyPlayers == numPlayers && numPlayers > (2&0)) { // TODO prod 2 players min
+					if (readyPlayers == numPlayers && numPlayers > (2&0)) { // TODO TEST MODE > 2 players
 						logic.startGame();
 						logic.nextPhase();
 						return;
@@ -69,6 +69,12 @@ public class Phase_JoinGame extends Phase {
 
 	@Override
 	public PhaseType getNextPhaseType() {
+		// add some more players
+		// TODO TEST MODE
+		logic.getGameData().addPlayer("a1", "Alpha");
+		logic.getGameData().addPlayer("b2", "Beta");
+		logic.getGameData().addPlayer("c3", "Gamma");
+		
 		logic.nextRound();
 		return PhaseType.DrawCards;
 	}

@@ -1,10 +1,14 @@
 package SharedData;
 
-public class MercenaryList {
+import java.util.Vector;
+
+public class MercenaryList extends Vector<Mercenary> {
+	
+
+	private static final long serialVersionUID = -3648229233202812463L;
 
 	public void addMercenary() {
-		// TODO - implement MercenaryList.addMercenary
-		throw new UnsupportedOperationException();
+		add(new Mercenary());
 	}
 
 	/**
@@ -12,8 +16,7 @@ public class MercenaryList {
 	 * @param mercenary
 	 */
 	public boolean removeMercenary(Mercenary mercenary) {
-		// TODO - implement MercenaryList.removeMercenary
-		throw new UnsupportedOperationException();
+		return remove(mercenary);
 	}
-
+	
 }

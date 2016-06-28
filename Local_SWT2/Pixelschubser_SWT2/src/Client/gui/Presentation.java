@@ -26,6 +26,10 @@ public class Presentation {
 		if (gameWindow != null) gameWindow.updateGameState(g);
 	}
 
+//	public static void updatePlayerData(PlayerData p) {
+//		if (gameWindow != null) gameWindow.updatePlayerData(p);
+//	}
+
 	/**
 	 * 
 	 * @param m
