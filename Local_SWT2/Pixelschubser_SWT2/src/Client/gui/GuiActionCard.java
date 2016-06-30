@@ -96,6 +96,7 @@ public class GuiActionCard extends JPanel {
 		}
 		
 		this.setPreferredSize(prefDim);
+		this.setMaximumSize(prefDim);
 	}
 
 	public GuiActionCard toBigCard() {
@@ -112,5 +113,9 @@ public class GuiActionCard extends JPanel {
 		java.net.URL imgUrl = GuiActionCard.class.getResource(path);
 		ImageIcon icon = new ImageIcon(imgUrl); //Toolkit.getDefaultToolkit().getImage(path)
 		return new JLabel(icon);
+	}
+	
+	public ActionCard getActionCard() {
+		return card;
 	}
 }

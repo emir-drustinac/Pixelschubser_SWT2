@@ -41,7 +41,7 @@ public class GameWindow extends JFrame {
 		
 		setTitle(windowName);
 		setSize(initialWidth, initialHeight);
-		setMinimumSize(new Dimension(600, 500));
+		setMinimumSize(new Dimension(600, 550));
 		setLayout(new BorderLayout());
 		
 		// add playerInfos
@@ -68,7 +68,7 @@ public class GameWindow extends JFrame {
 		
 		// add gameInfo
 		gameInfo = new GameInfos(gameData);
-		add(gameInfo, BorderLayout.EAST);
+		//add(gameInfo, BorderLayout.EAST);
 		gameInfo.setVisible(false);
 		
 		cardpanel = new CardPanel();

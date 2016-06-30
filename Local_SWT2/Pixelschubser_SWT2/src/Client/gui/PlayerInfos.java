@@ -98,7 +98,7 @@ public class PlayerInfos extends JPanel {
 		add(b2, BorderLayout.CENTER);
 		
 		// register mouse listener
-		addMouseListener(Presentation.getGameWindow().getGameViews());
+		//addMouseListener(Presentation.getGameWindow().getGameViews());
 	}
 
 	/**
@@ -115,16 +115,22 @@ public class PlayerInfos extends JPanel {
 		// with text beneath icon
 		label.setVerticalTextPosition(JLabel.BOTTOM);
 		label.setHorizontalTextPosition(JLabel.CENTER);
-		label.setText("-");
+		label.setText(/*"-"*/"0");
 		return label;
 	}
 
 	public void updatePlayerInfos(PlayerData p) {
-		name.setText(p.name);
+		name.setText(p.name); 
 		mercenary.setText(String.valueOf(p.numberOfMercenaries));
 		building.setText(String.valueOf(p.numberOfBuildings));
 		cards.setText(String.valueOf(p.getNumberOfCards()));
 		proconsul.setVisible(p.isProconsul);
+		
+		// register mouse listener
+		if(p.getNumberOfCards() > 0 && !p.isProconsul) {
+			System.out.println("~~~~~~PlayerInfos MouseListener aktiviert~~~~~");
+			addMouseListener(Presentation.getGameWindow().getGameViews());	
+		}
 	}
 
 	public String getPlayerID() {

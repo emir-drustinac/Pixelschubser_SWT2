@@ -11,6 +11,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 import Client.Client;
 import Client.gui.ActionCardException;
@@ -42,6 +44,11 @@ public class GV_DrawCards extends GameView {
 		cards = new JPanel();
 		cards.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 15));
 		this.add(cards, BorderLayout.CENTER);
+		
+		JScrollPane scrollPane = new JScrollPane(cards);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		add(scrollPane);
 		
 		// proconsul gets button to proceed in game
 		JButton btn = new JButton("weiter");
