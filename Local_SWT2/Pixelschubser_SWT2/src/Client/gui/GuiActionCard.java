@@ -14,6 +14,7 @@ import SharedData.ActionCard;
 public class GuiActionCard extends JPanel {
 	
 	private final ActionCard card;
+	private final int borderWidth;
 	
 	public GuiActionCard(ActionCard a) {
 		this(a, false);
@@ -21,8 +22,8 @@ public class GuiActionCard extends JPanel {
 	public GuiActionCard(ActionCard a, boolean small) {
 		card = a;
 		//build gui of component
+		borderWidth = small ? 4 : 8;
 		int textPadding = small ? 4 : 8;
-		int borderWidth = small ? 4 : 8;
 		float fontSizeTitle = small ? 12f : 16f;
 		float descFontSize = 11f;
 		Dimension prefDim = small ? new Dimension(90, 125) : new Dimension(180, 250);
@@ -114,8 +115,13 @@ public class GuiActionCard extends JPanel {
 		ImageIcon icon = new ImageIcon(imgUrl); //Toolkit.getDefaultToolkit().getImage(path)
 		return new JLabel(icon);
 	}
-	
-	public ActionCard getActionCard() {
+	public void markWith(Color color) {
+		this.setBorder(BorderFactory.createLineBorder(color, borderWidth, true));
+	}
+	public void unMark() {
+		this.setBorder(BorderFactory.createLineBorder(Color.white, borderWidth, true));
+	}
+	public final ActionCard getActionCard() {
 		return card;
 	}
 }

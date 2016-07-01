@@ -11,7 +11,7 @@ import javax.swing.JTextArea;
 
 import SharedData.GameData;
 
-public class GameInfos extends JPanel {
+public class GameLog extends JPanel {
 
 	/**
 	 * 
@@ -23,7 +23,7 @@ public class GameInfos extends JPanel {
 	
 	private JTextArea log;
 	
-	public GameInfos(GameData gameData) {
+	public GameLog(GameData gameData) {
 		setLayout(new GridLayout(1, 1));
 		//setBorder(BorderFactory.createLineBorder(Color.black));
 		setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(0,0,10,10,Color.white), BorderFactory.createEmptyBorder(5, 5, 5, 5)));

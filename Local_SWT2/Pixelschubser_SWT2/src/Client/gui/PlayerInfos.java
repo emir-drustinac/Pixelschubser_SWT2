@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import Client.Client;
 import SharedData.PlayerData;
 
-public class PlayerInfos extends JPanel {
+public class PlayerInfos extends JPanel implements MouseListener {
 
 	/**
 	 * 
@@ -40,6 +40,11 @@ public class PlayerInfos extends JPanel {
 	private JLabel building;
 	private JLabel cards;
 
+	private boolean isProconsul;
+
+	public PlayerInfos(String playerID, String playerName, GameViews gameViews) {
+		this(playerID, playerName);
+	}
 	public PlayerInfos(String playerID, String playerName) {
 		this.playerID = playerID;
 		this.playerName = playerName;
@@ -98,7 +103,8 @@ public class PlayerInfos extends JPanel {
 		add(b2, BorderLayout.CENTER);
 		
 		// register mouse listener
-		//addMouseListener(Presentation.getGameWindow().getGameViews());
+		addMouseListener(this);
+
 	}
 
 	/**
@@ -120,17 +126,12 @@ public class PlayerInfos extends JPanel {
 	}
 
 	public void updatePlayerInfos(PlayerData p) {
-		name.setText(p.name); 
+		name.setText(p.name);
 		mercenary.setText(String.valueOf(p.numberOfMercenaries));
 		building.setText(String.valueOf(p.numberOfBuildings));
 		cards.setText(String.valueOf(p.getNumberOfCards()));
-		proconsul.setVisible(p.isProconsul);
-		
-		// register mouse listener
-		if(p.getNumberOfCards() > 0 && !p.isProconsul) {
-			System.out.println("~~~~~~PlayerInfos MouseListener aktiviert~~~~~");
-			addMouseListener(Presentation.getGameWindow().getGameViews());	
-		}
+		isProconsul = p.isProconsul;
+		proconsul.setVisible(isProconsul);
 	}
 
 	public String getPlayerID() {
@@ -139,6 +140,10 @@ public class PlayerInfos extends JPanel {
 
 	public String getPlayerName() {
 		return playerName;
+	}
+	
+	public boolean isProconsul() {
+		return isProconsul;
 	}
 	
 	private static int nextColor = 0;
@@ -162,4 +167,17 @@ public class PlayerInfos extends JPanel {
 	private static Color getBackgroundColor() {
 		return backgroundColors[nextColor = (nextColor + 1) % backgroundColors.length];
 	}
+	@Override
+	public void mouseClicked(MouseEvent e) {}
+	@Override
+	public void mousePressed(MouseEvent e) {
+		Presentation.getGameWindow().getGameViews().PlayerInfoClicked(this);
+	}
+	@Override
+	public void mouseReleased(MouseEvent e) {}
+	@Override
+	public void mouseEntered(MouseEvent e) {}
+	@Override
+	public void mouseExited(MouseEvent e) {}
+	
 }

@@ -3,8 +3,6 @@ package Client.gui;
 
 import java.awt.CardLayout;
 import java.awt.Dimension;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.HashMap;
 
 import javax.swing.BorderFactory;
@@ -19,10 +17,11 @@ import Client.gui.gameview.GV_JoinGame;
 import Client.gui.gameview.GV_MakePromises;
 import Client.gui.gameview.GV_SpendMoney;
 import Client.gui.gameview.GameView;
+import SharedData.ActionCard;
 import SharedData.GameData;
 import SharedData.PhaseType;
 
-public class GameViews extends JPanel implements MouseListener {
+public class GameViews extends JPanel {
 
 	/**
 	 * 
@@ -39,8 +38,6 @@ public class GameViews extends JPanel implements MouseListener {
 
 	private HashMap<PhaseType, GameView> allGameViews = new HashMap<>();
 	
-//	private JLabel buildings;
-
 	public GameViews(GameData gameData) {
 		this.playerID = Client.getPlayerID();
 		// create all gui elements
@@ -49,49 +46,6 @@ public class GameViews extends JPanel implements MouseListener {
 		setMinimumSize(new Dimension(preferredWidth, preferredHeight));
 		setSize(preferredWidth, preferredHeight);
 		setPreferredSize(new Dimension(preferredWidth, preferredHeight));
-		
-//		// east for mercenaries
-//		JPanel mercs = new JPanel();
-//		mercs.setLayout(new GridLayout(0, 1));
-//		mercs.setBorder(BorderFactory.createEmptyBorder(20, 15, 20, 15));
-//		mercs.setBackground(bgColor);
-//		mercenaries = new JLabel[MAX_NUMBER_OF_MERCENARIES];
-//		for (int i = 0; i < MAX_NUMBER_OF_MERCENARIES; i++) {
-//			JLabel label;
-//			label = getIconLabel("/images/mercenary.png");
-//			label.setVerticalAlignment(JLabel.CENTER);
-//			mercenaries[i] = label;
-//			mercs.add(label);
-//		}
-//		add(mercs, BorderLayout.WEST);
-		
-		// center for buildings
-//		buildings = getIconLabel("/images/building.png");
-//		// label is centered
-//		buildings.setVerticalAlignment(JLabel.CENTER);
-//		buildings.setHorizontalAlignment(JLabel.CENTER);
-//		// with text above icon
-//		buildings.setVerticalTextPosition(JLabel.TOP);
-//		buildings.setHorizontalTextPosition(JLabel.CENTER);
-//		//buildings.setText("-");
-//		add(buildings, BorderLayout.CENTER);
-		
-//		// south for visual card list
-//		cards = new JPanel();
-//		cards.setBackground(bgColor);
-////		for (int i = 0; i < 7; i++) {
-////			JLabel card = getIconLabel("/images/card.png");
-////			cards.add(card);
-////		}
-//		add(cards, BorderLayout.SOUTH);
-//		
-//		//east for proconsul icon (valign top with 10 pixel padding)
-//		proconsul = getIconLabel("/images/proconsul.png");
-//		proconsul.setVerticalAlignment(JLabel.TOP);
-//		proconsul.setHorizontalAlignment(JLabel.CENTER);
-//		proconsul.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 10));
-//		proconsul.setVisible(false);
-//		add(proconsul, BorderLayout.EAST);
 		
 		// create all used GameViews and add it to contentPane and cardLayout
 		currentView = addGameView(PhaseType.JoinGame, new GV_JoinGame());
@@ -150,32 +104,11 @@ public class GameViews extends JPanel implements MouseListener {
 		return playerID;
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		currentView.mouseClicked(e);
+	public void ActionCardClicked(ActionCard a) {
+		currentView.ActionCardClicked(a);
 	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	
+	public void PlayerInfoClicked(PlayerInfos p) {
+		currentView.PlayerInfoClicked(p);
 	}
 }

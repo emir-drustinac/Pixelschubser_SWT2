@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 import java.util.EnumSet;
 
 import javax.swing.BorderFactory;
@@ -15,7 +14,6 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
 import Client.Client;
-import Client.gui.ActionCardException;
 import Client.gui.GuiActionCard;
 import SharedData.ActionCard;
 import SharedData.ActionCard.CardType;
@@ -73,14 +71,13 @@ public class GV_DrawCards extends GameView {
 		for (int i = 0; i < p.getNumberOfCards(); i++) {
 			ActionCard a = p.getCard(i);
 			if (a.drawnInRound == g.round) {
-				cards.add(new GuiActionCard(a, !p.isProconsul));
-				//cards.add(new GuiActionCard(null, true));
+				cards.add(new GuiActionCard(a, p.isProconsul));
 				types.add(a.getType());
 			}
 		}
 		
 		// mark cards drawn in this round in deck bar
-		markCardTypes(types);
+		//markCardTypes(types);
 	}
 
 	@Override
@@ -91,18 +88,6 @@ public class GV_DrawCards extends GameView {
 	@Override
 	public void deactivateView() {
 		// TODO clear things up
-	}
-
-	@Override
-	public ActionCardException useActionCard(ActionCard c) {
-		// TODO players uses an ActionCard
-		return new ActionCardException();
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO react on mouse clicks
-		
 	}
 
 }

@@ -26,7 +26,7 @@ public class GameWindow extends JFrame {
 	private HashMap<String, PlayerInfos> playerInfos = new HashMap<String, PlayerInfos>();
 	private JPanel players;
 	private GameViews gameViews;
-	private GameInfos gameInfo;
+	private GameLog gameLog;
 	private JLabel message;
 	private CardPanel cardpanel;
 	
@@ -44,6 +44,10 @@ public class GameWindow extends JFrame {
 		setMinimumSize(new Dimension(600, 550));
 		setLayout(new BorderLayout());
 		
+		// add -myInfo- all GameViews
+		gameViews = new GameViews(gameData);
+		add(gameViews, BorderLayout.CENTER);
+		
 		// add playerInfos
 		/*JPanel*/ players = new JPanel(new GridLayout(1, 0, 0, 0));
 		players.setBackground(freeSpaceColor);
@@ -52,7 +56,7 @@ public class GameWindow extends JFrame {
 			// create PlayerInfo for other players
 			//if (!p.playerID.equals(Client.getPlayerID())) {
 				// create playerInfos
-				PlayerInfos pi = new PlayerInfos(p.playerID, p.name);
+				PlayerInfos pi = new PlayerInfos(p.playerID, p.name, gameViews);
 				// add to list
 				playerInfos.put(p.playerID, pi);
 				// add to panel
@@ -62,26 +66,28 @@ public class GameWindow extends JFrame {
 		// add player infos to the frame
 		add(players, BorderLayout.NORTH);
 		
-		// add -myInfo- all GameViews
-		gameViews = new GameViews(gameData);
-		add(gameViews, BorderLayout.CENTER);
-		
 		// add gameInfo
-		gameInfo = new GameInfos(gameData);
+		gameLog = new GameLog(gameData);
 		//add(gameInfo, BorderLayout.EAST);
-		gameInfo.setVisible(false);
-		
-		cardpanel = new CardPanel();
-		add(cardpanel, BorderLayout.SOUTH);
-		
-		// add status message panel
-		message = new JLabel();
-		message.setText("initialized...");
-		message.setVerticalAlignment(JLabel.TOP);
-		message.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(0,10,10,10,freeSpaceColor), BorderFactory.createEmptyBorder(5, 10, 5, 10)));
-		message.setPreferredSize(new Dimension(500, 50));
-		add(message, BorderLayout.SOUTH);
-		
+		gameLog.setVisible(false);
+
+		// contain cardPanel and status panel in Grid(2,1)
+		JPanel south = new JPanel(new BorderLayout());
+		{
+			cardpanel = new CardPanel(gameViews);
+			//cardpanel.addMouseListener(gameViews);
+			south.add(cardpanel, BorderLayout.CENTER);
+
+			// add status message panel
+			message = new JLabel();
+			message.setText("initialized...");
+			message.setVerticalAlignment(JLabel.TOP);
+			message.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(0,10,10,10,freeSpaceColor), BorderFactory.createEmptyBorder(5, 10, 5, 10)));
+			message.setPreferredSize(new Dimension(500, 50));
+			south.add(message, BorderLayout.SOUTH);
+		}
+		add(south, BorderLayout.SOUTH);
+
 		// center frame on screen
 		setLocationRelativeTo(null);
 		// show frame
@@ -98,7 +104,7 @@ public class GameWindow extends JFrame {
 			} else {
 				// #######
 				// create playerInfos
-				PlayerInfos pi = new PlayerInfos(p.playerID, p.name);
+				PlayerInfos pi = new PlayerInfos(p.playerID, p.name, gameViews);
 				// add to list
 				playerInfos.put(p.playerID, pi);
 				// add to panel
@@ -109,8 +115,11 @@ public class GameWindow extends JFrame {
 		// update GameViews
 		gameViews.updateGameData(g);
 		
+		// update cardPanel
+		cardpanel.updateGameData(g);
+		
 		// update gameInfos
-		gameInfo.updateGameInfos(g);
+		gameLog.updateGameInfos(g);
 		
 		validate();
 		// add messages to log
@@ -125,6 +134,10 @@ public class GameWindow extends JFrame {
 
 	public GameViews getGameViews() {
 		return gameViews;
+	}
+
+	public CardPanel getCardPanel() {
+		return cardpanel;
 	}
 
 }

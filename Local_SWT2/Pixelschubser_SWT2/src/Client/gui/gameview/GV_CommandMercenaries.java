@@ -1,9 +1,5 @@
 package Client.gui.gameview;
 
-import java.awt.event.MouseEvent;
-
-import Client.gui.ActionCardException;
-import SharedData.ActionCard;
 import SharedData.GameData;
 
 /**
@@ -33,18 +29,6 @@ public class GV_CommandMercenaries extends GameView {
 	@Override
 	public void deactivateView() {
 		// TODO clear things up
-	}
-
-	@Override
-	public ActionCardException useActionCard(ActionCard c) {
-		// TODO players uses an ActionCard
-		return new ActionCardException();
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO react on mouse clicks
-		
 	}
 
 }

@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -14,8 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Client.Client;
-import Client.gui.ActionCardException;
-import SharedData.ActionCard;
 import SharedData.GameData;
 import SharedData.GameRules;
 import SharedData.PlayerData;
@@ -96,17 +93,6 @@ public class GV_JoinGame extends GameView {
 	@Override
 	public void deactivateView() {
 		// nothing to clear up
-	}
-
-	@Override
-	public ActionCardException useActionCard(ActionCard c) {
-		return new ActionCardException();
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO react on mouse clicks
-		
 	}
 
 }

@@ -17,31 +17,42 @@ public class Phase_MakePromises extends Phase {
 	@Override
 	public void ReceivedMessageFromClient(String clientID, String message) {
 		System.out.println("# " + this.getClass().getSimpleName() + " " + clientID + " " + message + " #");
-		PlayerData proconsul = logic.getGameData().getPlayer(clientID);
+		GameData game = logic.getGameData();
+		PlayerData proconsul = game.getPlayer(clientID);
+		int numberOfPlayersWithoutPromises = game.players.size() - game.numberOfPlayersWithPromisedCards() - 1;
 		if (proconsul != null && proconsul.isProconsul) {
 			//promise_card:cardid:playerid
 			if (message.startsWith("promise_card:")) {
 				String[] s = message.split(":", 3);
-				ActionCard a = proconsul.getCardByID(s[1]);
-				PlayerData p = logic.getGameData().getPlayer(s[2]);
-				if (a != null && p != null) {
+				ActionCard actioncard = proconsul.getCardByID(s[1]);
+				PlayerData player = game.getPlayer(s[2]);
+				if (actioncard != null && player != null) {
 					// check for enough cards to promise all players
-					if (proconsul.getNumberOfCards() > logic.getGameData().numberOfPlayersWithPromisedCards()
-						|| p.getNumberOfPromisedCards() == 0 ) {
-						p.addCard(a);
+					if (proconsul.getNumberOfCards() > numberOfPlayersWithoutPromises
+						|| player.getNumberOfPromisedCards() == 0 ) {
+						player.addPromise(actioncard);
 						com.sendMessageToClient(clientID, "promise_ack:true:u promised a card!");
-						com.sendPlayerDataToClient(p.playerID, p);
-						com.sendPlayerDataToClient(clientID, p);
+						//com.sendPlayerDataToClient(player.playerID, player);
+						//com.sendPlayerDataToClient(clientID, player);
+						com.sendGameDataToAllClients(game);
 					} else {
 						com.sendMessageToClient(clientID, "promise_ack:false:Warning: you would not have enough cards left!");
 					}
 				} else {
-					com.sendMessageToClient(clientID, "promise_ack:false:ERROR: Card or Player not found!");
+					com.sendMessageToClient(clientID, "promise_ack:false:ERROR: Card " + s[1] + " or Player " + s[2] + " not found!");
+					com.sendGameDataToAllClients(game);
 				}
 			}
 
 			// next phase
-			//logic.nextPhase();
+			if (message.startsWith("confirm:promise_cards")) {
+				// check if all players have promises
+				if (game.numberOfPlayersWithPromisedCards() == game.players.size() - 1) {
+					logic.nextPhase();
+				} else {
+					// TODO send client message!
+				}
+			}
 		}
 	}
 
