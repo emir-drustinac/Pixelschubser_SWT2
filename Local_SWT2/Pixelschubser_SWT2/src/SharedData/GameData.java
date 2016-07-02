@@ -14,6 +14,7 @@ public class GameData implements Serializable{
 	public PlayerList players;
 	private ActionCardList deck;
 	private ActionCardList discardPile;
+	public TopPlayer[] topPlayerList;
 	
 	public GameData() {
 		players = new PlayerList();
