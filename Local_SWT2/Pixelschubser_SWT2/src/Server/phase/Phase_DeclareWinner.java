@@ -1,5 +1,8 @@
 package Server.phase;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import Server.ServerCommunicator;
 import Server.ServerGameLogic;
 import SharedData.GameData;
@@ -10,6 +13,7 @@ import SharedData.PlayerList;
 public class Phase_DeclareWinner extends Phase {
 
 	private PlayerList winners;
+	private Timer timer;
 	
 	public Phase_DeclareWinner(ServerGameLogic logic, ServerCommunicator com) {
 		super(logic, com);
@@ -19,22 +23,29 @@ public class Phase_DeclareWinner extends Phase {
 
 	@Override
 	public void ReceivedMessageFromClient(String clientID, String message) {
-		// TODO Auto-generated method stub
 		System.out.println("# " + this.getClass().getSimpleName() + " " + clientID + " " + message + " #");
+		// next phase
+		if (message.startsWith("confirm:declare_winners")) {
+			// auto next after x Seconds
+			if (timer == null) {
+				timer = new Timer();
+				timer.schedule(new TimerTask() {
 
+					@Override
+					public void run() {
+						System.out.println("<Timer>");
+						logic.nextPhase();
+					}
+				}, 3000);
+			}
+		}
 	}
 
 	@Override
-	public void ReceivedGameStateFromClient(String clientID, GameData g) {
-		// TODO Auto-generated method stub
-
-	}
+	public void ReceivedGameStateFromClient(String clientID, GameData g) {}
 
 	@Override
-	public void ReceivedPlayerDataFromClient(String clientID, PlayerData p) {
-		// TODO Auto-generated method stub
-
-	}
+	public void ReceivedPlayerDataFromClient(String clientID, PlayerData p) {}
 
 	@Override
 	public PhaseType getNextPhaseType() {

@@ -84,7 +84,7 @@ public class Phase_DrawCards extends Phase {
 						System.out.println("<Timer>");
 						logic.nextPhase();
 					}
-				}, 5000);
+				}, 3000);
 			}
 		}
 	}

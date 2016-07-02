@@ -168,4 +168,8 @@ public class GameData implements Serializable{
 		return n;
 	}
 
+	public boolean allPlayersHaveBeenPromised() {
+		return numberOfPlayersWithPromisedCards() == players.size() - 1;
+	}
+
 }

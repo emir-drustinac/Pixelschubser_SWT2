@@ -29,8 +29,10 @@ public class GV_MakePromises extends GameView {
 	
 	private static final long serialVersionUID = -9160771029486484794L;
 	private JPanel players;
+	private JPanel playerList;
 	private JPanel cards;
 	private JLabel info;
+	private JButton btn;
 	private JScrollPane scrollPane;
 	private ActionCard promisedCard;
 	
@@ -40,12 +42,13 @@ public class GV_MakePromises extends GameView {
 		// text label
 		info = new JLabel("");
 		info.setHorizontalAlignment(JLabel.CENTER);
-		info.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+		info.setBorder(BorderFactory.createEmptyBorder(5, 10, 15, 10));
 		this.add(info, BorderLayout.NORTH);
 
 		// players grid
-		players = new JPanel();
-		players.setLayout(new GridLayout(0, 1, 0, 15));
+		playerList = new JPanel();
+		players = new JPanel(new GridLayout(0, 1, 0, 15));
+		playerList.add(players);
 		// card grid
 		cards = new JPanel();
 		cards.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 15));
@@ -53,16 +56,19 @@ public class GV_MakePromises extends GameView {
 		scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setBorder(null);
 		add(scrollPane, BorderLayout.CENTER);
 		
 		// button to proceed in game
-		JButton btn = new JButton("weiter");
+		btn = new JButton("weiter");
 		btn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Client.sendMessageToServer("confirm:promise_cards");
 			}
 		});
+		btn.setEnabled(false);
+		btn.setVisible(false);
 		this.add(btn, BorderLayout.SOUTH);
 	}
 
@@ -75,18 +81,21 @@ public class GV_MakePromises extends GameView {
 		if (player.isProconsul) {
 			// show players with their promisedCardCount
 			info.setText("Versprechungen machen: zuerst eine Karte anklicken und dann einen Spieler");
-			scrollPane.setViewportView(players);
+			scrollPane.setViewportView(playerList);
 			
 			players.removeAll();
 			for (PlayerData p : g.players) {
 				if (!p.isProconsul) {
 					int n = p.getNumberOfPromisedCards();
 					JLabel lbl = new JLabel(p.name + " hat " + n + " Versprechen");
-					lbl.setForeground(n > 0 ? Color.green : Color.red);
+					lbl.setForeground(n > 0 ? Color.green.darker() : Color.red);
 					lbl.setHorizontalAlignment(JLabel.CENTER);
 					players.add(lbl);
 				}
 			}
+			
+			btn.setVisible(true);
+			if (g.allPlayersHaveBeenPromised()) btn.setEnabled(true);
 
 		} else {
 			// show cards promised in this round
@@ -99,6 +108,7 @@ public class GV_MakePromises extends GameView {
 				GuiActionCard ac = new GuiActionCard(a, false);
 				cards.add(ac);
 			}
+			btn.setVisible(false);
 		}
 	}
 
@@ -110,12 +120,12 @@ public class GV_MakePromises extends GameView {
 //		types.add(CardType.DENARI2000);
 //		types.add(CardType.DENARI3000);
 //		markCardTypes(types);
-		markCardTypes(null);
+		//markCardTypes(null);
 	}
 
 	@Override
 	public void deactivateView() {
-		markCardTypes(null);
+		//markCardTypes(null);
 	}
 
 

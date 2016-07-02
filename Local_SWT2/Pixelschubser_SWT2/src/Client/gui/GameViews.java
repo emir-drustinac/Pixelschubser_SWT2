@@ -12,7 +12,9 @@ import Client.Client;
 import Client.gui.gameview.GV_CardLimit;
 import Client.gui.gameview.GV_Combat;
 import Client.gui.gameview.GV_CommandMercenaries;
+import Client.gui.gameview.GV_DeclareWinner;
 import Client.gui.gameview.GV_DrawCards;
+import Client.gui.gameview.GV_GameOver;
 import Client.gui.gameview.GV_JoinGame;
 import Client.gui.gameview.GV_MakePromises;
 import Client.gui.gameview.GV_SpendMoney;
@@ -55,6 +57,8 @@ public class GameViews extends JPanel {
 		addGameView(PhaseType.Combat, new GV_Combat());
 		addGameView(PhaseType.SpendMoney, new GV_SpendMoney());
 		addGameView(PhaseType.CardLimit, new GV_CardLimit());
+		addGameView(PhaseType.DeclareWinner, new GV_DeclareWinner());
+		addGameView(PhaseType.GameOver, new GV_GameOver());
 	}
 
 	/**
@@ -79,7 +83,7 @@ public class GameViews extends JPanel {
 			currentView.activateView(g);
 			cardLayout.show(this, g.phase.toString());
 		} else {
-			System.out.println("ERROR: no GameView class defined in getGameViewClassNameForPhase for phase " + g.phase);
+			System.out.println("ERROR: no GameView instance found GameViews.updateGameData for phase " + g.phase);
 			//throw new Exception("no GameView class found!");
 		}
 		// update the current view
