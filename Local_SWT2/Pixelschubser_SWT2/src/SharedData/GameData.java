@@ -16,6 +16,8 @@ public class GameData implements Serializable{
 	private ActionCardList discardPile;
 	public TopPlayer[] topPlayerList;
 	
+	private boolean firstRound = false;
+	
 	public GameData() {
 		players = new PlayerList();
 		deck = new ActionCardList();
@@ -138,6 +140,19 @@ public class GameData implements Serializable{
 
 	public int getDiscardPileSize() {
 		return discardPile.size();
+	}
+	
+	// FIXME round
+	public boolean isFirstRound() {
+		return firstRound;
+	}
+
+	public void setFirstRound(boolean firstRound) {
+		this.firstRound = firstRound;
+	}
+
+	public PhaseType getPhase() {
+		return phase;
 	}
 
 	public void printDeck() {

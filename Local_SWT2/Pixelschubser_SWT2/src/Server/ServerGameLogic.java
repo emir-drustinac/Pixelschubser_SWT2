@@ -28,6 +28,7 @@ public class ServerGameLogic {
 
 	public void nextPhase() {
 		currentPhase = currentPhase.getNextPhase();
+		
 		com.sendGameDataToAllClients(game);
 	}
 
@@ -52,6 +53,12 @@ public class ServerGameLogic {
 		p.numberOfMercenaries = 1;
 		p.isReady = true;
 		*/
+		
+		// runde
+		// TODO: init deck
+		// karten vergeben
+		//
+		
 	}
 
 	/**
