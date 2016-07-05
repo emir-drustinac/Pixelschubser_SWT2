@@ -139,5 +139,9 @@ public class GameWindow extends JFrame {
 	public CardPanel getCardPanel() {
 		return cardpanel;
 	}
+	
+	public PlayerInfos getPlayerInfo(String playerID) {
+		return playerInfos.get(playerID);
+	}
 
 }

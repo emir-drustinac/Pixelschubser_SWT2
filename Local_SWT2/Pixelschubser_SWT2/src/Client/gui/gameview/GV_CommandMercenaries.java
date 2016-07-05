@@ -4,21 +4,32 @@ package Client.gui.gameview;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.HashMap;
 
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import Client.Client;
 import Client.gui.MercenaryGUI;
 import Client.gui.PlayerInfos;
+import Client.gui.Presentation;
+import Client.gui.WrapLayout;
+import SharedData.ActionCard.CardType;
 import SharedData.GameData;
 import SharedData.Mercenary;
 import SharedData.PlayerData;
-import SharedData.ActionCard.CardType;
 
 
 /**
@@ -28,93 +39,131 @@ import SharedData.ActionCard.CardType;
 public class GV_CommandMercenaries extends GameView implements MouseListener{
 	
 	private static final long serialVersionUID = 982113843262696068L;
-
-	private ArrayList<MercenaryGUI> mercenaryList;
+	
 	private MercenaryGUI selectedMerc = null;
-	private boolean initialized;
+	private ArrayList<String> playerNumberList;
+	private HashMap<String, MercenaryGUI> myGUIMercs;
 	
 	private JPanel myMercenaries;
-	private JPanel otherMercenaries;
+	private JPanel[] attackingMercenaries;
+	private JPanel[] defendingMercenaries;
 	
-	GameData game;
+	private boolean iAmProconsul = false;
 	
 	public GV_CommandMercenaries() {
 		// build gui
 		setLayout(new BorderLayout());
 		
-		myMercenaries = new JPanel(new FlowLayout());
-		otherMercenaries = new JPanel(new FlowLayout());
-		
-		add(otherMercenaries, BorderLayout.NORTH);
+		myMercenaries = new JPanel(new GridBagLayout());
+		//myMercenaries.setBackground(Color.orange);
 		add(myMercenaries, BorderLayout.CENTER);
 		
-		mercenaryList = new ArrayList<>(4);
-		initialized = false;
-		// ### TEST MERC
-//		MercenaryGUI m = new MercenaryGUI("aaa", 1);
-//		m.addMouseListener(this);
-//		add(m);
-//		mercenaryList.add(m);
+		playerNumberList = new ArrayList<>();
+		myGUIMercs = new HashMap<>();
+		
+		// button to proceed in game
+		JButton btn = new JButton("weiter");
+		btn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Client.sendMessageToServer("confirm:command_mercs");
+			}
+		});
+		this.add(btn, BorderLayout.SOUTH);
 	}
 	
 	@Override
 	public void updateGameData(GameData g) {
-		game = g;
+
+		PlayerData me = g.getPlayer(myClientID());
+		iAmProconsul = me.isProconsul;
 		
-		// FIXME game data kommt 2 mal
-		System.out.println("+++++++++++++++++++++++++++++++++++++++ ");
-		System.out.println(" ----- " + g.getPlayer(myClientID()).name + " " + g.getPlayer(myClientID()).numberOfMercenaries());
-		System.out.println(" ----- " + g.getPlayer(myClientID()).name + " " + g.getPlayer(myClientID()).mercenaries.size());
-
-		if (!initialized) {
-			initialized = true;
-
-			PlayerData me = g.getPlayer(myClientID());
-			int j = getNumberOfPlayer(myClientID());
-
-			for (Mercenary merc : me.mercenaries) {
-				MercenaryGUI m = null;
-				if (me.isProconsul) {
-					m = new MercenaryGUI(me.name, merc.mercID, 6);
-				} else {
-					m = new MercenaryGUI(me.name, merc.mercID, j + 1);
-				}
-
-				m.addMouseListener(this);
-				myMercenaries.add(m);
-				mercenaryList.add(m);
-				System.out.println("xxxxxxx");
-			}
+		// update mercenary overview
+		int numPlayers = g.players.size();
+		for (int i = 0; i < numPlayers; i++) {
+			attackingMercenaries[i].removeAll();
+			defendingMercenaries[i].removeAll();
 		}
-
-		// if have active card SPY show other mercenaries
-		if (true) {
-			otherMercenaries.removeAll();
-			for (PlayerData p : game.players) {
-				if (!p.isProconsul && !p.playerID.equals(myClientID())) {
-					for (Mercenary m : p.mercenaries) {
-						int num = m.isDefendingProconsul() ? 6 : getNumberOfPlayer(m.getTarget().isEmpty() ? p.playerID : m.getTarget()) + 1;
-						Color color = Color.blue; // TODO get color of playerInfo background
-						// TODO how to decide if merc is attacking or defending?
-						otherMercenaries.add(new MercenaryGUI(p.playerID, m.mercID, num, color, true));
+		boolean haveSpyCardActive = true; // TODO decide haveSpyCardActive
+		for (PlayerData p : g.players) {
+			if (p.isProconsul || p.playerID.equals(myClientID()) || haveSpyCardActive) {
+				for (Mercenary m : p.mercenaries) {
+					//int num = m.isDefendingProconsul() ? 6 : getNumberOfPlayer(m.getTarget().isEmpty() ? p.playerID : m.getTarget()) + 1;
+					int num = getNumberOfPlayer(m.getTarget().isEmpty() ? p.playerID : m.getTarget());
+					Color color = Presentation.getColorOfPlayer(p.playerID);
+					// if merc is defending
+					boolean defending = m.isDefendingProconsul() || m.getTarget().isEmpty() || m.getTarget().equals(p.playerID);
+					MercenaryGUI gui = new MercenaryGUI(p.playerID, m.mercID, num, color, defending, true);
+					if (defending) {
+						defendingMercenaries[num].add(gui);
+					} else {
+						attackingMercenaries[num].add(gui);
 					}
 				}
 			}
 		}
-				
+		
+		// update my mercs colors and icons
+		for (Mercenary m : me.mercenaries) {
+			MercenaryGUI gui = myGUIMercs.get(m.mercID);
+			if (gui != null) gui.updateVisuals(m);
+		}
+		
+		revalidate();
 	}
 
-	private int getNumberOfPlayer(String target) {
-		for (int j = 0; j < game.players.size(); j++) {
-			if (game.players.get(j).playerID.equals(target)) {
-				return j;
-			}
-		}
-		return 0;
+	private int getNumberOfPlayer(String playerID) {
+		return playerNumberList.indexOf(playerID);
 	}
 
 	@Override
 	public void activateView(GameData g) {
+		
+		// fill playerNumberList
+		for (PlayerData p : g.players) {
+			playerNumberList.add(p.playerID);
+		}
+		
+		// build gui for merc overview
+		if (attackingMercenaries == null) {
+			int numPlayers = g.players.size();
+			attackingMercenaries = new JPanel[numPlayers];
+			defendingMercenaries = new JPanel[numPlayers];
+			JPanel otherMercenaries = new JPanel(new GridLayout(1, numPlayers));
+			for (int i = 0; i < numPlayers; i++) {
+				JPanel box = new JPanel();
+				box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
+				attackingMercenaries[i] = new JPanel(new FlowLayout());
+				box.add(attackingMercenaries[i]);
+				defendingMercenaries[i] = new JPanel(new WrapLayout());
+				box.add(defendingMercenaries[i]);
+				otherMercenaries.add(box);
+			}
+			add(otherMercenaries, BorderLayout.NORTH);
+		}
+		
+		// build gui for my mercs to command them
+		PlayerData me = g.getPlayer(myClientID());
+		Color myColor = Presentation.getColorOfPlayer(myClientID());
+//		int j = getNumberOfPlayer(myClientID());
+
+		for (Mercenary merc : me.mercenaries) {
+//			MercenaryGUI m = null;
+//			if (me.isProconsul) {
+//				m = new MercenaryGUI(me.name, merc.mercID, 6);
+//			} else {
+//				m = new MercenaryGUI(me.name, merc.mercID, j + 1);
+//			}
+			MercenaryGUI m  = new MercenaryGUI(me.playerID, merc.mercID, 0, myColor, true, false);
+			myGUIMercs.put(merc.mercID, m);
+			m.addMouseListener(this);
+			GridBagConstraints gbc = new GridBagConstraints();
+			gbc.gridheight = 50;
+			gbc.gridwidth = 50;
+			gbc.insets = new Insets(15, 15, 15, 15);
+			myMercenaries.add(m, gbc);
+		}
+		
 		updateGameData(g);
 		EnumSet<CardType> types = EnumSet.noneOf(CardType.class);
 		types.add(CardType.SPY);
@@ -124,62 +173,31 @@ public class GV_CommandMercenaries extends GameView implements MouseListener{
 	@Override
 	public void deactivateView() {
 		// TODO clear things up
+		// clear player list
+		playerNumberList.clear();
+		// clean my mercs
+		myMercenaries.removeAll();
+		// clean merc overview
+		for (int i = 0; i < attackingMercenaries.length; i++) {
+			attackingMercenaries[i].removeAll();
+			defendingMercenaries[i].removeAll();
+		}
 	}
 	
 	@Override
 	public void PlayerInfoClicked(PlayerInfos p) {
 
 		if (selectedMerc != null) {
-
+			
+			String targetID = p.getPlayerID();
+			boolean attacking = true;
 			if (p.isProconsul()) {
 				// target is proconsul
 				// dialog box
-
 				int answer = JOptionPane.showConfirmDialog(this, "Proconsul angreifen?", "Proconsul Optionen", JOptionPane.YES_NO_OPTION);
-
-				if (answer == JOptionPane.YES_OPTION) {
-
-					// User clicked YES.
-					for (int j = 0; j < game.players.size(); j++) {
-						if (game.players.get(j).playerID.equals(p.getPlayerID())) {
-							selectedMerc.setDice(j + 1);
-							String targetID = p.getPlayerID();
-							System.out.println("~~~~~ " + targetID + " attacked by " + selectedMerc.getPlayerID());
-							// attacking?
-							Client.sendMessageToServer("merc_command:" + selectedMerc.getMercID() + ":" + targetID + ":" + true);
-							break;
-						}
-					}
-				} else if (answer == JOptionPane.NO_OPTION) {
-					// User clicked NO.
-					selectedMerc.setDice(6);
-					String targetID = p.getPlayerID();
-					System.out.println("~~~~~ " + targetID + " defended by " + selectedMerc.getPlayerID());
-					// attacking?
-					Client.sendMessageToServer("merc_command:" + selectedMerc.getMercID() + ":" + targetID + ":" + false);
-				}
-
-				System.out.println("target is proconsul");
-			} else {
-				// target is NOT proconsul
-				// set dice
-
-				System.out.println(" target is NOT proconsul");
-
-				for (int j = 0; j < game.players.size(); j++) {
-					if (game.players.get(j).playerID.equals(p.getPlayerID())) {
-						selectedMerc.setDice(j + 1);
-						// System.out.println("attacking " + p.getPlayerID());
-						////
-						String targetID = p.getPlayerID();
-						System.out.println("~~~~~ " + targetID + " attacked by " + selectedMerc.getPlayerID());
-						// attacking?
-						Client.sendMessageToServer("merc_command:" + selectedMerc.getMercID() + ":" + targetID + ":" + true);
-						break;
-					}
-				}
-
+				attacking = (answer == JOptionPane.YES_OPTION);
 			}
+			Client.sendMessageToServer("merc_command:" + selectedMerc.getMercID() + ":" + targetID + ":" + attacking);
 
 			// deselect merc at the end
 			selectedMerc.setSelected(false);
@@ -203,11 +221,11 @@ public class GV_CommandMercenaries extends GameView implements MouseListener{
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// if(!game.getPlayer(myClientID()).isProconsul){		// TODO comment that to test
-			
+		if(!iAmProconsul){
+
 			if(e.getSource() instanceof MercenaryGUI){
 				MercenaryGUI m  = (MercenaryGUI) e.getSource();
-				
+
 				if(selectedMerc == null){
 					selectedMerc = m;
 					selectedMerc.setSelected(true);
@@ -218,11 +236,7 @@ public class GV_CommandMercenaries extends GameView implements MouseListener{
 					}
 				}
 			} 
-		// } else {									// TODO comment that to test
-		// // owner is proconsul
-		// // nothing
-		// System.out.println("owner is proconsul");
-		// }
+		}
 	}
 
 	@Override

@@ -1,6 +1,8 @@
 package Client.gui;
 
 
+import java.awt.Color;
+
 import SharedData.GameData;
 
 public class Presentation {
@@ -50,6 +52,21 @@ public class Presentation {
 	
 	public static MenuWindow getMenuWindow() {
 		return menuWindow;
+	}
+
+	/**
+	 * get color of p's playerInfo background
+	 * @param playerID
+	 * @return Color
+	 */
+	public static Color getColorOfPlayer(String playerID) {
+		if (gameWindow != null) {
+			PlayerInfos p = gameWindow.getPlayerInfo(playerID);
+			if (p != null) {
+				return p.getBgColor();
+			}
+		}
+		return Color.LIGHT_GRAY;
 	}
 
 }

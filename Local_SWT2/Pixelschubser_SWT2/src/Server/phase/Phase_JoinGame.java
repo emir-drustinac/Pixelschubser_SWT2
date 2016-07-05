@@ -76,7 +76,8 @@ public class Phase_JoinGame extends Phase {
 		logic.getGameData().addPlayer("c3", "Gamma");
 		
 		logic.nextRound();
-		return PhaseType.DrawCards;
+		return PhaseType.CommandMercenaries;
+		//return PhaseType.DrawCards;
 	}
 
 }

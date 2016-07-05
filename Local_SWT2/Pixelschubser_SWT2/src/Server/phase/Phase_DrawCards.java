@@ -101,7 +101,8 @@ public class Phase_DrawCards extends Phase {
 
 	@Override
 	public PhaseType getNextPhaseType() {
-		return PhaseType.MakePromises;
+		return PhaseType.CommandMercenaries; // TODO TEST
+		//return PhaseType.MakePromises;
 	}
 
 }
