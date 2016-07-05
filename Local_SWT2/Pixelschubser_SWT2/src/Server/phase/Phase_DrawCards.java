@@ -68,6 +68,11 @@ public class Phase_DrawCards extends Phase {
 	@Override
 	public void ReceivedMessageFromClient(String clientID, String message) {
 		System.out.println("# " + this.getClass().getSimpleName() + " " + clientID + " " + message + " #");
+		
+		if(message.startsWith("phase_infos")) {
+			com.sendMessageToClient(clientID, "Wenn Sie bereit sind, clicken Sie auf weiter");
+		}
+		
 		if (message.startsWith("confirm")) {
 			logic.getGameData().getPlayer(clientID).isReady = true;
 			// next phase
@@ -84,7 +89,7 @@ public class Phase_DrawCards extends Phase {
 						System.out.println("<Timer>");
 						logic.nextPhase();
 					}
-				}, 3000);
+				}, 1000);
 			}
 		}
 	}

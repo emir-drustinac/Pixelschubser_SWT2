@@ -34,4 +34,15 @@ public class ActionCardList extends Vector<ActionCard> {
 		return i < 0 || i >= this.size() ? null : this.get(i);
 	}
 
+	public boolean containsCardWithID(ActionCard ac) {
+		for(int i = 0; i < this.size(); i++) {
+			if(super.get(i).getCardID().equals(ac.getCardID())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+
 }

@@ -11,9 +11,14 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 
+import SharedData.ActionCard.CardType;
 import SharedData.GameData;
 import SharedData.PlayerData;
+import SharedData.PhaseType;
 
 public class GameWindow extends JFrame {
 	
@@ -28,7 +33,10 @@ public class GameWindow extends JFrame {
 	private GameViews gameViews;
 	private GameLog gameLog;
 	private JLabel message;
+	private JLabel lblPhase;
+	private JPanel infosPanel;
 	private CardPanel cardpanel;
+	private JLabel handCards;
 	
 	/**
 	 * 
@@ -41,7 +49,7 @@ public class GameWindow extends JFrame {
 		
 		setTitle(windowName);
 		setSize(initialWidth, initialHeight);
-		setMinimumSize(new Dimension(600, 550));
+		setMinimumSize(new Dimension(700, 700));
 		setLayout(new BorderLayout());
 		
 		// add -myInfo- all GameViews
@@ -74,18 +82,37 @@ public class GameWindow extends JFrame {
 		// contain cardPanel and status panel in Grid(2,1)
 		JPanel south = new JPanel(new BorderLayout());
 		{
+			//Label handCards
+			handCards = new JLabel();
+			handCards.setBorder(new EmptyBorder(5, 5, 5, 5));
+			handCards.setHorizontalAlignment(JLabel.CENTER);
+			//handCards.setVerticalTextPosition(JLabel.TOP);
+			south.add(handCards, BorderLayout.NORTH);
+			
+			setBackground(Color.BLUE);
 			cardpanel = new CardPanel(gameViews);
+			cardpanel.setBackground(freeSpaceColor);
 			//cardpanel.addMouseListener(gameViews);
 			south.add(cardpanel, BorderLayout.CENTER);
 
-			// add status message panel
+			//Panel with Phase label on the top and message on the bottom
+			infosPanel = new JPanel(new GridLayout(2, 0, 0, 0));
+			
+			lblPhase = new JLabel("");
+			lblPhase.setForeground(Color.BLUE);
+			lblPhase.setHorizontalAlignment(JLabel.CENTER);
+			lblPhase.setBorder(new EmptyBorder(0, 0, 10, 0));
+			infosPanel.add(lblPhase);
+			
 			message = new JLabel();
-			message.setText("initialized...");
-			message.setVerticalAlignment(JLabel.TOP);
-			message.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(0,10,10,10,freeSpaceColor), BorderFactory.createEmptyBorder(5, 10, 5, 10)));
-			message.setPreferredSize(new Dimension(500, 50));
-			south.add(message, BorderLayout.SOUTH);
+			//message.setText("initialisiert...");
+			message.setVerticalAlignment(JLabel.BOTTOM);
+			message.setBorder(new EmptyBorder(5, 5, 5, 5));
+			//message.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(0,10,10,10,freeSpaceColor), BorderFactory.createEmptyBorder(5, 10, 5, 10)));
+			infosPanel.add(message);
+			south.add(infosPanel, BorderLayout.SOUTH);
 		}
+		south.setBorder(new MatteBorder(0, 10, 10, 10, Color.WHITE));
 		add(south, BorderLayout.SOUTH);
 
 		// center frame on screen
@@ -97,6 +124,11 @@ public class GameWindow extends JFrame {
 	public void updateGameState(GameData g) {
 		// update playerInfos
 		// TODO remove playerInfos not existing in GameData?
+		boolean b = g.phase != PhaseType.JoinGame && g.phase != (PhaseType.GameOver) && 
+				g.phase != (PhaseType.DeclareWinner);  
+		handCards.setText(b ? "Karten auf der Hand:" : " ");
+		lblPhase.setText(g.phase.toStringDE());
+		
 		for (PlayerData p : g.players) {
 			if (playerInfos.containsKey(p.playerID)) {
 				// update playerInfos
@@ -128,7 +160,13 @@ public class GameWindow extends JFrame {
 
 	public void ReceivedMessage(String m) {
 		//gameInfo.
-		message.setText(m);
+		//Warning message -> make text red
+		if(m.endsWith("!")) {
+			message.setForeground(Color.RED);
+			message.setText(m);
+		} else {
+			message.setText(m);
+		}
 		//gameViews.
 	}
 

@@ -238,7 +238,7 @@ public class ActionCard implements Serializable{
 		case DENARI1000: return "1000 Denari";
 		case DENARI2000: return "2000 Denari";
 		case DENARI3000: return "3000 Denari";
-		case PROPAGANDA: return "Du erhältst einen Soldaten gratis";
+		case PROPAGANDA: return "Du erhältst einen Söldner gratis";
 		case FREEBUILDING: return "Du erhältst ein Gebäude gratis";
 		case GOLDENLION: return "1 Siegpunkt";
 		case GOLDENCHARIOT: return "1 Siegpunkt";

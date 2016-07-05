@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.border.EmptyBorder;
 
 import Client.Client;
 import Client.gui.GuiActionCard;
@@ -40,7 +41,8 @@ public class GV_MakePromises extends GameView {
 	
 	public GV_MakePromises() {
 		setLayout(new BorderLayout());
-
+		Client.sendMessageToServer("phase_infos");
+		
 		// text label
 		info = new JLabel("");
 		info.setHorizontalAlignment(JLabel.CENTER);
@@ -54,6 +56,7 @@ public class GV_MakePromises extends GameView {
 		// card grid
 		cards = new JPanel();
 		cards.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 15));
+		cards.setBorder(new EmptyBorder(0, 5, 0, 5));
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);

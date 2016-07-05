@@ -31,7 +31,7 @@ public class Phase_MakePromises extends Phase {
 					if (proconsul.getNumberOfCards() > numberOfPlayersWithoutPromises
 						|| player.getNumberOfPromisedCards() == 0 ) {
 						player.addPromise(actioncard);
-						com.sendMessageToClient(clientID, "promise_ack:true:u promised a card!");
+						com.sendMessageToClient(clientID, "promise_ack:true:u promised a card");
 						//com.sendPlayerDataToClient(player.playerID, player);
 						//com.sendPlayerDataToClient(clientID, player);
 						com.sendGameDataToAllClients(game);
@@ -54,6 +54,10 @@ public class Phase_MakePromises extends Phase {
 				}
 			}
 		}
+		
+		if(message.startsWith("phase_infos")) {
+			com.sendMessageToClient(clientID, "Wenn Sie mit den Versprechungen fertig sind, clicken Sie auf weiter");
+		}
 	}
 
 	@Override
@@ -69,7 +73,8 @@ public class Phase_MakePromises extends Phase {
 	@Override
 	public PhaseType getNextPhaseType() {
 		//return PhaseType.DeclareWinner;
-		return PhaseType.CommandMercenaries;
+		//return PhaseType.CommandMercenaries;
+		return PhaseType.SpendMoney; //Emir
 	}
 
 }

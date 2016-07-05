@@ -259,7 +259,7 @@ public class MenuWindow extends JFrame implements /* Observer, */ ActionListener
 				setVisible(false);
 				this.dispose();
 			} else {
-				statusCreate.setText("Game Name oder Player Name leer!!!");
+				statusCreate.setText("Spielername leer!!!");
 			}
 			
 		} else if (e.getActionCommand().equals(BACK)) {
