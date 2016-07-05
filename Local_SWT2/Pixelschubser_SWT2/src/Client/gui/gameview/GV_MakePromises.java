@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.EnumSet;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -18,6 +19,7 @@ import Client.Client;
 import Client.gui.GuiActionCard;
 import Client.gui.PlayerInfos;
 import SharedData.ActionCard;
+import SharedData.ActionCard.CardType;
 import SharedData.GameData;
 import SharedData.PlayerData;
 
@@ -115,12 +117,16 @@ public class GV_MakePromises extends GameView {
 	@Override
 	public void activateView(GameData g) {
 		updateGameData(g);
-//		EnumSet<CardType> types = EnumSet.noneOf(CardType.class);
-//		types.add(CardType.DENARI1000);
-//		types.add(CardType.DENARI2000);
-//		types.add(CardType.DENARI3000);
-//		markCardTypes(types);
-		//markCardTypes(null);
+		if (g.getPlayer(myClientID()).isProconsul) {
+			// enable all cards to give
+			markCardTypes(null);
+			//TODO Proconsul can use picklock card?
+		} else {
+			// can use picklock card
+			EnumSet<CardType> types = EnumSet.noneOf(CardType.class);
+			types.add(CardType.PICKLOCK);
+			markCardTypes(types);
+		}
 	}
 
 	@Override

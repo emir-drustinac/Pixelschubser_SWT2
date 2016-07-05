@@ -2,6 +2,7 @@ package Client.gui;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Image;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -25,15 +26,20 @@ public class MercenaryGUI extends JPanel{
 	private static final long serialVersionUID = 2924473578897929872L;
 	
 	private String playerID;
+	private String mercID;
 	private int augenZahl;
 	private JLabel[] diceLabel;
 	
-	public MercenaryGUI(String playerID, int augenZahl) {
+	public MercenaryGUI(String playerID, String mercID, int augenZahl) {
+		this(playerID, mercID, augenZahl, Color.RED, false);
+	}
+	public MercenaryGUI(String playerID, String mercID, int augenZahl, Color bgColor, boolean small) {
 		
 		this.playerID = playerID;
+		this.mercID = mercID;
 		this.augenZahl = augenZahl;
 		
-		setBackground(Color.RED);
+		setBackground(bgColor);
 		setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
 		
 		setLayout(new CardLayout(0, 0));
@@ -42,7 +48,7 @@ public class MercenaryGUI extends JPanel{
 		
 		for (int i = 0; i < 6; i++) {
 			String path = "/images/dice" + Integer.toString(i+1) + ".png";
-			diceLabel[i] = getIconLabel(path);
+			diceLabel[i] = small ? getIconLabel(path, 38) : getIconLabel(path);
 			add(diceLabel[i]);
 			diceLabel[i].setVisible(false);
 		}
@@ -55,7 +61,7 @@ public class MercenaryGUI extends JPanel{
 		for (int i = 0; i < diceLabel.length; i++) {
 			diceLabel[i].setVisible(false);			
 		}
-		
+		if (zahl > 0 && zahl <= diceLabel.length)
 		diceLabel[zahl-1].setVisible(true);
 		
 	}
@@ -64,9 +70,16 @@ public class MercenaryGUI extends JPanel{
 		return augenZahl;
 	}
 		
-	public JLabel getIconLabel(String path) {
+	public static JLabel getIconLabel(String path, int width) {
 		java.net.URL imgUrl = MercenaryGUI.class.getResource(path);
-		ImageIcon icon = new ImageIcon(imgUrl); 
+		ImageIcon icon = new ImageIcon(imgUrl);
+		int height = (int) ((float)icon.getIconHeight() * (float)width / (float)icon.getIconWidth());
+		icon = new ImageIcon(icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+		return new JLabel(icon);
+	}
+	public static JLabel getIconLabel(String path) {
+		java.net.URL imgUrl = MercenaryGUI.class.getResource(path);
+		ImageIcon icon = new ImageIcon(imgUrl);
 		return new JLabel(icon);
 	}
 
@@ -81,6 +94,10 @@ public class MercenaryGUI extends JPanel{
 			setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
 		}
 		
+	}
+
+	public String getMercID() {
+		return mercID;
 	}
 	
 }

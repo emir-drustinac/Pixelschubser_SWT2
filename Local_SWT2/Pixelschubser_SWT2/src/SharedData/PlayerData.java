@@ -13,7 +13,7 @@ public class PlayerData implements Serializable{
 	public final String playerID;
 	public boolean isProconsul = false;
 	public int numberOfBuildings;
-	public int numberOfMercenaries;
+	public int numberOfMercenaries() {return mercenaries.size();}
 	public MercenaryList mercenaries;
 	private int combatPoints;
 	private ActionCardList promises;
@@ -26,10 +26,10 @@ public class PlayerData implements Serializable{
 		this.playerID = playerID;
 		promises = new ActionCardList();
 		cards = new ActionCardList();
-		mercenaries = new MercenaryList();
+		mercenaries = new MercenaryList(); // new MercList has already one merc in it
 		combatPoints = 0;
 //		numberOfMercenaries = 1;	// hard coding :)
-		numberOfMercenaries = mercenaries.size();
+		//numberOfMercenaries = mercenaries.size();
 		numberOfBuildings = 1;
 	}
 

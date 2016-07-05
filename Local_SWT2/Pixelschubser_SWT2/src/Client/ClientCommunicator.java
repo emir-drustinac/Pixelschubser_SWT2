@@ -60,7 +60,7 @@ public class ClientCommunicator implements SocketWorkerManager{
 		System.out.println("Received GameData: round=" + g.round + " phase=" + g.phase + " numPlayers=" + g.players.size());
 		for (PlayerData p : g.players) {
 			System.out.println("  Player " + p.playerID + " : Name=" + p.name + " buildings=" + p.numberOfBuildings
-					+ " mercenaries=" + p.numberOfMercenaries + " numCards=" + p.getNumberOfCards()
+					+ " mercenaries=" + p.numberOfMercenaries() + " numCards=" + p.getNumberOfCards()
 					+ " leader=" + p.isGameLeader + " proconsul=" + p.isProconsul + " ready=" + p.isReady);
 		}
 		game.receivedGameState(g);
@@ -68,7 +68,7 @@ public class ClientCommunicator implements SocketWorkerManager{
 	public void receivedPlayerData(PlayerData p) {
 		System.out.println("Received PlayerData: playerID" + p.playerID + " : Name=" + p.name 
 				+ " buildings=" + p.numberOfBuildings
-				+ " mercenaries=" + p.numberOfMercenaries + " numCards=" + p.getNumberOfCards()
+				+ " mercenaries=" + p.numberOfMercenaries() + " numCards=" + p.getNumberOfCards()
 				+ " leader=" + p.isGameLeader + " proconsul=" + p.isProconsul + " ready=" + p.isReady);
 		game.receivedPlayerData(p);
 	}

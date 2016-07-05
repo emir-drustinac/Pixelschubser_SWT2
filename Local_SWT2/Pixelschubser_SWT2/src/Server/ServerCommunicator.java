@@ -58,7 +58,7 @@ public class ServerCommunicator implements Runnable, SocketWorkerManager{
 		System.out.println(">>Sending GameData: phase=" + g.phase + " numPlayers=" + g.players.size());
 		for (PlayerData p : g.players) {
 			System.out.println("  Player " + p.playerID + " : Name=" + p.name + " buildings=" + p.numberOfBuildings
-					+ " mercenaries=" + p.numberOfMercenaries + " numCards=" + p.getNumberOfCards()
+					+ " mercenaries=" + p.numberOfMercenaries() + " numCards=" + p.getNumberOfCards()
 					+ " leader=" + p.isGameLeader + " proconsul=" + p.isProconsul + " ready=" + p.isReady);
 		}
 		synchronized (socketWorkers) {

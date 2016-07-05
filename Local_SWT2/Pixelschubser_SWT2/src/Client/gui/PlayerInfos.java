@@ -127,7 +127,7 @@ public class PlayerInfos extends JPanel implements MouseListener {
 
 	public void updatePlayerInfos(PlayerData p) {
 		name.setText(p.name);
-		mercenary.setText(String.valueOf(p.numberOfMercenaries));
+		mercenary.setText(String.valueOf(p.numberOfMercenaries()));
 		building.setText(String.valueOf(p.numberOfBuildings));
 		cards.setText(String.valueOf(p.getNumberOfCards()));
 		isProconsul = p.isProconsul;

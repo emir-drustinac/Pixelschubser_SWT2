@@ -5,11 +5,14 @@ import java.io.Serializable;
 public class Mercenary implements Serializable {
 
 	private static final long serialVersionUID = 3494795381040939978L;
+	private static int nextMercID = 1;
 	private String target;
+	public final String mercID;
 	private boolean defendingProconsul;		// to separate defending merc from offending one on Proconsul
 	
 	public Mercenary() {
 		target = "";
+		mercID = "merc" + nextMercID++;
 		defendingProconsul = false;
 	}
 
@@ -27,6 +30,14 @@ public class Mercenary implements Serializable {
 
 	public void setDefendingProconsul(boolean defendingProconsul) {
 		this.defendingProconsul = defendingProconsul;
+	}
+
+	static int getNextMercID() {
+		return nextMercID;
+	}
+
+	static void setNextMercID(int nextMercID) {
+		Mercenary.nextMercID = nextMercID;
 	}
 
 }
