@@ -71,14 +71,13 @@ public class Phase_JoinGame extends Phase {
 	public PhaseType getNextPhaseType() {
 		// add some more players
 		// TODO TEST MODE
-		logic.getGameData().addPlayer("a1", "Alpha");
-		logic.getGameData().addPlayer("b2", "Beta");
-		logic.getGameData().addPlayer("c3", "Gamma");
-		logic.getGameData().addPlayer("d4", "Delta");
+//		logic.getGameData().addPlayer("a1", "Alpha");
+//		logic.getGameData().addPlayer("b2", "Beta");
+//		logic.getGameData().addPlayer("c3", "Gamma");
+//		logic.getGameData().addPlayer("d4", "Delta");
 		
 		logic.nextRound();
-		return PhaseType.CommandMercenaries;
-		//return PhaseType.DrawCards;
+		return PhaseType.DrawCards;
 	}
 
 }

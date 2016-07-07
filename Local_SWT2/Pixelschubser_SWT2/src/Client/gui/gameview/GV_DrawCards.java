@@ -31,6 +31,7 @@ public class GV_DrawCards extends GameView {
 	
 	private static final long serialVersionUID = -4000887215527920683L;
 	private final JPanel cards;
+	JButton btnWeiter;
 	
 	public GV_DrawCards() {
 		this.setLayout(new BorderLayout());
@@ -53,15 +54,15 @@ public class GV_DrawCards extends GameView {
 		add(scrollPane);
 		
 		// proconsul gets button to proceed in game
-		JButton btn = new JButton("weiter");
-		btn.addActionListener(new ActionListener() {
+		btnWeiter = new JButton("weiter");
+		btnWeiter.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Client.sendMessageToServer("confirm:drawcards");
 			}
 		});
-		this.add(btn, BorderLayout.SOUTH);
+		this.add(btnWeiter, BorderLayout.SOUTH);
 	}
 
 	@Override
@@ -71,6 +72,12 @@ public class GV_DrawCards extends GameView {
 		// show cards drawn in this round
 		EnumSet<CardType> types = EnumSet.noneOf(CardType.class);
 		PlayerData p = g.players.get(myClientID());
+		
+		//visible only for the proconsul
+		if(!p.isProconsul) {
+			btnWeiter.setVisible(false);
+		}
+		
 		cards.removeAll();
 		for (int i = 0; i < p.getNumberOfCards(); i++) {
 			ActionCard a = p.getCard(i);
@@ -81,7 +88,7 @@ public class GV_DrawCards extends GameView {
 		}
 		
 		// mark cards drawn in this round in deck bar
-		//markCardTypes(types);
+//		markCardTypes(types);
 	}
 
 	@Override

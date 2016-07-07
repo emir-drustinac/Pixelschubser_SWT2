@@ -44,6 +44,8 @@ public class GameData implements Serializable{
 				deck.addCard( discardPile.remove(r) );
 			} 
 		}
+		System.out.println("~~~~~Deck size: " + deck.size());
+		System.out.println("~~~~~Discard Pile size: " + discardPile.size());
 		// return first card on deck and remove it from deck 
 		if (deck.size() == 0) System.out.println("Can't draw card from empty deck!");
 		return deck.size() == 0 ? null : deck.remove(0);

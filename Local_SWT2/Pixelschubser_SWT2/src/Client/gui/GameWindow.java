@@ -49,7 +49,7 @@ public class GameWindow extends JFrame {
 		
 		setTitle(windowName);
 		setSize(initialWidth, initialHeight);
-		setMinimumSize(new Dimension(700, 700));
+		setMinimumSize(new Dimension(700, 750));
 		setLayout(new BorderLayout());
 		
 		// add -myInfo- all GameViews
@@ -107,6 +107,7 @@ public class GameWindow extends JFrame {
 			message = new JLabel();
 			//message.setText("initialisiert...");
 			message.setVerticalAlignment(JLabel.BOTTOM);
+			message.setHorizontalAlignment(JLabel.CENTER);
 			message.setBorder(new EmptyBorder(5, 5, 5, 5));
 			//message.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(0,10,10,10,freeSpaceColor), BorderFactory.createEmptyBorder(5, 10, 5, 10)));
 			infosPanel.add(message);
@@ -165,6 +166,7 @@ public class GameWindow extends JFrame {
 			message.setForeground(Color.RED);
 			message.setText(m);
 		} else {
+			message.setForeground(Color.BLACK);
 			message.setText(m);
 		}
 		//gameViews.

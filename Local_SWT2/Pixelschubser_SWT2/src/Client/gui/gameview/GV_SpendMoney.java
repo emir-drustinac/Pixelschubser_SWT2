@@ -3,29 +3,35 @@ package Client.gui.gameview;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.EnumSet;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
 import Client.Client;
+import Client.gui.CardPanel;
 import Client.gui.GuiActionCard;
+import Client.gui.Presentation;
 import SharedData.ActionCard;
 import SharedData.ActionCard.CardType;
 import SharedData.ActionCardList;
 import SharedData.GameData;
 import SharedData.PlayerData;
+import SharedData.PlayerList;
 
 /**
  * @author chris
@@ -35,19 +41,14 @@ public class GV_SpendMoney extends GameView {
 
 	private static final long serialVersionUID = 1829294331352754452L;
 	private JPanel moneyCardsPanel;
-	private JPanel itemsToBuy;
-	private JPanel icons;
-	private JPanel itemsCount;
 	private MouseListener itemsML;
 	private MouseListener cardsML;
 	private JLabel mercs;
 	private JLabel buildings;
 	private JLabel cards;
 	private JLabel lblCost;
-	private JLabel mercsCount;
-	private JLabel buildingsCount;
-	private JLabel cardsCount;
 	private JButton btnKaufen;
+	private JButton btnWeiter;
 	private int cost = 0;
 	private int money = 0;
 	private int nrOfMercs;
@@ -56,109 +57,164 @@ public class GV_SpendMoney extends GameView {
 	private int mercsToBuy = 0;
 	private int buildingsToBuy = 0;
 	private int cardsToBuy = 0;
-	private ActionCardList acl;
+	private ActionCardList discardedCards;
 	private GuiActionCard gac;
+	private CardPanel handCardsPanel;
+	private boolean buyPressed;
+	private int nrOfReadyPlayers = 0;
+	private PlayerList waitingPlayers;
 
 	public GV_SpendMoney() {
 		this.setLayout(new BorderLayout());
 		
-		JPanel nord = new JPanel(new BorderLayout());
-		JPanel itemsCosts = new JPanel(new FlowLayout(FlowLayout.CENTER, 68, 1));
-		itemsCosts.add(new JLabel("2000 Denari"));
-		itemsCosts.add(new JLabel("4000 Denari"));
-		itemsCosts.add(new JLabel("1000 Denari"));
-		itemsCosts.add(new JLabel("                              "));
-		itemsCosts.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		JPanel totalCost = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		lblCost = getIconLabel("/images/dollar_coin_stack.png");
-		lblCost.setText("" + cost + "  Denari");
-		totalCost.add(lblCost);
-
-		itemsToBuy = new JPanel(new FlowLayout(FlowLayout.CENTER, 100, 1));
-		itemsToBuy.setBorder(new EmptyBorder(5, 5, 5, 5));
-		nord.add(itemsCosts, BorderLayout.NORTH);
-		nord.add(itemsToBuy, BorderLayout.CENTER);
-		nord.add(totalCost, BorderLayout.SOUTH);
-		add(nord/* itemsToBuy */, BorderLayout.NORTH);
-
-		// create MouseListener:
+		discardedCards = new ActionCardList();
+		// create MouseListeners:
 		createItemsML();
-		createCardsML();
-
-		mercs = getIconLabel("/images/mercenary_small_2.png");
+		createCardsML();		
+		
+		JPanel nord = new JPanel(new FlowLayout());
+		add(nord, BorderLayout.NORTH);
+		
+		JPanel grids = new JPanel(new GridLayout(3, 4, 80, 1));
+		nord.add(grids);
+		
+		JLabel lblDenari1 = new JLabel();
+		lblDenari1.setVerticalAlignment(JLabel.CENTER);
+		lblDenari1.setText("2000 Denari");
+		lblDenari1.setHorizontalAlignment(JLabel.CENTER);
+		grids.add(lblDenari1);
+		
+		JLabel lblDenari2 = new JLabel();
+		lblDenari2.setVerticalAlignment(JLabel.CENTER);
+		lblDenari2.setText("4000 Denari");
+		lblDenari2.setHorizontalAlignment(JLabel.CENTER);
+		grids.add(lblDenari2);
+		
+		JLabel lblDenari3 = new JLabel();
+		lblDenari3.setVerticalAlignment(JLabel.CENTER);
+		lblDenari3.setText("1000 Denari");
+		lblDenari3.setHorizontalAlignment(JLabel.CENTER);
+		grids.add(lblDenari3);
+		
+		JLabel lblDummy = new JLabel();
+		lblDummy.setVerticalAlignment(JLabel.CENTER);
+		lblDummy.setHorizontalAlignment(JLabel.CENTER);
+		grids.add(lblDummy);
+		
+		mercs = new JLabel(new ImageIcon(getClass().getResource("/images/mercenary_small_2.png")));
 		mercs.setText("0");
-		mercs.setToolTipText("2000 Denari");
-		mercs.setVerticalAlignment(JLabel.CENTER);
-		mercs.setHorizontalAlignment(JLabel.CENTER);
 		mercs.setVerticalTextPosition(JLabel.BOTTOM);
 		mercs.setHorizontalTextPosition(JLabel.CENTER);
+		mercs.setHorizontalAlignment(JLabel.CENTER);
+		mercs.setVerticalAlignment(JLabel.CENTER);
 		mercs.addMouseListener(itemsML);
-		itemsToBuy.add(mercs);
-
-		buildings = getIconLabel("/images/building_small_2.png");
+		grids.add(mercs);
+		
+		buildings = new JLabel(new ImageIcon(getClass().getResource("/images/building_small_2.png")));
 		buildings.setText("0");
-		buildings.setToolTipText("4000 Denari");
-		buildings.setVerticalAlignment(JLabel.CENTER);
-		buildings.setHorizontalAlignment(JLabel.CENTER);
 		buildings.setVerticalTextPosition(JLabel.BOTTOM);
 		buildings.setHorizontalTextPosition(JLabel.CENTER);
+		buildings.setHorizontalAlignment(JLabel.CENTER);
+		buildings.setVerticalAlignment(JLabel.CENTER);
 		buildings.addMouseListener(itemsML);
-		itemsToBuy.add(buildings);
-
-		cards = getIconLabel("/images/cards_small_2.png");
+		grids.add(buildings);
+		
+		cards = new JLabel(new ImageIcon(getClass().getResource("/images/cards_small_2.png")));
 		cards.setText("0");
-		cards.setToolTipText("1000 Denari");
-		cards.setVerticalAlignment(JLabel.CENTER);
-		cards.setHorizontalAlignment(JLabel.CENTER);
 		cards.setVerticalTextPosition(JLabel.BOTTOM);
 		cards.setHorizontalTextPosition(JLabel.CENTER);
+		cards.setHorizontalAlignment(JLabel.CENTER);
+		cards.setVerticalAlignment(JLabel.CENTER);
 		cards.addMouseListener(itemsML);
-		itemsToBuy.add(cards);
-
+		grids.add(cards);
+		
 		btnKaufen = new JButton("kaufen");
 		btnKaufen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnKaufen.setEnabled(false);
-				Client.sendMessageToServer(
-						"confirm:spend_money:" + cost + ":" + mercsToBuy + ":" + buildingsToBuy + ":" + cardsToBuy);
+				buyPressed = true;
+				Client.sendMessageToServer("kaufen:" + cost + ":" + 
+						mercsToBuy + ":" + buildingsToBuy + ":" + cardsToBuy);
+				//reset number of buyed items and cost
+				mercsToBuy = buildingsToBuy = cardsToBuy = cost = money = 0;
+				mercs.setText("" + mercsToBuy);
+				buildings.setText("" + mercsToBuy);
+				cards.setText("" + mercsToBuy);
+				lblCost.setText("" + cost);
+				discardedCards.removeAllElements();
+				
+				moneyCardsPanel.validate();
+//				moneyCardsPanel.repaint();
 			}
 		});
-		itemsToBuy.add(btnKaufen);
+		JPanel btnKaufenPanel = new JPanel(new FlowLayout());
+		btnKaufenPanel.add(btnKaufen);
+		grids.add(btnKaufenPanel);
+		
+		JLabel lblDummy2 = new JLabel();
+		lblDummy2.setHorizontalAlignment(JLabel.CENTER);
+		grids.add(lblDummy2);
+		
+		JPanel lblCostPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		lblCost = new JLabel(new ImageIcon(getClass().getResource("/images/dollar_coin_stack.png")));
+		lblCost.setText("    " + cost + " Denari");
+		lblCost.setHorizontalAlignment(JLabel.CENTER);
+		lblCostPanel.add(lblCost);
+		grids.add(lblCostPanel);
+		
+		JLabel lblDummy3 = new JLabel();
+		lblDummy3.setHorizontalAlignment(JLabel.CENTER);
+		grids.add(lblDummy3);
+		
+		btnWeiter = new JButton("weiter");
+		btnWeiter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				nrOfReadyPlayers++;
+				btnWeiter.setEnabled(false);
+				btnKaufen.setEnabled(false);
+				Client.sendMessageToServer("weiter");
+				waitingPlayers.removePlayer(myClientID());
+			}
+		});
+		JPanel btnWeiterPanel = new JPanel(new FlowLayout());
+		btnWeiterPanel.add(btnWeiter);
+		grids.add(btnWeiterPanel);
+
 
 		JPanel middle = new JPanel(new BorderLayout());
-		JLabel lblDeck = new JLabel("Karten auf dem Ablagestapel:");
+		JLabel lblDeck = new JLabel("Karten auf dem Ablagestapel:"); //Discard Pile
 		lblDeck.setHorizontalAlignment(JLabel.CENTER);
 		middle.add(lblDeck, BorderLayout.NORTH);
 		// JPanel with cards that can be used for buying
-		moneyCardsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
+		moneyCardsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		middle.add(moneyCardsPanel, BorderLayout.CENTER);
-		this.add(middle/* moneyCardsPanel */, BorderLayout.CENTER);
+//		this.add(middle, BorderLayout.CENTER);
 		// moneyCardsPanel.setBorder(new EmptyBorder(1, 1, 20, 1));
 		JScrollPane scrollPane = new JScrollPane(middle/* moneyCardsPanel */);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-		this.add(nord/* itemsToBuy */, BorderLayout.NORTH);
-		add(scrollPane);
+//		this.add(nord, BorderLayout.NORTH);
+		this.add(scrollPane, BorderLayout.CENTER);
 
 	}
 
 	private void createItemsML() {
-		Client.sendMessageToServer("phase_infos");
 		itemsML = new MouseAdapter() {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-
+				Client.sendMessageToServer("phase_infos");
+				String nrS = ((JLabel) e.getSource()).getText();
+				int nrI = Integer.parseInt(nrS);
+				
 				if (SwingUtilities.isLeftMouseButton(e)) {
-					String nr = ((JLabel) e.getSource()).getText();
-
 					if (((JLabel) e.getSource()).equals(mercs)) {
 						cost += 2000;
-						if(nrOfFreeMercsCards-- > 0 && (acl.contains(CardType.ABUSEOFPOWER) || acl.contains(CardType.PROPAGANDA))) {
+						if(nrOfFreeMercsCards > 0 /*&& (discardedCards.contains(CardType.ABUSEOFPOWER) || discardedCards.contains(CardType.PROPAGANDA))*/) {
 							cost = cost >= 2000 ? (cost - 2000) : cost;
-							mercsToBuy = Integer.parseInt(nr) + 1;
+							nrOfFreeMercsCards--;
+							mercsToBuy = nrI + 1;
 							((JLabel) e.getSource()).setText("" + mercsToBuy);
 						}
 						else if (cost > money) {
@@ -168,26 +224,25 @@ public class GV_SpendMoney extends GameView {
 							Client.sendMessageToServer("buy:mercs_limit");
 							cost -= 2000;
 						} else {
-							mercsToBuy = Integer.parseInt(nr) + 1;
+							mercsToBuy = nrI + 1;
 							((JLabel) e.getSource()).setText("" + mercsToBuy);
 						}
-//						lblCost.setText("" + cost + "  Denari");
 					}
 
 					if (((JLabel) e.getSource()).equals(buildings)) {
 						cost += 4000;
-						if (nrOfFreeBuildingsCards-- > 0) {
+						if (nrOfFreeBuildingsCards > 0) {
 							cost = cost >= 4000 ? (cost - 4000) : cost;
-							buildingsToBuy = Integer.parseInt(nr) + 1;
+							nrOfFreeBuildingsCards--;
+							buildingsToBuy = nrI + 1;
 							((JLabel) e.getSource()).setText("" + buildingsToBuy);
 						} else if (cost > money) {
 							Client.sendMessageToServer("buy:not_enough_money");
 							cost -= 4000;
 						} else {
-							buildingsToBuy = Integer.parseInt(nr) + 1;
+							buildingsToBuy = nrI + 1;
 							((JLabel) e.getSource()).setText("" + buildingsToBuy);
 						}
-//						lblCost.setText("" + cost + "  Denari");
 					}
 
 					if (((JLabel) e.getSource()).equals(cards)) {
@@ -200,27 +255,26 @@ public class GV_SpendMoney extends GameView {
 							cost -= 1000;
 						} else {
 						//if(cost <= money && cardsToBuy < 1) {
-							cardsToBuy = Integer.parseInt(nr) + 1;
+							cardsToBuy = buyPressed ? nrI : nrI + 1;
 							((JLabel) e.getSource()).setText("" + cardsToBuy);
 						}
-//						lblCost.setText("" + cost + "  Denari");
 					}
 					lblCost.setText("" + cost + "  Denari");
 				}
 
 				if (SwingUtilities.isRightMouseButton(e)) {
 					if (((JLabel) e.getSource()).equals(mercs) && mercsToBuy > 0) {
-						cost -= 2000;
+						cost = cost >= 2000 ? (cost - 2000) : cost;
 						nrOfFreeMercsCards++;
 						((JLabel) e.getSource()).setText("" + --mercsToBuy);
 					}
 					if (((JLabel) e.getSource()).equals(buildings) && buildingsToBuy > 0) {
-						cost -= 4000;
+						cost = cost >= 4000 ? (cost - 4000) : cost;
 						nrOfFreeBuildingsCards++;
 						((JLabel) e.getSource()).setText("" + --buildingsToBuy);
 					}
 					if (((JLabel) e.getSource()).equals(cards) && cardsToBuy > 0) {
-						cost -= 1000;
+						cost = cost >= 1000 ? (cost - 1000) : cost;
 						((JLabel) e.getSource()).setText("" + --cardsToBuy);
 					}
 					lblCost.setText("" + cost + "  Denari");
@@ -230,33 +284,32 @@ public class GV_SpendMoney extends GameView {
 	}
 
 	private void createCardsML() {
-		acl = new ActionCardList();
 		cardsML = new MouseAdapter() {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				GuiActionCard gac = ((GuiActionCard) e.getSource());
+				gac = ((GuiActionCard) e.getSource());
 
 				// select
-				if (SwingUtilities.isLeftMouseButton(e) && !acl.containsCardWithID(gac.getActionCard())) {
+				if (SwingUtilities.isLeftMouseButton(e) && !discardedCards.containsCardWithID(gac.getActionCard())) {
 					gac.setBorder(new MatteBorder(5, 5, 5, 5, Color.BLUE));
-					acl.add(gac.getActionCard());
-					System.out.println("~~~Addded card: " + acl.lastElement().getType());
+					discardedCards.add(gac.getActionCard());
+					System.out.println("~~~Addded card: " + discardedCards.lastElement().getType());
 					money += gac.getActionCard().moneyValue();
 					System.out.println("~~~~MONEY: " + money);
-					System.out.println("SIZE: " + acl.size());
+					System.out.println("SIZE: " + discardedCards.size());
 					Client.sendMessageToServer("selectedCard:" + gac.getActionCard().getCardID());
 				}
 				// unselect
-				if (SwingUtilities.isRightMouseButton(e) && acl.containsCardWithID(gac.getActionCard())) {
+				if (SwingUtilities.isRightMouseButton(e) && discardedCards.containsCardWithID(gac.getActionCard())) {
 					gac.setBorder(BorderFactory.createLineBorder(Color.WHITE, 4));
-					acl.removeCard(gac.getActionCard());
+					discardedCards.removeCard(gac.getActionCard());
 					System.out.println("~~~Removed card: " + gac.getActionCard().getCardID());
 					if (money != 0) {
 						money -= gac.getActionCard().moneyValue();
 						System.out.println("~~~~MONEY: " + money);
 					}
-					System.out.println("SIZE: " + acl.size());
+					System.out.println("SIZE: " + discardedCards.size());
 					Client.sendMessageToServer("unselectedCard:" + gac.getActionCard().getCardID());
 				}
 			}
@@ -266,34 +319,100 @@ public class GV_SpendMoney extends GameView {
 	@Override
 	public void updateGameData(GameData g) {
 		System.out.println("@ " + this.getClass().getSimpleName() + ".updateGameData @");
-
+		handCardsPanel = Presentation.getGameWindow().getCardPanel();
+		
 		// show cards which can be used for buying
+		EnumSet<CardType> types = EnumSet.noneOf(CardType.class);
 		PlayerData pd = g.players.get(myClientID());
+		//wait for proconsul to finish buying items
+		if(!pd.isProconsul && nrOfReadyPlayers > 0) {
+			Client.sendMessageToServer("can_i_play_now");
+			if(myClientID().equals(waitingPlayers.get(0).playerID)) {
+				enableGUIComponents();
+			}
+		} 
 		nrOfMercs = pd.numberOfMercenaries();
 		moneyCardsPanel.removeAll();
+		moneyCardsPanel.validate();
+		moneyCardsPanel.repaint();
+		
 		boolean fMercs = false;
 		boolean fBuildings = false;
 		for (int i = 0; i < pd.getNumberOfCards(); i++) {
 			ActionCard a = pd.getCard(i);
 			fMercs = a.getType().equals(CardType.ABUSEOFPOWER) || a.getType().equals(CardType.PROPAGANDA);
 			fBuildings = a.getType().equals(CardType.FREEBUILDING);
-			if (a.isMoneyCard() || fMercs || fBuildings) {
-				gac = new GuiActionCard(a, true);
-				gac.addMouseListener(cardsML);
-				moneyCardsPanel.add(gac);
+			if ((a.isMoneyCard() || fMercs || fBuildings)) {
+				types.add(a.getType());
 			}
-			if (fMercs) {
-				nrOfFreeMercsCards++;
-			}
-			if (fBuildings) {
-				nrOfFreeBuildingsCards++;
+			if(buyPressed && a.isMoneyCard()) {
+				btnKaufen.setEnabled(true);
+//				money += a.moneyValue();
 			}
 		}
+		// mark cards in the hand which can be used to buy items
+		markCardTypes(types);
+//		handCardsPanel.updateGameData(g);
+	}
+	
+	private void disableGUIComponents() {
+		btnKaufen.setEnabled(false);
+		btnWeiter.setEnabled(false);
+		handCardsPanel.setVisible(false);
+
+	}
+	private void enableGUIComponents() {
+		btnKaufen.setEnabled(true);
+		btnWeiter.setEnabled(true);
+		handCardsPanel.setVisible(true);
+		handCardsPanel.validate();
+		handCardsPanel.repaint();
+	}
+	
+	@Override
+	public void ActionCardClicked(ActionCard a) {
+		boolean fMercs, fBuildings;
+		GuiActionCard gac = new GuiActionCard(a, true);
+		
+		//proconsul
+//		if(nrOfReadyPlayers == 0) {
+			moneyCardsPanel.add(gac);
+			discardedCards.add(a);
+			moneyCardsPanel.validate();
+//			handCardsPanel = Presentation.getGameWindow().getCardPanel();
+			handCardsPanel.removeCard(a);
+			Client.sendMessageToServer("selectedCard:" + a.getCardID());
+			handCardsPanel.validate();
+			handCardsPanel.repaint();
+//		}
+		
+		fMercs = a.getType().equals(CardType.ABUSEOFPOWER) || a.getType().equals(CardType.PROPAGANDA);
+		fBuildings = a.getType().equals(CardType.FREEBUILDING);
+		if (fMercs) {
+			nrOfFreeMercsCards++;
+			System.out.println("~~~~~Free mercs: " + nrOfFreeMercsCards);
+		} else if (fBuildings) {
+			nrOfFreeBuildingsCards++;
+			System.out.println("~~~~~Free buildings: " + nrOfFreeBuildingsCards);
+		} else {
+			money += a.moneyValue();
+		}
+		System.out.println("~~~~Addded card: " + discardedCards.lastElement().getType());
+		System.out.println("~~~~MONEY: " + money);
+		System.out.println("~~~~Dicarded cards SIZE: " + discardedCards.size());
+		
 	}
 
 	@Override
 	public void activateView(GameData g) {
 		updateGameData(g);
+		waitingPlayers = g.players;
+		PlayerData pd = g.players.get(myClientID());
+		//wait for proconsul to finish his buying
+		if(!pd.isProconsul) {
+			disableGUIComponents();
+			Client.sendMessageToServer("waiting_for_proconsul");
+		} 
 	}
 
 	@Override

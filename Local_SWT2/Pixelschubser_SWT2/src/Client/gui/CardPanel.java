@@ -12,6 +12,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 import Client.Client;
 import SharedData.ActionCard;
@@ -28,7 +30,9 @@ public class CardPanel extends JScrollPane implements MouseMotionListener, Mouse
 	private static final long serialVersionUID = -1766680394953812193L;
 	private final GameViews gameViews;
 	private GuiActionCard markedCard;
+	private boolean disableAllCards;
 
+	
 	public CardPanel (GameViews gameViews) {
 		this.gameViews = gameViews;
 		
@@ -123,7 +127,7 @@ public class CardPanel extends JScrollPane implements MouseMotionListener, Mouse
 		if (cardFilter.isEmpty()) {
 			g.unMark();
 		} else {
-			if( cardFilter.contains( g.getActionCard().getType() ) ) {
+			if( cardFilter.contains( g.getActionCard().getType()) && !disableAllCards) {
 				g.markWith(Color.green);
 			} else {
 				g.markWith(Color.gray);
@@ -169,7 +173,7 @@ public class CardPanel extends JScrollPane implements MouseMotionListener, Mouse
 				markUnmarkCard(markedCard);
 			}
 			// tell GameViews
-			if (cardFilter.isEmpty() || cardFilter.contains(a.getType())) {
+			if ((cardFilter.isEmpty() || cardFilter.contains(a.getType())) && SwingUtilities.isLeftMouseButton(e)) {
 				g.markWith(Color.blue);
 				markedCard = g;
 				gameViews.ActionCardClicked(a);
@@ -188,4 +192,8 @@ public class CardPanel extends JScrollPane implements MouseMotionListener, Mouse
 
 	@Override
 	public void mouseExited(MouseEvent e) {}
+	
+	public void setDisableAllCards(boolean disableAllCards) {
+		this.disableAllCards = disableAllCards;
+	}
 }

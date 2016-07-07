@@ -24,7 +24,7 @@ public class Client {
 	private static String playerName = "Nero";
 	private static String password = "pw";
 	private static /*final*/ String playerID /*= "id"*/;
-	static {
+	/*static {
 		String pid = null;
 		File pf = new File(System.getProperty("user.home") + "\\.proconsul\\playerID");
 		if (pf.exists() && pf.canRead() && pf.length() >= 8) {
@@ -50,7 +50,7 @@ public class Client {
 		}
 		playerID = pid;
 		System.out.println("playerID: " + playerID);
-	}
+	}*/
 	
 	static {
 		playerID = UUID.randomUUID().toString();
@@ -67,10 +67,10 @@ public class Client {
 
 		// Create Logic for Start Menu
 		logic = new MenuWindowLogic();
-		//Presentation.createMenuWindow(logic);
+		Presentation.createMenuWindow(logic);
 		
 		// directly enter new game on local host
-		logic.createGame(playerName + " " + playerID.substring(1, 4));
+//		logic.createGame(playerName + " " + playerID.substring(1, 4));
 
 		// test von CFR
 		if (playerID.equals("82687bf1-df0c-4bb2-af1a-d84a492f7501") /* Laptop */
