@@ -39,7 +39,7 @@ public class GameData implements Serializable{
 			System.out.println("Cards were mixed.");
 			int numCards = discardPile.size();
 			Random rnd = new Random();
-			for (int i = numCards; i > 0; i++) {
+			for (int i = numCards; i > 0; i--) {
 				int r = rnd.nextInt(i);
 				deck.addCard( discardPile.remove(r) );
 			} 
