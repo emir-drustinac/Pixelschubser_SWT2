@@ -3,36 +3,29 @@ package Client.gui.gameview;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.EnumSet;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
 import Client.Client;
-import Client.gui.ActionCardException;
 import Client.gui.GuiActionCard;
-import Client.gui.testGUIs.SpendMoneyTest;
 import SharedData.ActionCard;
-import SharedData.GameData;
-import SharedData.PlayerData;
 import SharedData.ActionCard.CardType;
 import SharedData.ActionCardList;
+import SharedData.GameData;
+import SharedData.PlayerData;
 
 /**
  * @author chris
@@ -78,7 +71,7 @@ public class GV_SpendMoney extends GameView {
 		itemsCosts.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		JPanel totalCost = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		lblCost = new JLabel(new ImageIcon(SpendMoneyTest.class.getResource("/images/dollar_coin_stack.png")));
+		lblCost = getIconLabel("/images/dollar_coin_stack.png");
 		lblCost.setText("" + cost + "  Denari");
 		totalCost.add(lblCost);
 
@@ -93,33 +86,33 @@ public class GV_SpendMoney extends GameView {
 		createItemsML();
 		createCardsML();
 
-		mercs = new JLabel("0");
+		mercs = getIconLabel("/images/mercenary_small_2.png");
+		mercs.setText("0");
 		mercs.setToolTipText("2000 Denari");
 		mercs.setVerticalAlignment(JLabel.CENTER);
 		mercs.setHorizontalAlignment(JLabel.CENTER);
 		mercs.setVerticalTextPosition(JLabel.BOTTOM);
 		mercs.setHorizontalTextPosition(JLabel.CENTER);
-		mercs.setIcon(new ImageIcon(SpendMoneyTest.class.getResource("/images/mercenary_small_2.png")));
 		mercs.addMouseListener(itemsML);
 		itemsToBuy.add(mercs);
 
-		buildings = new JLabel("0");
+		buildings = getIconLabel("/images/building_small_2.png");
+		buildings.setText("0");
 		buildings.setToolTipText("4000 Denari");
 		buildings.setVerticalAlignment(JLabel.CENTER);
 		buildings.setHorizontalAlignment(JLabel.CENTER);
 		buildings.setVerticalTextPosition(JLabel.BOTTOM);
 		buildings.setHorizontalTextPosition(JLabel.CENTER);
-		buildings.setIcon(new ImageIcon(SpendMoneyTest.class.getResource("/images/building_small_2.png")));
 		buildings.addMouseListener(itemsML);
 		itemsToBuy.add(buildings);
 
-		cards = new JLabel("0");
+		cards = getIconLabel("/images/cards_small_2.png");
+		cards.setText("0");
 		cards.setToolTipText("1000 Denari");
 		cards.setVerticalAlignment(JLabel.CENTER);
 		cards.setHorizontalAlignment(JLabel.CENTER);
 		cards.setVerticalTextPosition(JLabel.BOTTOM);
 		cards.setHorizontalTextPosition(JLabel.CENTER);
-		cards.setIcon(new ImageIcon(SpendMoneyTest.class.getResource("/images/cards_small_2.png")));
 		cards.addMouseListener(itemsML);
 		itemsToBuy.add(cards);
 
