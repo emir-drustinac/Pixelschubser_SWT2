@@ -26,7 +26,7 @@ public class PlayerData implements Serializable{
 		this.playerID = playerID;
 		promises = new ActionCardList();
 		cards = new ActionCardList();
-		mercenaries = new MercenaryList(); // new MercList has already one merc in it
+		mercenaries = new MercenaryList(this);
 		combatPoints = 0;
 //		numberOfMercenaries = 1;	// hard coding :)
 		//numberOfMercenaries = mercenaries.size();

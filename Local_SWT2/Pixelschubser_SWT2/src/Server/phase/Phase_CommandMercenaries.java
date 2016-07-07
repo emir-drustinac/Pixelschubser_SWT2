@@ -21,10 +21,8 @@ public class Phase_CommandMercenaries extends Phase {
 				m.setDefendingProconsul(false);
 			}
 			// TODO TESTING
-			if(p.mercenaries.size() <= 3){
-				p.mercenaries.add(new Mercenary());
-				p.mercenaries.add(new Mercenary());
-				p.mercenaries.add(new Mercenary());
+			while(p.mercenaries.size() <= 3){
+				p.mercenaries.add(new Mercenary(p));
 			}
 			// /TESTING
 		}

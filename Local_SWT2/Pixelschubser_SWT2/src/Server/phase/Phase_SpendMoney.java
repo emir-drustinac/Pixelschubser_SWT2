@@ -110,7 +110,7 @@ public class Phase_SpendMoney extends Phase {
 			String[] addItems = message.split(":", 5);
 			mercsCount = Integer.parseInt(addItems[2]);
 			while(mercsCount-- > 0) {
-				pd.mercenaries.add(new Mercenary());
+				pd.mercenaries.add(new Mercenary(pd));
 			}
 			buildingsCount = Integer.parseInt(addItems[3]);
 			if(buildingsCount > 0) {
