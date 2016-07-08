@@ -11,6 +11,7 @@ public class Mercenary implements Serializable {
 	private String target;
 	public final String mercID;
 	private boolean defendingProconsul;		// to separate defending merc from offending one on Proconsul
+	public int dice;
 	
 	public Mercenary(PlayerData player) {
 		this.playerID = player.playerID;

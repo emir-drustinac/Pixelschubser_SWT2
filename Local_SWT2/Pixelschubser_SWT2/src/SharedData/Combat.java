@@ -1,26 +1,22 @@
 package SharedData;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Vector;
 
-public class Combat {
+public class Combat implements Serializable {
 	
-	private class Merc {
-		private String owner;
-		private int dice = 0;
-		private Merc(String playerID) {owner = playerID;}
-	}
-	
+	private static final long serialVersionUID = -4053919102770431105L;
 	public int stage = 0;
 	public HashMap<String, PlayerData> attackers = new HashMap<>();
 	public HashMap<String, PlayerData> defenders = new HashMap<>();
 	public HashMap<String, PlayerData> remaining_attackers = new HashMap<>();
 	public HashMap<String, PlayerData> remaining_defenders = new HashMap<>();
 	public final PlayerData defender;
-	public HashMap<String, Merc> att_mercs = new HashMap<>();
-	public HashMap<String, Merc> def_mercs = new HashMap<>();
+	public HashMap<String, Mercenary> att_mercs = new HashMap<>();
+	public HashMap<String, Mercenary> def_mercs = new HashMap<>();
 	private Random rnd;
 	
 	// activeCards
@@ -35,16 +31,18 @@ public class Combat {
 	public void addAttackingMercenary(Mercenary m) {
 		if (stage != 0) return;
 		if (!att_mercs.containsKey(m.mercID) && !def_mercs.containsKey(m.mercID)) {
-			att_mercs.put(m.mercID, new Merc(m.playerID));
+			att_mercs.put(m.mercID, m);
 			if (!attackers.containsKey(m.playerID)) attackers.put(m.playerID, m.owner);
+			if (!remaining_attackers.containsKey(m.playerID)) remaining_attackers.put(m.playerID, m.owner);
 		}
 	}
 	
 	public void addDefendingMercenary(Mercenary m) {
 		if (stage != 0) return;
 		if (!att_mercs.containsKey(m.mercID) && !def_mercs.containsKey(m.mercID)) {
-			def_mercs.put(m.mercID, new Merc(m.playerID));
+			def_mercs.put(m.mercID, m);
 			if (!defenders.containsKey(m.playerID)) defenders.put(m.playerID, m.owner);
+			if (!remaining_defenders.containsKey(m.playerID)) remaining_defenders.put(m.playerID, m.owner);
 		}
 	}
 	
@@ -62,8 +60,8 @@ public class Combat {
 			retValue = true;
 			att_mercs.remove(m.mercID);
 			boolean noMercsLeft = true;
-			for (Merc merc : att_mercs.values()) {
-				if (merc.owner.equals(m.playerID)) {
+			for (Mercenary merc : att_mercs.values()) {
+				if (merc.playerID.equals(m.playerID)) {
 					noMercsLeft = false;
 				}
 			}
@@ -75,8 +73,8 @@ public class Combat {
 			retValue = true;
 			def_mercs.remove(m.mercID);
 			boolean noMercsLeft = true;
-			for (Merc merc : def_mercs.values()) {
-				if (merc.owner.equals(m.playerID)) {
+			for (Mercenary merc : def_mercs.values()) {
+				if (merc.playerID.equals(m.playerID)) {
 					noMercsLeft = false;
 				}
 			}
@@ -89,7 +87,7 @@ public class Combat {
 	
 	public int getAttackValue() {
 		int val = 0;
-		for (Merc m : att_mercs.values()) {
+		for (Mercenary m : att_mercs.values()) {
 			val += m.dice;
 		}
 		return val;
@@ -97,8 +95,8 @@ public class Combat {
 	
 	public int getDefendValue() {
 		int val = 0;
-		for (Merc m : def_mercs.values()) {
-			if (!BRIBE || !defender.isProconsul || !defender.playerID.equals(m.owner))
+		for (Mercenary m : def_mercs.values()) {
+			if (!BRIBE || !defender.isProconsul || !defender.playerID.equals(m.playerID))
 				val += m.dice;
 		}
 		// ignoriere die Gebäude des Verteidigers
@@ -107,14 +105,14 @@ public class Combat {
 	}
 	
 	public void rollDices() {
-		for (Merc m : att_mercs.values()) {
+		for (Mercenary m : att_mercs.values()) {
 			m.dice = rollDice();
 		}
-		for (Merc m : def_mercs.values()) {
+		for (Mercenary m : def_mercs.values()) {
 			if (SLAVEREVOLT) {
 				m.dice = 2;
 			} else {
-				if (defender.isProconsul && m.owner.equals(defender.playerID)) {
+				if (defender.isProconsul && m.playerID.equals(defender.playerID)) {
 					m.dice = 1;
 				} else {
 					m.dice = rollDice();
@@ -135,10 +133,10 @@ public class Combat {
 			looters.add(p);
 		}
 		HashMap<String, Integer> fightvalues = new HashMap<>();
-		for (Merc m : att_mercs.values()) {
-			if (!fightvalues.containsKey(m.owner)) fightvalues.put(m.owner, new Integer(0));
-			Integer f = fightvalues.get(m.owner) + m.dice;
-			fightvalues.put(m.owner, f);
+		for (Mercenary m : att_mercs.values()) {
+			if (!fightvalues.containsKey(m.playerID)) fightvalues.put(m.playerID, new Integer(0));
+			Integer f = fightvalues.get(m.playerID) + m.dice;
+			fightvalues.put(m.playerID, f);
 		}
 		looters.sort(new Comparator<PlayerData>() {
 
@@ -161,5 +159,27 @@ public class Combat {
 	
 	public final boolean isProconsulFight() {
 		return defender.isProconsul;
+	}
+
+	public void printCombat() {
+		System.out.println("# Combat on ground of " + defender.name + " in stage " + stage);
+		System.out.print("# attackers:");
+		for (PlayerData p : attackers.values()) System.out.print(" '" + p.name + "'");
+		System.out.print("\n# defenders:");
+		for (PlayerData p : defenders.values()) System.out.print(" '" + p.name + "'");
+		System.out.print("\n# remaining_attackers:");
+		for (PlayerData p : remaining_attackers.values()) System.out.print(" '" + p.name + "'");
+		System.out.print("\n# remaining_defenders:");
+		for (PlayerData p : remaining_defenders.values()) System.out.print(" '" + p.name + "'");
+		System.out.println("\n# attacking mercenaries:");
+		for (Mercenary m : att_mercs.values()) System.out.println("# \t" + m.mercID + " owner:'" + m.owner.name + "' target:" + m.getTarget() + " dice:" + m.dice);
+		System.out.println("# defending mercenaries:");
+		for (Mercenary m : def_mercs.values()) System.out.println("# \t" + m.mercID + " owner:'" + m.owner.name + "' target:" + m.getTarget() + " dice:" + m.dice);
+		System.out.println("# def value: " + getDefendValue());
+		System.out.println("# att value: " + getAttackValue());
+		Vector<PlayerData> looters = getLooters();
+		System.out.print("# possible loot order:");
+		for (PlayerData p : looters) System.out.print(" '" + p.name + "'");
+		System.out.println();
 	}
 }

@@ -3,7 +3,6 @@ package Client.gui.gameview;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -25,7 +24,7 @@ import Client.Client;
 import Client.gui.MercenaryGUI;
 import Client.gui.PlayerInfos;
 import Client.gui.Presentation;
-import Client.gui.WrapLayout;
+import Client.gui.WrapPanel;
 import SharedData.ActionCard.CardType;
 import SharedData.GameData;
 import SharedData.Mercenary;
@@ -109,7 +108,7 @@ public class GV_CommandMercenaries extends GameView implements MouseListener{
 			if (gui != null) gui.updateVisuals(m);
 		}
 		
-		revalidate();
+		validate();
 	}
 
 	private int getNumberOfPlayer(String playerID) {
@@ -133,9 +132,9 @@ public class GV_CommandMercenaries extends GameView implements MouseListener{
 			for (int i = 0; i < numPlayers; i++) {
 				JPanel box = new JPanel();
 				box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
-				attackingMercenaries[i] = new JPanel(new FlowLayout());
+				attackingMercenaries[i] = new WrapPanel();
 				box.add(attackingMercenaries[i]);
-				defendingMercenaries[i] = new JPanel(new WrapLayout());
+				defendingMercenaries[i] = new WrapPanel();
 				box.add(defendingMercenaries[i]);
 				otherMercenaries.add(box);
 			}

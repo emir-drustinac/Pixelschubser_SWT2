@@ -43,4 +43,7 @@ public class PlayerList extends Vector<PlayerData> implements Serializable {
 		return null;
 	}
 
+	public int getPlayerIndex(String playerID) {
+		return indexOf(get(playerID));
+	}
 }

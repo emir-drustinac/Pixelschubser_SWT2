@@ -123,6 +123,11 @@ public class ServerGameLogic {
 			// a random proconsul
 			game.makeProconsul( game.players.get( (new Random()).nextInt(game.players.size()) ).playerID );
 			
+			// every player starts with 1 mercenary
+			for (PlayerData p : game.players) {
+				if (p.numberOfMercenaries() == 0) p.mercenaries.addMercenary();
+			}
+			
 			return true;
 		}
 		return false;

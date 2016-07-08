@@ -73,8 +73,8 @@ public class Phase_MakePromises extends Phase {
 	@Override
 	public PhaseType getNextPhaseType() {
 		//return PhaseType.DeclareWinner;
-		//return PhaseType.CommandMercenaries;
-		return PhaseType.SpendMoney; //Emir
+		return PhaseType.CommandMercenaries;
+		//return PhaseType.SpendMoney; //Emir
 	}
 
 }

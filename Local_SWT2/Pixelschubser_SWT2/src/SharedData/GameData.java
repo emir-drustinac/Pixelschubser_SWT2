@@ -11,17 +11,18 @@ public class GameData implements Serializable{
 	private static final long serialVersionUID = -4237062929837830623L;
 	public int round = 0;
 	public PhaseType phase = PhaseType.JoinGame;
-	public PlayerList players;
-	private ActionCardList deck;
-	private ActionCardList discardPile;
+	public final PlayerList players;
+	private final ActionCardList deck;
+	private final ActionCardList discardPile;
+	public final ActionCardList activeCardList;
 	public TopPlayer[] topPlayerList;
-	
-	private boolean firstRound = false;
+	public Combat combat;
 	
 	public GameData() {
 		players = new PlayerList();
 		deck = new ActionCardList();
 		discardPile = new ActionCardList();
+		activeCardList = new ActionCardList();
 	}
 
 	/**
@@ -39,7 +40,7 @@ public class GameData implements Serializable{
 			System.out.println("Cards were mixed.");
 			int numCards = discardPile.size();
 			Random rnd = new Random();
-			for (int i = numCards; i > 0; i++) {
+			for (int i = numCards; i > 0; i--) {
 				int r = rnd.nextInt(i);
 				deck.addCard( discardPile.remove(r) );
 			} 
@@ -144,15 +145,6 @@ public class GameData implements Serializable{
 		return discardPile.size();
 	}
 	
-	// FIXME round
-	public boolean isFirstRound() {
-		return firstRound;
-	}
-
-	public void setFirstRound(boolean firstRound) {
-		this.firstRound = firstRound;
-	}
-
 	public PhaseType getPhase() {
 		return phase;
 	}
@@ -188,6 +180,13 @@ public class GameData implements Serializable{
 
 	public boolean allPlayersHaveBeenPromised() {
 		return numberOfPlayersWithPromisedCards() == players.size() - 1;
+	}
+
+	public String getProconsulID() {
+		for (PlayerData p : players) {
+			if (p.isProconsul) return p.playerID;
+		}
+		return null;
 	}
 
 }
