@@ -52,6 +52,7 @@ public class ActionCard implements Serializable{
 	 */
 
 	public enum CardType {
+		noCard,
 		/* welche Phase? - NACH VERPRECHUNGEN */
 		PICKLOCK, //X1 Einbrecher - darf wann gespielt werden? - bewirkt was?
 			 		// schaue dir die Handkarten eines Spielers und nimm dir eine davon
@@ -83,7 +84,9 @@ public class ActionCard implements Serializable{
 		//************************TOTAL OF 45 ActionCards*****************************
 	}
 	
-	public final static EnumSet<CardType> noCardTypes = EnumSet.noneOf(CardType.class);
+	public final static EnumSet<CardType> noCardTypes = EnumSet.of(
+			CardType.noCard
+			);
 	
 	public final static EnumSet<CardType> commandMercenariesCardTypes = EnumSet.of(
 			CardType.SPY
@@ -200,6 +203,9 @@ public class ActionCard implements Serializable{
 			case GOLDENLION: return "Goldener Löwe";
 			case GOLDENCHARIOT: return "Goldener Wagen";
 			case JUGGLER: return "Gaukler-truppe";
+			case noCard: return "leere Karte";
+		default:
+			break;
 		}
 		return "unknown card";
 	}
@@ -239,6 +245,7 @@ public class ActionCard implements Serializable{
 		case GOLDENLION: return "";
 		case GOLDENCHARIOT: return "";
 		case JUGGLER: return "";
+		case noCard: return "";
 		}
 		return "";
 	}
@@ -266,6 +273,7 @@ public class ActionCard implements Serializable{
 		case GOLDENLION: return "1 Siegpunkt";
 		case GOLDENCHARIOT: return "1 Siegpunkt";
 		case JUGGLER: return "Keine Auswirkungen";
+		case noCard: return "";
 		}
 		return "";
 	}
@@ -290,6 +298,7 @@ public class ActionCard implements Serializable{
 		case GOLDENLION: return "/images/actioncards/golden_lion.png";
 		case GOLDENCHARIOT: return "/images/actioncards/golden_wagon.png";
 		case JUGGLER: return "/images/actioncards/juggler.png";
+		case noCard: return "/images/actioncards/x.png";
 		}
 		return "/images/card.png";
 	}
