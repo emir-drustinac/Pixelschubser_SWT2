@@ -77,6 +77,7 @@ public class Phase_Combat extends Phase {
 		}
 
 		currentCombat = getNextCombat();
+		if (currentCombat != null) currentCombat.nextStage();
 		
 		// if pro is not attacked, provide promises
 		if (!combats.containsKey(proconsulID)) providePromises();
@@ -114,18 +115,55 @@ public class Phase_Combat extends Phase {
 
 	@Override
 	public void ReceivedMessageFromClient(String clientID, String message) {
+		GameData game = logic.getGameData();
 		System.out.println("# " + this.getClass().getSimpleName() + " " + clientID + " " + message + " #");
-//		if (message.startsWith("MessageString:")) {
-//			String name = message.split(":", 2)[1];
-//			logic.addPlayer(clientID, name);
-//		}
+		if (message.startsWith("confirm:combat")) {
+			game.getPlayer(clientID).isReady = true;
+			
+			// TODO TEST
+			game.setAllPlayersReady(true);
+			
+			// next phase
+			if (game.allPlayersAreReady()) {
+				if (currentCombat == null) {
+					game.setAllPlayersReady(false);
+					logic.nextPhase();
+				} else {
+					// next stage or next Combat
+					if (currentCombat.stage < 4) {
+						currentCombat.nextStage();
+						// set players unready
+						if (currentCombat.stage == 1) {
+							for (PlayerData p : currentCombat.remaining_defenders.values()) {
+								p.isReady = false;
+							}
+						}
+						if (currentCombat.stage == 2) {
+							for (PlayerData p : currentCombat.remaining_attackers.values()) {
+								p.isReady = false;
+							}
+						}
+						if (currentCombat.stage == 3) {
+							currentCombat.defender.isReady = false;
+						}
+						if (currentCombat.stage == 4) {
+							currentCombat.defender.isReady = false;
+						}
+					} else {
+						// next combat
+						currentCombat = getNextCombat();
+						if (currentCombat != null) currentCombat.nextStage();
+						game.combat = currentCombat;
+					}
+					// tell all clients
+					com.sendGameDataToAllClients(game);
+				}
+			}
+		}
 		
 		// if a card is used, add it to the new activeCardList in GameData
 		//ActionCard a = ...
 		//logic.getGameData().activeCardList.addCard(a);
-		
-		// next phase
-		//logic.nextPhase();
 	}
 
 	@Override

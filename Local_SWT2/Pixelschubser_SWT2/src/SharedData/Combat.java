@@ -182,4 +182,23 @@ public class Combat implements Serializable {
 		for (PlayerData p : looters) System.out.print(" '" + p.name + "'");
 		System.out.println();
 	}
+
+	public void nextStage() {
+		stage++;
+		if (stage == 1) {
+			// fight started
+			// defenders may use their cards
+		}
+		if (stage == 2) {
+			// attackers may use their cards
+		}
+		if (stage == 3) {
+			// rolling dices
+			rollDices();
+		}
+		if (stage == 4) {
+			// fight ended
+			// loot or provide promises
+		}
+	}
 }

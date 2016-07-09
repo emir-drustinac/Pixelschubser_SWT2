@@ -98,11 +98,11 @@ public class GV_Combat extends GameView {
 		if (g.combat != null) {
 			// defender may use cards
 			if (g.combat.stage == 1 && g.combat.remaining_defenders.containsKey(myClientID())) {
-				types.addAll(ActionCard.defendingCardTypes);
+				types = ActionCard.defendingCardTypes;
 			}
 			// attacker may use cards
 			if (g.combat.stage == 2 && g.combat.remaining_attackers.containsKey(myClientID())) {
-				types.addAll(ActionCard.attackingCardTypes);
+				types = ActionCard.attackingCardTypes;
 			}
 		}
 		markCardTypes(types);
@@ -135,6 +135,7 @@ public class GV_Combat extends GameView {
 		}
 		
 		//updateGameData(g);
+		markCardTypes(ActionCard.noCardTypes);
 	}
 
 	@Override
