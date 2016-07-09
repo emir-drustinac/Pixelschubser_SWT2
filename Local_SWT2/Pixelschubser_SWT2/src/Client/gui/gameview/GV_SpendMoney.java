@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.EnumSet;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -18,7 +17,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.MatteBorder;
 
@@ -322,7 +320,6 @@ public class GV_SpendMoney extends GameView {
 		handCardsPanel = Presentation.getGameWindow().getCardPanel();
 		
 		// show cards which can be used for buying
-		EnumSet<CardType> types = EnumSet.noneOf(CardType.class);
 		PlayerData pd = g.players.get(myClientID());
 		//wait for proconsul to finish buying items
 		if(!pd.isProconsul && nrOfReadyPlayers > 0) {
@@ -336,22 +333,13 @@ public class GV_SpendMoney extends GameView {
 		moneyCardsPanel.validate();
 		moneyCardsPanel.repaint();
 		
-		boolean fMercs = false;
-		boolean fBuildings = false;
 		for (int i = 0; i < pd.getNumberOfCards(); i++) {
 			ActionCard a = pd.getCard(i);
-			fMercs = a.getType().equals(CardType.ABUSEOFPOWER) || a.getType().equals(CardType.PROPAGANDA);
-			fBuildings = a.getType().equals(CardType.FREEBUILDING);
-			if ((a.isMoneyCard() || fMercs || fBuildings)) {
-				types.add(a.getType());
-			}
 			if(buyPressed && a.isMoneyCard()) {
 				btnKaufen.setEnabled(true);
 //				money += a.moneyValue();
 			}
 		}
-		// mark cards in the hand which can be used to buy items
-		markCardTypes(types);
 //		handCardsPanel.updateGameData(g);
 	}
 	
@@ -412,12 +400,15 @@ public class GV_SpendMoney extends GameView {
 		if(!pd.isProconsul) {
 			disableGUIComponents();
 			Client.sendMessageToServer("waiting_for_proconsul");
-		} 
+		}
+		// mark cards in the hand which can be used to buy items
+		markCardTypes(ActionCard.moneySpendingCardTypes);
 	}
 
 	@Override
 	public void deactivateView() {
 		// TODO clear things up
+		markCardTypes(ActionCard.noCardTypes);
 	}
 
 }

@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.EnumSet;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -18,6 +19,8 @@ import Client.gui.WrapPanel;
 import SharedData.GameData;
 import SharedData.Mercenary;
 import SharedData.PlayerData;
+import SharedData.ActionCard;
+import SharedData.ActionCard.CardType;
 
 /**
  * @author chris
@@ -89,6 +92,20 @@ public class GV_Combat extends GameView {
 				defendingMercenaries[num].add(gui);
 			}
 		}
+		
+		// update usable cards
+		EnumSet<CardType> types = ActionCard.noCardTypes;
+		if (g.combat != null) {
+			// defender may use cards
+			if (g.combat.stage == 1 && g.combat.remaining_defenders.containsKey(myClientID())) {
+				types.addAll(ActionCard.defendingCardTypes);
+			}
+			// attacker may use cards
+			if (g.combat.stage == 2 && g.combat.remaining_attackers.containsKey(myClientID())) {
+				types.addAll(ActionCard.attackingCardTypes);
+			}
+		}
+		markCardTypes(types);
 	}
 
 	@Override
@@ -130,6 +147,7 @@ public class GV_Combat extends GameView {
 			attackingMercenaries[i].removeAll();
 			defendingMercenaries[i].removeAll();
 		}
+		markCardTypes(ActionCard.noCardTypes);
 	}
 
 }

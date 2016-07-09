@@ -1,10 +1,8 @@
 package Server.phase;
 
-import Client.Client;
 import Server.ServerCommunicator;
 import Server.ServerGameLogic;
 import SharedData.ActionCard;
-import SharedData.ActionCard.CardType;
 import SharedData.ActionCardList;
 import SharedData.GameData;
 import SharedData.Mercenary;

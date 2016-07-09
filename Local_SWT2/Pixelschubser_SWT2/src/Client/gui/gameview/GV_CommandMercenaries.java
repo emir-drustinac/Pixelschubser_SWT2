@@ -12,7 +12,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.HashMap;
 
 import javax.swing.BoxLayout;
@@ -25,7 +24,7 @@ import Client.gui.MercenaryGUI;
 import Client.gui.PlayerInfos;
 import Client.gui.Presentation;
 import Client.gui.WrapPanel;
-import SharedData.ActionCard.CardType;
+import SharedData.ActionCard;
 import SharedData.GameData;
 import SharedData.Mercenary;
 import SharedData.PlayerData;
@@ -164,9 +163,8 @@ public class GV_CommandMercenaries extends GameView implements MouseListener{
 		}
 		
 		updateGameData(g);
-		EnumSet<CardType> types = EnumSet.noneOf(CardType.class);
-		types.add(CardType.SPY);
-		markCardTypes(types);
+		
+		markCardTypes(ActionCard.commandMercenariesCardTypes);
 	}
 
 	@Override
@@ -181,6 +179,7 @@ public class GV_CommandMercenaries extends GameView implements MouseListener{
 			attackingMercenaries[i].removeAll();
 			defendingMercenaries[i].removeAll();
 		}
+		markCardTypes(ActionCard.noCardTypes);
 	}
 	
 	@Override

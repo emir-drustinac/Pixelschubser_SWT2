@@ -1,6 +1,7 @@
 package SharedData;
 
 import java.io.Serializable;
+import java.util.EnumSet;
 
 public class ActionCard implements Serializable{
 	
@@ -75,13 +76,51 @@ public class ActionCard implements Serializable{
 		PROPAGANDA, //X1 - ? - ?
 		FREEBUILDING, //X1 ? - ? - ?
 		// Extra Point Cards
-		GOLDENLION, //X1 Goldener Lï¿½we - kann nicht ausgespielt werden - gibt einen extra Machtpunkt
+		GOLDENLION, //X1 Goldener Löwe - kann nicht ausgespielt werden - gibt einen extra Machtpunkt
 		GOLDENCHARIOT, //X1 Goldener Wagen - kann nicht ausgespielt werden - gibt einen extra Machtpunkt
 		// Junk Karte
 		JUGGLER //X1 Gauklertruppe - kann nicht ausgespielt werden - bewirkt nichts 
 		//************************TOTAL OF 45 ActionCards*****************************
 	}
+	
+	public final static EnumSet<CardType> noCardTypes = EnumSet.noneOf(CardType.class);
+	
+	public final static EnumSet<CardType> commandMercenariesCardTypes = EnumSet.of(
+			CardType.SPY
+			);
+	
+	public final static EnumSet<CardType> attackingCardTypes = EnumSet.of(
+			CardType.ASSASSINATION,
+			CardType.CATAPULT,
+			CardType.SLAVEREVOLT,
+			CardType.BRIBE, 
+			CardType.LION,
+			CardType.SURPRISEATTACK,
+			CardType.ANNEXATION
+			);
 
+	public final static EnumSet<CardType> defendingCardTypes = EnumSet.of(
+			CardType.ASSASSINATION,
+			CardType.CATAPULT,
+			CardType.SLAVEREVOLT,
+			CardType.BRIBE,
+			CardType.LION
+			);
+
+	public final static EnumSet<CardType> moneyCardTypes = EnumSet.of(
+			CardType.DENARI1000,
+			CardType.DENARI2000,
+			CardType.DENARI3000
+			);
+	public final static EnumSet<CardType> moneySpendingCardTypes = EnumSet.of(
+			CardType.DENARI1000,
+			CardType.DENARI2000,
+			CardType.DENARI3000,
+			CardType.ABUSEOFPOWER,
+			CardType.FREEBUILDING,
+			CardType.PROPAGANDA
+			);
+	
 	private final String cardID;
 	private final CardType type;
 	private ActionCardList currentCardList;
@@ -109,38 +148,22 @@ public class ActionCard implements Serializable{
 				type == CardType.GOLDENLION;			
 	}
 	
-	// Alex: ist damit DICE Phase gemeint? 
-	// Weil sonst redundant viele Karten die es schon in usableForOffender/usableByDefender schon gibt
 	public boolean usableDuringFight() {
-		return 
+		return usableByDefender() || usableForOffender();
 //				type == CardType.ASSASSINATION ||
 //				type == CardType.CATAPULT ||
 //				type == CardType.SLAVEREVOLT ||
 //				type == CardType.BRIBE ||
 //				type == CardType.LION ||
-				type == CardType.ABUSEOFPOWER;
-	}
-
-	public boolean usableForOffender(){
-		return 
-				type == CardType.ASSASSINATION ||
-				type == CardType.CATAPULT ||
-				type == CardType.SLAVEREVOLT ||
-				type == CardType.BRIBE ||
-				type == CardType.LION ||
-				type == CardType.SURPRISEATTACK ||
-				type == CardType.ANNEXATION;
 //				type == CardType.ABUSEOFPOWER;
 	}
 
+	public boolean usableForOffender(){
+		return attackingCardTypes.contains(type);
+	}
+
 	public boolean usableByDefender() {
-		return 
-				type == CardType.ASSASSINATION ||
-				type == CardType.CATAPULT ||
-				type == CardType.SLAVEREVOLT ||
-				type == CardType.BRIBE ||
-				type == CardType.LION;
-				//type == CardType.ABUSEOFPOWER;
+		return defendingCardTypes.contains(type);
 	}
 
 	public CardType getType() {
@@ -182,7 +205,7 @@ public class ActionCard implements Serializable{
 	}
 
 	public boolean isMoneyCard() {
-		return type == CardType.DENARI1000 || type == CardType.DENARI2000 || type == CardType.DENARI3000;
+		return moneyCardTypes.contains(type);
 	}
 
 	public int moneyValue() {
@@ -278,11 +301,11 @@ public class ActionCard implements Serializable{
 		case MakePromises:
 			return false;
 		case CommandMercenaries:
-			return type == CardType.SPY;
+			return commandMercenariesCardTypes.contains(type);
 		case Combat:
 			return usableDuringFight();
 		case SpendMoney:
-			return isMoneyCard() || type==CardType.FREEBUILDING || type==CardType.PROPAGANDA;
+			return moneySpendingCardTypes.contains(type);
 		case CardLimit:
 		case DeclareWinner:
 		case GameOver:
