@@ -192,7 +192,7 @@ public class GV_Combat extends GameView {
 			text += "Verteidungswert: " + defValue + "<br>";
 			
 			for (Card c : g.combat.defendersCards) {
-				text += g.getPlayer(c.owner).name + " benutzt " + c.type + "<br>";
+				text += g.getPlayer(c.owner).name + " benutzt " + (new ActionCard(c.type).getName()) + "<br>";
 			}
 			if (g.combat.defendersCards.size() > 0) text += "<br><b>Gesamt: " + defValue + "</b>";
 			lblDefenderSummary.setText("<html><b>Verteidiger</b><br><br>" + text + "</html>");
@@ -204,7 +204,7 @@ public class GV_Combat extends GameView {
 			text += "Angriffswert: " + attValue + "<br>";
 			
 			for (Card c : g.combat.attackersCards) {
-				text += g.getPlayer(c.owner).name + " benutzt " + c.type + "<br>";
+				text += g.getPlayer(c.owner).name + " benutzt " + (new ActionCard(c.type).getName()) + "<br>";
 			}
 			if (g.combat.attackersCards.size() > 0) text += "<br><b>Gesamt: " + attValue + "</b>";
 			lblAttackerSummary.setText("<html><b>Angreifer</b><br><br>" + text + "</html>");
