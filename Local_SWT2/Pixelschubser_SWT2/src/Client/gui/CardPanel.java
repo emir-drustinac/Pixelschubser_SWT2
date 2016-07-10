@@ -39,8 +39,8 @@ public class CardPanel extends JScrollPane implements MouseMotionListener, Mouse
 		cardFilter = EnumSet.noneOf(CardType.class);;
 		cardPanel = new JPanel();
 		cardPanel.setBorder(BorderFactory.createEmptyBorder(0, 60, 0, 60));
-		cardPanel.setMinimumSize(new Dimension(200, 135));
-		cardPanel.setPreferredSize(new Dimension(200, 135));
+		//cardPanel.setMinimumSize(new Dimension(200, 135));
+		//cardPanel.setPreferredSize(new Dimension(200, 135));
 		//cardPanel.setBackground(Color.blue);
 		this.setViewportView(cardPanel);
 		// set cardPanel Borders and scrollbars
