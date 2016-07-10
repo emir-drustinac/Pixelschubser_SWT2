@@ -15,6 +15,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
+import Client.Client;
 import SharedData.ActionCard.CardType;
 import SharedData.GameData;
 import SharedData.PlayerData;
@@ -160,14 +161,12 @@ public class GameWindow extends JFrame {
 	}
 
 	public void ReceivedMessage(String m) {
-		//gameInfo.
+		//gameInfo
 		//Warning message -> make text red
 		if(m.endsWith("!")) {
-			message.setForeground(Color.RED);
-			message.setText(m);
+			setMessage(m, true);
 		} else {
-			message.setForeground(Color.BLACK);
-			message.setText(m);
+			setMessage(m, false);
 		}
 		//gameViews.
 	}
@@ -182,6 +181,15 @@ public class GameWindow extends JFrame {
 	
 	public PlayerInfos getPlayerInfo(String playerID) {
 		return playerInfos.get(playerID);
+	}
+
+	public String getMessage() {
+		return message.getText();
+	}
+
+	public void setMessage(String msg, boolean error) {
+		message.setText(msg);
+		message.setForeground(error ? Color.red : Color.black);
 	}
 
 }

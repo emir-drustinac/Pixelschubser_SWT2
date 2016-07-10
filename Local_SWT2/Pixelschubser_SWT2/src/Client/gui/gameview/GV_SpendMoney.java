@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.EnumSet;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -17,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.MatteBorder;
 
@@ -52,23 +54,24 @@ public class GV_SpendMoney extends GameView {
 	private int nrOfMercs;
 	private int nrOfFreeMercsCards = 0;
 	private int nrOfFreeBuildingsCards = 0;
+	private boolean hasFreeMercsCards = false;
+	private boolean hasFreeBuildingCards = false;
 	private int mercsToBuy = 0;
 	private int buildingsToBuy = 0;
 	private int cardsToBuy = 0;
-	private ActionCardList discardedCards;
-	private GuiActionCard gac;
 	private CardPanel handCardsPanel;
-	private boolean buyPressed;
-	private int nrOfReadyPlayers = 0;
-	private PlayerList waitingPlayers;
+	private boolean buyPressed = false;
+	private boolean cardBought = false;
+	private ActionCardList discardedCards;
+	
 
 	public GV_SpendMoney() {
 		this.setLayout(new BorderLayout());
 		
-		discardedCards = new ActionCardList();
 		// create MouseListeners:
 		createItemsML();
-		createCardsML();		
+//		createCardsML();
+		discardedCards = new ActionCardList();
 		
 		JPanel nord = new JPanel(new FlowLayout());
 		add(nord, BorderLayout.NORTH);
@@ -131,18 +134,20 @@ public class GV_SpendMoney extends GameView {
 			public void actionPerformed(ActionEvent e) {
 				btnKaufen.setEnabled(false);
 				buyPressed = true;
+				cardBought = cardsToBuy > 0 ? true : false;
 				Client.sendMessageToServer("kaufen:" + cost + ":" + 
 						mercsToBuy + ":" + buildingsToBuy + ":" + cardsToBuy);
-				//reset number of buyed items and cost
+				
+				//reset number of buyed items, cost and money
 				mercsToBuy = buildingsToBuy = cardsToBuy = cost = money = 0;
 				mercs.setText("" + mercsToBuy);
-				buildings.setText("" + mercsToBuy);
-				cards.setText("" + mercsToBuy);
+				buildings.setText("" + buildingsToBuy);
+				cards.setText("" + cardsToBuy);
 				lblCost.setText("" + cost);
-				discardedCards.removeAllElements();
 				
+				moneyCardsPanel.removeAll();
 				moneyCardsPanel.validate();
-//				moneyCardsPanel.repaint();
+				moneyCardsPanel.repaint();
 			}
 		});
 		JPanel btnKaufenPanel = new JPanel(new FlowLayout());
@@ -155,7 +160,7 @@ public class GV_SpendMoney extends GameView {
 		
 		JPanel lblCostPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		lblCost = new JLabel(new ImageIcon(getClass().getResource("/images/dollar_coin_stack.png")));
-		lblCost.setText("    " + cost + " Denari");
+		lblCost.setText("" + cost /*+ " Denari"*/);
 		lblCost.setHorizontalAlignment(JLabel.CENTER);
 		lblCostPanel.add(lblCost);
 		grids.add(lblCostPanel);
@@ -167,11 +172,13 @@ public class GV_SpendMoney extends GameView {
 		btnWeiter = new JButton("weiter");
 		btnWeiter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				nrOfReadyPlayers++;
 				btnWeiter.setEnabled(false);
 				btnKaufen.setEnabled(false);
+				
+				moneyCardsPanel.removeAll();
+				moneyCardsPanel.validate();
+				moneyCardsPanel.repaint();
 				Client.sendMessageToServer("weiter");
-				waitingPlayers.removePlayer(myClientID());
 			}
 		});
 		JPanel btnWeiterPanel = new JPanel(new FlowLayout());
@@ -180,7 +187,7 @@ public class GV_SpendMoney extends GameView {
 
 
 		JPanel middle = new JPanel(new BorderLayout());
-		JLabel lblDeck = new JLabel("Karten auf dem Ablagestapel:"); //Discard Pile
+		JLabel lblDeck = new JLabel("Abgelegte Karten:"); //Discarded Cards
 		lblDeck.setHorizontalAlignment(JLabel.CENTER);
 		middle.add(lblDeck, BorderLayout.NORTH);
 		// JPanel with cards that can be used for buying
@@ -202,85 +209,93 @@ public class GV_SpendMoney extends GameView {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				Client.sendMessageToServer("phase_infos");
-				String nrS = ((JLabel) e.getSource()).getText();
-				int nrI = Integer.parseInt(nrS);
-				
-				if (SwingUtilities.isLeftMouseButton(e)) {
-					if (((JLabel) e.getSource()).equals(mercs)) {
-						cost += 2000;
-						if(nrOfFreeMercsCards > 0 /*&& (discardedCards.contains(CardType.ABUSEOFPOWER) || discardedCards.contains(CardType.PROPAGANDA))*/) {
+//				if (btnKaufen.isEnabled()) {
+					String nrS = ((JLabel) e.getSource()).getText();
+					int nrI = Integer.parseInt(nrS);
+
+					if (SwingUtilities.isLeftMouseButton(e)) {
+						if (((JLabel) e.getSource()).equals(mercs)) {
+							cost += 2000;
+							if (nrOfFreeMercsCards > 0) {
+								cost = cost >= 2000 ? (cost - 2000) : cost;
+								nrOfFreeMercsCards--;
+								mercsToBuy = nrI + 1;
+								((JLabel) e.getSource()).setText("" + mercsToBuy);
+							} else if (cost > money) {
+								Presentation.getGameWindow().setMessage("Nicht genug Geld!", true);
+								cost -= 2000;
+							} else if (mercsToBuy + nrOfMercs > 3) {
+								Presentation.getGameWindow().setMessage("Sie können maximal 4 Söldner haben!", true);
+								cost -= 2000;
+							} else {
+								mercsToBuy = nrI + 1;
+								((JLabel) e.getSource()).setText("" + mercsToBuy);
+							}
+						}
+
+						if (((JLabel) e.getSource()).equals(buildings)) {
+							cost += 4000;
+							if (nrOfFreeBuildingsCards > 0) {
+								cost = cost >= 4000 ? (cost - 4000) : cost;
+								nrOfFreeBuildingsCards--;
+								buildingsToBuy = nrI + 1;
+								((JLabel) e.getSource()).setText("" + buildingsToBuy);
+							} else if (cost > money) {
+								Presentation.getGameWindow().setMessage("Nicht genug Geld!", true);
+								cost -= 4000;
+							} else {
+								buildingsToBuy = nrI + 1;
+								((JLabel) e.getSource()).setText("" + buildingsToBuy);
+							}
+						}
+
+						if (((JLabel) e.getSource()).equals(cards)) {
+							cost += 1000;
+							if (cost > money) {
+								Presentation.getGameWindow().setMessage("Nicht genug Geld!", true);
+								cost -= 1000;
+							} else if (cardsToBuy > 0) {
+								Presentation.getGameWindow().setMessage("Sie können maximal 1 Karte in dieser Runde kaufen!", true);
+								cost -= 1000;
+							} else {
+								if(!cardBought) {
+									cardsToBuy = nrI + 1;
+								} else {
+									cost -= 1000;
+									Presentation.getGameWindow().setMessage("Sie haben schon 1 Karte in dieser Runde gekauft!", true);
+								}
+								((JLabel) e.getSource()).setText("" + cardsToBuy);
+							}
+						}
+						lblCost.setText("" + cost /*+ "  Denari"*/);
+					}
+
+					if (SwingUtilities.isRightMouseButton(e)) {
+						if (((JLabel) e.getSource()).equals(mercs) && mercsToBuy > 0) {
 							cost = cost >= 2000 ? (cost - 2000) : cost;
-							nrOfFreeMercsCards--;
-							mercsToBuy = nrI + 1;
-							((JLabel) e.getSource()).setText("" + mercsToBuy);
+							if(hasFreeMercsCards) { 
+								nrOfFreeMercsCards++;
+							}
+							((JLabel) e.getSource()).setText("" + --mercsToBuy);
 						}
-						else if (cost > money) {
-							Client.sendMessageToServer("buy:not_enough_money");
-							cost -= 2000;
-						} else if (mercsToBuy + nrOfMercs > 3) {
-							Client.sendMessageToServer("buy:mercs_limit");
-							cost -= 2000;
-						} else {
-							mercsToBuy = nrI + 1;
-							((JLabel) e.getSource()).setText("" + mercsToBuy);
-						}
-					}
-
-					if (((JLabel) e.getSource()).equals(buildings)) {
-						cost += 4000;
-						if (nrOfFreeBuildingsCards > 0) {
+						else if (((JLabel) e.getSource()).equals(buildings) && buildingsToBuy > 0) {
 							cost = cost >= 4000 ? (cost - 4000) : cost;
-							nrOfFreeBuildingsCards--;
-							buildingsToBuy = nrI + 1;
-							((JLabel) e.getSource()).setText("" + buildingsToBuy);
-						} else if (cost > money) {
-							Client.sendMessageToServer("buy:not_enough_money");
-							cost -= 4000;
-						} else {
-							buildingsToBuy = nrI + 1;
-							((JLabel) e.getSource()).setText("" + buildingsToBuy);
+							if(hasFreeBuildingCards) {
+								nrOfFreeBuildingsCards++;
+							}
+							((JLabel) e.getSource()).setText("" + --buildingsToBuy);
 						}
-					}
-
-					if (((JLabel) e.getSource()).equals(cards)) {
-						cost += 1000;
-						if (cost > money) {
-							Client.sendMessageToServer("buy:not_enough_money");
-							cost -= 1000;
-						} else if (cardsToBuy > 0) {
-							Client.sendMessageToServer("buy:card_limit");
-							cost -= 1000;
-						} else {
-						//if(cost <= money && cardsToBuy < 1) {
-							cardsToBuy = buyPressed ? nrI : nrI + 1;
-							((JLabel) e.getSource()).setText("" + cardsToBuy);
+						else if (((JLabel) e.getSource()).equals(cards) && cardsToBuy > 0) {
+							cost = cost >= 1000 ? (cost - 1000) : cost;
+							((JLabel) e.getSource()).setText("" + --cardsToBuy);
 						}
+						lblCost.setText("" + cost /*+ "  Denari"*/);
 					}
-					lblCost.setText("" + cost + "  Denari");
 				}
-
-				if (SwingUtilities.isRightMouseButton(e)) {
-					if (((JLabel) e.getSource()).equals(mercs) && mercsToBuy > 0) {
-						cost = cost >= 2000 ? (cost - 2000) : cost;
-						nrOfFreeMercsCards++;
-						((JLabel) e.getSource()).setText("" + --mercsToBuy);
-					}
-					if (((JLabel) e.getSource()).equals(buildings) && buildingsToBuy > 0) {
-						cost = cost >= 4000 ? (cost - 4000) : cost;
-						nrOfFreeBuildingsCards++;
-						((JLabel) e.getSource()).setText("" + --buildingsToBuy);
-					}
-					if (((JLabel) e.getSource()).equals(cards) && cardsToBuy > 0) {
-						cost = cost >= 1000 ? (cost - 1000) : cost;
-						((JLabel) e.getSource()).setText("" + --cardsToBuy);
-					}
-					lblCost.setText("" + cost + "  Denari");
-				}
-			}
+//			}
 		};
 	}
-
+	/* discarded cards dont need this listener any more
 	private void createCardsML() {
 		cardsML = new MouseAdapter() {
 
@@ -312,7 +327,7 @@ public class GV_SpendMoney extends GameView {
 				}
 			}
 		};
-	}
+	}*/
 
 	@Override
 	public void updateGameData(GameData g) {
@@ -320,95 +335,68 @@ public class GV_SpendMoney extends GameView {
 		handCardsPanel = Presentation.getGameWindow().getCardPanel();
 		
 		// show cards which can be used for buying
+		EnumSet<CardType> types = EnumSet.noneOf(CardType.class);
 		PlayerData pd = g.players.get(myClientID());
-		//wait for proconsul to finish buying items
-		if(!pd.isProconsul && nrOfReadyPlayers > 0) {
-			Client.sendMessageToServer("can_i_play_now");
-			if(myClientID().equals(waitingPlayers.get(0).playerID)) {
-				enableGUIComponents();
-			}
-		} 
 		nrOfMercs = pd.numberOfMercenaries();
-		moneyCardsPanel.removeAll();
-		moneyCardsPanel.validate();
-		moneyCardsPanel.repaint();
 		
+		boolean fMercs = false;
+		boolean fBuildings = false;
 		for (int i = 0; i < pd.getNumberOfCards(); i++) {
 			ActionCard a = pd.getCard(i);
-			if(buyPressed && a.isMoneyCard()) {
-				btnKaufen.setEnabled(true);
-//				money += a.moneyValue();
-			}
+			fMercs = a.getType().equals(CardType.ABUSEOFPOWER) || a.getType().equals(CardType.PROPAGANDA);
+			fBuildings = a.getType().equals(CardType.FREEBUILDING);
+			if (a.isMoneyCard() || fMercs || fBuildings) {
+				types.add(a.getType());
+			} //else if(buyPressed && a.isMoneyCard()) {
+//				btnKaufen.setEnabled(true);
+//			}
 		}
-//		handCardsPanel.updateGameData(g);
-	}
-	
-	private void disableGUIComponents() {
-		btnKaufen.setEnabled(false);
-		btnWeiter.setEnabled(false);
-		handCardsPanel.setVisible(false);
-
-	}
-	private void enableGUIComponents() {
-		btnKaufen.setEnabled(true);
-		btnWeiter.setEnabled(true);
-		handCardsPanel.setVisible(true);
-		handCardsPanel.validate();
-		handCardsPanel.repaint();
+		// mark cards in the hand which can be used to buy items
+		if(!types.isEmpty()) {
+			markCardTypes(types);
+		}
 	}
 	
 	@Override
 	public void ActionCardClicked(ActionCard a) {
 		boolean fMercs, fBuildings;
 		GuiActionCard gac = new GuiActionCard(a, true);
+		handCardsPanel = Presentation.getGameWindow().getCardPanel();
 		
-		//proconsul
-//		if(nrOfReadyPlayers == 0) {
-			moneyCardsPanel.add(gac);
-			discardedCards.add(a);
-			moneyCardsPanel.validate();
-//			handCardsPanel = Presentation.getGameWindow().getCardPanel();
-			handCardsPanel.removeCard(a);
-			Client.sendMessageToServer("selectedCard:" + a.getCardID());
-			handCardsPanel.validate();
-			handCardsPanel.repaint();
-//		}
+		moneyCardsPanel.add(gac);
+		discardedCards.add(a);
+		moneyCardsPanel.validate();
+		handCardsPanel.removeCard(a);
+		handCardsPanel.validate();
+		handCardsPanel.repaint();			
+		Client.sendMessageToServer("selectedCard:" + a.getCardID());
 		
 		fMercs = a.getType().equals(CardType.ABUSEOFPOWER) || a.getType().equals(CardType.PROPAGANDA);
 		fBuildings = a.getType().equals(CardType.FREEBUILDING);
 		if (fMercs) {
+			hasFreeMercsCards = true;
 			nrOfFreeMercsCards++;
-			System.out.println("~~~~~Free mercs: " + nrOfFreeMercsCards);
+			System.out.println("~~~~(" + Client.getPlayerName() + ") Free mercs: " + nrOfFreeMercsCards);
 		} else if (fBuildings) {
+			hasFreeBuildingCards = true;
 			nrOfFreeBuildingsCards++;
-			System.out.println("~~~~~Free buildings: " + nrOfFreeBuildingsCards);
+			System.out.println("~~~~(" + Client.getPlayerName() + ") Free buildings: " + nrOfFreeBuildingsCards);
 		} else {
 			money += a.moneyValue();
+			btnKaufen.setEnabled(true);
 		}
-		System.out.println("~~~~Addded card: " + discardedCards.lastElement().getType());
-		System.out.println("~~~~MONEY: " + money);
-		System.out.println("~~~~Dicarded cards SIZE: " + discardedCards.size());
+		System.out.println("~~~~(" + Client.getPlayerName() + ") MONEY: " + money);
 		
 	}
 
 	@Override
 	public void activateView(GameData g) {
 		updateGameData(g);
-		waitingPlayers = g.players;
-		PlayerData pd = g.players.get(myClientID());
-		//wait for proconsul to finish his buying
-		if(!pd.isProconsul) {
-			disableGUIComponents();
-			Client.sendMessageToServer("waiting_for_proconsul");
-		}
-		// mark cards in the hand which can be used to buy items
-		markCardTypes(ActionCard.moneySpendingCardTypes);
 	}
 
 	@Override
 	public void deactivateView() {
 		// TODO clear things up
-		markCardTypes(ActionCard.noCardTypes);
 	}
 
 }

@@ -156,6 +156,14 @@ public class GameData implements Serializable{
 		}
 		System.out.println("");
 	}
+	
+	public void printDiscardPile() {
+		System.out.println("Discard pile contains " + discardPile.size() + " cards:");
+		for (ActionCard a : discardPile) {
+			System.out.print(a.getType() + " ");
+		}
+		System.out.println("");
+	}
 
 	public boolean allPlayersAreReady() {
 		for (PlayerData p : players) {

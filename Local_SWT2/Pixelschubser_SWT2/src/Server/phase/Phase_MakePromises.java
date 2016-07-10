@@ -54,10 +54,6 @@ public class Phase_MakePromises extends Phase {
 				}
 			}
 		}
-		
-		if(message.startsWith("phase_infos")) {
-			com.sendMessageToClient(clientID, "Wenn Sie mit den Versprechungen fertig sind, clicken Sie auf weiter");
-		}
 	}
 
 	@Override
@@ -72,7 +68,6 @@ public class Phase_MakePromises extends Phase {
 
 	@Override
 	public PhaseType getNextPhaseType() {
-		//return PhaseType.DeclareWinner;
 		return PhaseType.CommandMercenaries;
 		//return PhaseType.SpendMoney; //Emir
 	}

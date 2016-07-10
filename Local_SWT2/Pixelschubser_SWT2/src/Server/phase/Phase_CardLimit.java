@@ -7,6 +7,8 @@ import SharedData.PhaseType;
 import SharedData.PlayerData;
 
 public class Phase_CardLimit extends Phase {
+	
+	private int nrOfReadyPlayers = 0;
 
 	public Phase_CardLimit(ServerGameLogic logic, ServerCommunicator com) {
 		super(logic, com);
@@ -16,13 +18,21 @@ public class Phase_CardLimit extends Phase {
 	@Override
 	public void ReceivedMessageFromClient(String clientID, String message) {
 		System.out.println("# " + this.getClass().getSimpleName() + " " + clientID + " " + message + " #");
-//		if (message.startsWith("MessageString:")) {
-//			String name = message.split(":", 2)[1];
-//			logic.addPlayer(clientID, name);
-//		}
+		PlayerData pd = logic.getGameData().players.get(clientID);
 		
-		// next phase
-		//logic.nextPhase();
+		if (message.startsWith("selectedCard:")) {
+			String card = message.split(":", 2)[1];
+			pd.removeCard(pd.getCardByID(card));
+			com.sendPlayerDataToClient(clientID, pd);
+		}
+		if (message.startsWith("weiter")) {
+			nrOfReadyPlayers++;
+			if(nrOfReadyPlayers == logic.getGameData().players.size()) {
+				com.sendGameDataToAllClients(logic.getGameData());
+				logic.nextPhase();
+			}
+		}
+		
 	}
 
 	@Override

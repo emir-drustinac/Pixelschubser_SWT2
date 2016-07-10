@@ -1,7 +1,9 @@
 package Client.gui.gameview;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.EnumSet;
@@ -12,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.border.EmptyBorder;
 
 import Client.Client;
 import Client.gui.GuiActionCard;
@@ -32,7 +35,6 @@ public class GV_DrawCards extends GameView {
 	
 	public GV_DrawCards() {
 		this.setLayout(new BorderLayout());
-		Client.sendMessageToServer("phase_infos");
 		
 		// text label
 		JLabel la = new JLabel("gezogene Karten:");
@@ -85,7 +87,7 @@ public class GV_DrawCards extends GameView {
 		}
 		
 		// mark cards drawn in this round in deck bar
-//		markCardTypes(types);
+		markCardTypes(types);
 	}
 
 	@Override

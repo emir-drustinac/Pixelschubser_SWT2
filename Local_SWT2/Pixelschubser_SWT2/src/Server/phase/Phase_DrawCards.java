@@ -7,6 +7,7 @@ import Server.ServerCommunicator;
 import Server.ServerGameLogic;
 import SharedData.ActionCard;
 import SharedData.GameData;
+import SharedData.Mercenary;
 import SharedData.PhaseType;
 import SharedData.PlayerData;
 
@@ -29,6 +30,8 @@ public class Phase_DrawCards extends Phase {
 				int numCards = numPlayers + 2;
 				drawCardsForPlayer(g, p, numCards);
 			}
+			//each player gets one mercenary at the beginning
+			p.mercenaries.add(new Mercenary(p));
 		}
 		// TODO: other players draw in which order?
 //		Vector<PlayerData> orderedPlayers = new Vector<>();
@@ -68,11 +71,7 @@ public class Phase_DrawCards extends Phase {
 	@Override
 	public void ReceivedMessageFromClient(String clientID, String message) {
 		System.out.println("# " + this.getClass().getSimpleName() + " " + clientID + " " + message + " #");
-		
-		if(message.startsWith("phase_infos")) {
-			com.sendMessageToClient(clientID, "Wenn Sie bereit sind, clicken Sie auf weiter");
-		}
-		
+
 		if (message.startsWith("confirm")) {
 			logic.getGameData().getPlayer(clientID).isReady = true;
 			// next phase
