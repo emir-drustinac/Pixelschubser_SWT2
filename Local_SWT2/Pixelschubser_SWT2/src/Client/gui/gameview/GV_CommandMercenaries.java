@@ -169,7 +169,7 @@ public class GV_CommandMercenaries extends GameView implements MouseListener{
 		
 		markCardTypes(ActionCard.commandMercenariesCardTypes);
 		
-		btn.setEnabled(true);
+		btn.setEnabled(!g.getPlayer(myClientID()).isReady);
 	}
 
 	@Override
