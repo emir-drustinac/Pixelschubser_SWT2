@@ -19,7 +19,8 @@ public class Phase_DrawCards extends Phase {
 		super(logic, com);
 		System.out.println("# " + this.getClass().getSimpleName() + " entered");
 		
-		//logic.getGameData().printDeck();
+		//start new round
+		logic.nextRound();
 		
 		// draw cards for every player
 		GameData g = logic.getGameData();

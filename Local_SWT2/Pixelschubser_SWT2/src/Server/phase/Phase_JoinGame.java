@@ -63,7 +63,6 @@ public class Phase_JoinGame extends Phase {
 
 	@Override
 	public PhaseType getNextPhaseType() {
-		logic.nextRound();
 		return PhaseType.DrawCards;
 	}
 
