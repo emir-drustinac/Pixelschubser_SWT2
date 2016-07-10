@@ -281,6 +281,7 @@ public class GV_Combat extends GameView {
 			boolean iAmDefender = combat.defenders.containsKey(myClientID());
 			boolean mercIsDefender = combat.defenders.containsKey(playerID);
 			if (iAmDefender != mercIsDefender) {
+				chooseAssassinatedMerc = null;
 				Client.sendMessageToServer("combat_usecard:" + chooseAssassinatedMerc.getCardID() + ":" + mercID);
 			}
 		}
