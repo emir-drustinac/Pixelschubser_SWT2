@@ -25,6 +25,7 @@ import Client.gui.PlayerInfos;
 import Client.gui.Presentation;
 import Client.gui.WrapPanel;
 import SharedData.ActionCard;
+import SharedData.ActionCard.CardType;
 import SharedData.GameData;
 import SharedData.Mercenary;
 import SharedData.PlayerData;
@@ -47,6 +48,7 @@ public class GV_CommandMercenaries extends GameView implements MouseListener{
 	private JPanel[] defendingMercenaries;
 	
 	private boolean iAmProconsul = false;
+	private boolean haveSpyCardActive = false;
 	
 	public GV_CommandMercenaries() {
 		// build gui
@@ -82,7 +84,6 @@ public class GV_CommandMercenaries extends GameView implements MouseListener{
 			attackingMercenaries[i].removeAll();
 			defendingMercenaries[i].removeAll();
 		}
-		boolean haveSpyCardActive = true; // TODO decide haveSpyCardActive
 		for (PlayerData p : g.players) {
 			if (p.isProconsul || p.playerID.equals(myClientID()) || haveSpyCardActive) {
 				for (Mercenary m : p.mercenaries) {
@@ -169,7 +170,7 @@ public class GV_CommandMercenaries extends GameView implements MouseListener{
 
 	@Override
 	public void deactivateView() {
-		// TODO clear things up
+		haveSpyCardActive = false;
 		// clear player list
 		playerNumberList.clear();
 		// clean my mercs
@@ -180,6 +181,13 @@ public class GV_CommandMercenaries extends GameView implements MouseListener{
 			defendingMercenaries[i].removeAll();
 		}
 		markCardTypes(ActionCard.noCardTypes);
+	}
+	
+	@Override
+	public void ActionCardClicked(ActionCard a) {
+		if (a.getType() == CardType.SPY) 
+			haveSpyCardActive = true;
+		Client.sendMessageToServer("command_usecard:" + a.getCardID());
 	}
 	
 	@Override

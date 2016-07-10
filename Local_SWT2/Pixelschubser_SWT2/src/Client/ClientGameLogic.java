@@ -6,11 +6,11 @@ import SharedData.*;
 public class ClientGameLogic {
 
 	private GameData game;
-	private ClientCommunicator com;
+//	private ClientCommunicator com;
 	
 	
 	public ClientGameLogic(ClientCommunicator com) {
-		this.com = com;
+//		this.com = com;
 		com.setGameLogic(this);
 	}
 	/**
@@ -42,7 +42,7 @@ public class ClientGameLogic {
 
 	// metheods for each phase
 	
-	/* TODO DRAW CARDS:
+	/* DRAW CARDS:
 	 * 
 	 * 00 - Display Cards 
 	 * 01 - Click Draw Button 
@@ -50,23 +50,17 @@ public class ClientGameLogic {
 	 * 03 - Click EndPhase Button
 	 * 
 	 */
-	public void drawCards() {
-		com.sendMessage("i cant draw cards! server please could u draw for me and send me my cards per GameData or PlayerData?!");
-	}
 	
-	/* TODO MAKE PROMISES:
+	/* MAKE PROMISES:
 	 * 
 	 * 00 - Display Cards 
 	 * 01 - Click Card, Click again to deselect
 	 * 02 - Click Player 
 	 * 03 - Click EndPhase Button -> (check if all PLAYERS have at least 1 Card promised)
-	 * 		#### PICKLOCK CARD TODO
+	 * 		#### PICKLOCK CARD
 	*/
-	public void makePromises() {
-		
-	}
 	
-	/* TODO COMMAND MERCENARIES:
+	/* COMMAND MERCENARIES:
 	 * 
 	 * 00 - Display Merc
 	 * 01 - Click Merc
@@ -74,14 +68,10 @@ public class ClientGameLogic {
 	 * 		if player is YOUERSELF = defend
 	 * 		if player is PROCONSUL = choose to ATTACK or DEFEND Prokonsul
 	 * 03 - Click EndPhase Button -> (check if all MERCS have a TARGET )
-	 * 		### SPY CARD TODO
+	 * 		### SPY CARD
 	 */
 	
-	public void command() {
-		
-	}
-
-	/* TODO - COMBAT DEFENDER CARDS
+	/* - COMBAT DEFENDER CARDS
 	 * 
 	 * 00 - Displya Cards (Nonplayable Cards grayed out)
 	 * 01 - Click Card to Select, Click again to deselect
@@ -90,7 +80,7 @@ public class ClientGameLogic {
 	 * 03 - Click EndPhase Button
 	 */
 	
-	/* TODO - COMBAT OFFENDER CARDS
+	/* - COMBAT OFFENDER CARDS
 	 * 
 	 * 00 - Displya Cards (Nonplayable Cards grayed out)
 	 * 01 - Click Card to Select, Click again to deselect
@@ -99,18 +89,18 @@ public class ClientGameLogic {
 	 * 03 - Click EndPhase Button 
 	 */
 	
-	/* TODO - COMBAT DICE
+	/* - COMBAT DICE
 	 * 
 	 * 00 - Display Def/Off MERC
 	 * 01 - Click FIGHT Button
 	 * 02 - Display Values
-	 * 			### Click CARD TODO re-Dice
+	 * 			### Click CARD re-Dice
 	 * 			Display Values
 	 * 03 - Display Winner
 	 * 
 	 */
 	
-	/* TODO - COMBAT LOOT
+	/* - COMBAT LOOT
 	 * 
 	 * 00 - Display LOOT button
 	 * 00 - Click LOOT button
@@ -118,22 +108,14 @@ public class ClientGameLogic {
 	 * 01 - Click EndPhase Button
 	 */
 
-	public void combat() {
-
-	}
-	
-	/* TODO - SPEND MONEY
+	/* - SPEND MONEY
 	 * 
 	 * 00 - Display SHOP and CARDS
 	 * ?????????????????????????????????
 	 * xx - Click EndPhase button
 	 */
 
-	public void spendMoney() {
-
-	}
-	
-	/* TODO - CARD LIMIT
+	/* - CARD LIMIT
 	 * 
 	 * 00 - Dislpay all Cards
 	 * 			Display DISPOSE button 
@@ -142,9 +124,5 @@ public class ClientGameLogic {
 	 * 01 - Click EndPhase button
 	 * 
 	 */
-
-	public void ckeckCardLimit() {
-
-	}
 
 }

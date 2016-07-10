@@ -98,7 +98,6 @@ public class GameViews extends JPanel {
 //		if (phase == PhaseType.JoinGame) return GV_JoinGame.class.getSimpleName();
 //		if (phase == PhaseType.JoinGame) return GV_JoinGame.class.getSimpleName();
 //		if (phase == PhaseType.JoinGame) return GV_JoinGame.class.getSimpleName();
-//		// TODO add more GameViews
 //		System.out.println("ERROR: no GameView class defined in getGameViewClassNameForPhase for phase " + phase);
 //		return GV_JoinGame.class.getSimpleName();
 //		//throw new Exception("no GameView class found!");

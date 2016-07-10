@@ -24,13 +24,15 @@ public class Client {
 	private static String playerName = "Nero";
 	private static String password = "pw";
 	private static /*final*/ String playerID /*= "id"*/;
-	/*static {
+	static {
 		String pid = null;
+		String name = null;
 		File pf = new File(System.getProperty("user.home") + "\\.proconsul\\playerID");
 		if (pf.exists() && pf.canRead() && pf.length() >= 8) {
 			try {
 				BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(pf)));
 				pid = br.readLine();
+				name = br.readLine();
 				br.close();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -49,8 +51,9 @@ public class Client {
 			}
 		}
 		playerID = pid;
+		if (name != null) playerName = name;
 		System.out.println("playerID: " + playerID);
-	}*/
+	}
 	
 	static {
 		playerID = UUID.randomUUID().toString();
@@ -70,7 +73,7 @@ public class Client {
 		Presentation.createMenuWindow(logic);
 		
 		// directly enter new game on local host
-//		logic.createGame(playerName + " " + playerID.substring(1, 4));
+//		logic.createGame(playerName /*+ " " + playerID.substring(1, 4)*/);
 
 		// test von CFR
 		if (playerID.equals("82687bf1-df0c-4bb2-af1a-d84a492f7501") /* Laptop */
@@ -180,7 +183,6 @@ public class Client {
 				Thread.sleep(2500);
 				com.sendMessage("Hello World");
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -194,8 +196,7 @@ public class Client {
 		game = new ClientGameLogic(com);
 		com.setAuth(playerID, playerName, password);
 		try {
-			// TODO: remove {true ? "127.0.0.1" : } for operative use
-			com.setServer(true ? "127.0.0.1" : JOptionPane.showInputDialog("Server IP"));
+			com.setServer(JOptionPane.showInputDialog("Server IP"));
 			com.connect();
 			System.out.println("client up");
 		} catch (IOException e) {
@@ -212,7 +213,6 @@ public class Client {
 					ex.printStackTrace();
 				}
 			} else {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

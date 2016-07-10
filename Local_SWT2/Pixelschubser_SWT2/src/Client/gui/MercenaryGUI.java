@@ -1,6 +1,10 @@
 package Client.gui;
 
 import java.awt.Color;
+import java.awt.Image;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -25,11 +29,20 @@ public class MercenaryGUI extends JPanel{
 	 */
 	private static final long serialVersionUID = 2924473578897929872L;
 	
-	private String playerID;
-	private String mercID;
-	private int augenZahl;
-	private JLabel lbl;
+	private static final ImageIcon[] dieIcons = new ImageIcon[6];
+	private static final Random rnd = new Random();
+	static {
+		for (int i = 1; i <= 6; i++) {
+			dieIcons[i-1] = getImageIcon("/images/dice_side_" + i + ".png", 23);
+		}
+	}
+	
+	private final String playerID;
+	private final String mercID;
+	private final int augenZahl;
+	private final JLabel lbl;
 	private boolean small;
+	private int borderWidth;
 	//private JLabel[] diceLabel;
 	
 	public MercenaryGUI(String playerID, String mercID, int augenZahl) {
@@ -39,11 +52,12 @@ public class MercenaryGUI extends JPanel{
 		
 		this.playerID = playerID;
 		this.mercID = mercID;
-		this.augenZahl = augenZahl;
+		this.augenZahl = Math.max(Math.min(augenZahl, 6), 1);
 		this.small = small;
+		this.borderWidth = small ? 2 : 5;
 		
 		setBackground(bgColor);
-		setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
+		setBorder(BorderFactory.createLineBorder(Color.WHITE, borderWidth));
 		
 		//setLayout(new CardLayout(0, 0));
 		
@@ -95,6 +109,12 @@ public class MercenaryGUI extends JPanel{
 	 * @param path
 	 * @return
 	 */
+	private static ImageIcon getImageIcon(String path, int width) {
+		ImageIcon icon = getImageIcon(path);
+		int height = (int) ((float)icon.getIconHeight() * (float)width / (float)icon.getIconWidth());
+		icon = new ImageIcon(icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+		return icon;
+	}
 	private static ImageIcon getImageIcon(String path) {
 		java.net.URL imgUrl = MercenaryGUI.class.getResource(path);
 		ImageIcon icon = new ImageIcon(imgUrl);
@@ -107,9 +127,9 @@ public class MercenaryGUI extends JPanel{
 
 	public void setSelected(boolean b){
 		if(b){
-			setBorder(BorderFactory.createLineBorder(Color.GREEN, 5));
+			setBorder(BorderFactory.createLineBorder(Color.GREEN, borderWidth));
 		}else{
-			setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
+			setBorder(BorderFactory.createLineBorder(Color.WHITE, borderWidth));
 		}
 		
 	}
@@ -125,6 +145,30 @@ public class MercenaryGUI extends JPanel{
 		setBackground(c);
 		// set icon
 		lbl.setIcon(getImageIcon(getImagePath(deff)));
+	}
+	public void showDie() {
+		lbl.setIcon(dieIcons[augenZahl-1]);
+	}
+	public void animateDie() {
+		final Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+			private int nums = 0;
+			private int del = 0;
+			@Override
+			public void run() {
+				if (nums > 5) {
+					timer.cancel();
+					lbl.setIcon(dieIcons[augenZahl-1]);
+				} else {
+					del--;
+					if (del < 0) {
+						nums++;
+						del = nums*5;
+						lbl.setIcon(dieIcons[ rnd.nextInt(6) ]);
+					}
+				}
+			}
+		}, 100 + rnd.nextInt(200), 20);
 	}
 	
 }

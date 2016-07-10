@@ -50,8 +50,9 @@ public class ServerCommunicator implements Runnable, SocketWorkerManager{
 		}
 		String playerID = ((ServerSocketWorker)s).getClientID();
 		String name = ((ServerSocketWorker)s).getUsername();
-		// TODO player could already be in the player list after connection is lost
-		game.addPlayer(playerID, name);
+		// player could already be in the player list after connection is lost
+		if (game.getGameData().getPlayer(playerID) == null)
+			game.addPlayer(playerID, name);
 	}
 
 	public void sendGameDataToAllClients(GameData g) {
@@ -67,7 +68,6 @@ public class ServerCommunicator implements Runnable, SocketWorkerManager{
 					System.out.println(" > to " + sw.getClientID());
 					sw.sendGameData(g);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -84,7 +84,6 @@ public class ServerCommunicator implements Runnable, SocketWorkerManager{
 						sw.sendPlayerData(p);
 					}
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -101,7 +100,6 @@ public class ServerCommunicator implements Runnable, SocketWorkerManager{
 				try {
 					sw.sendMessage(m);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -119,7 +117,6 @@ public class ServerCommunicator implements Runnable, SocketWorkerManager{
 				try {
 					if (sw.getClientID().equals(PID)) sw.sendMessage(m);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

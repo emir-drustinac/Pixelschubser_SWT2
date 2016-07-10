@@ -95,17 +95,14 @@ public class Phase_DrawCards extends Phase {
 
 	@Override
 	public void ReceivedGameStateFromClient(String clientID, GameData g) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void ReceivedPlayerDataFromClient(String clientID, PlayerData p) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public PhaseType getNextPhaseType() {
-//		return PhaseType.Combat; // TODO TEST
 		return PhaseType.MakePromises;
 	}
 

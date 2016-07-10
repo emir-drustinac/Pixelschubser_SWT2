@@ -50,26 +50,21 @@ public class Phase_MakePromises extends Phase {
 				if (game.numberOfPlayersWithPromisedCards() == game.players.size() - 1) {
 					logic.nextPhase();
 				} else {
-					// TODO send client message!
+					com.sendMessageToClient(clientID, "ERROR: u have not promised cards to all players yet!");
 				}
 			}
 		}
 	}
 
 	@Override
-	public void ReceivedGameStateFromClient(String clientID, GameData g) {
-		// TODO Auto-generated method stub
-	}
+	public void ReceivedGameStateFromClient(String clientID, GameData g) {}
 
 	@Override
-	public void ReceivedPlayerDataFromClient(String clientID, PlayerData p) {
-		// TODO Auto-generated method stub
-	}
+	public void ReceivedPlayerDataFromClient(String clientID, PlayerData p) {}
 
 	@Override
 	public PhaseType getNextPhaseType() {
 		return PhaseType.CommandMercenaries;
-		//return PhaseType.SpendMoney; //Emir
 	}
 
 }

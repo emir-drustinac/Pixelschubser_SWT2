@@ -14,7 +14,6 @@ public class GameData implements Serializable{
 	public final PlayerList players;
 	private final ActionCardList deck;
 	private final ActionCardList discardPile;
-	public final ActionCardList activeCardList;
 	public TopPlayer[] topPlayerList;
 	public Combat combat;
 	
@@ -22,7 +21,6 @@ public class GameData implements Serializable{
 		players = new PlayerList();
 		deck = new ActionCardList();
 		discardPile = new ActionCardList();
-		activeCardList = new ActionCardList();
 	}
 
 	/**
@@ -31,7 +29,7 @@ public class GameData implements Serializable{
 	 */
 	public void discardCard(ActionCard a) {
 		discardPile.addCard(a);
-		// TODO: automatically remove card from its current ActionCardList by letting the card know on which list it is?
+		// automatically remove card from its current ActionCardList by letting the card know on which list it is!
 	}
 
 	public ActionCard takeCard() {

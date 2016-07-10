@@ -142,4 +142,10 @@ public class PlayerData implements Serializable{
 		return null;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof PlayerData)) return false;
+		return playerID.equals(((PlayerData)obj).playerID);
+	}
+
 }

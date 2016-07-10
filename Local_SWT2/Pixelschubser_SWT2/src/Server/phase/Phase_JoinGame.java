@@ -38,7 +38,7 @@ public class Phase_JoinGame extends Phase {
 						if (p1.isReady) readyPlayers++;
 					}
 					// start game if all are ready
-					if (readyPlayers == numPlayers && numPlayers > (2&0)) { // TODO TEST MODE > 2 players
+					if (readyPlayers == numPlayers && numPlayers > 2) {
 						logic.startGame();
 						logic.nextPhase();
 						return;
@@ -56,26 +56,13 @@ public class Phase_JoinGame extends Phase {
 	}
 
 	@Override
-	public void ReceivedGameStateFromClient(String clientID, GameData g) {
-		// TODO Auto-generated method stub
-
-	}
+	public void ReceivedGameStateFromClient(String clientID, GameData g) {}
 
 	@Override
-	public void ReceivedPlayerDataFromClient(String clientID, PlayerData p) {
-		// TODO Auto-generated method stub
-
-	}
+	public void ReceivedPlayerDataFromClient(String clientID, PlayerData p) {}
 
 	@Override
 	public PhaseType getNextPhaseType() {
-		// add some more players
-		// TODO TEST MODE
-		if (logic.getGameData().players.size() < 4) logic.getGameData().addPlayer("a1", "Alpha");
-		if (logic.getGameData().players.size() < 4) logic.getGameData().addPlayer("b2", "Beta");
-		if (logic.getGameData().players.size() < 4) logic.getGameData().addPlayer("c3", "Gamma");
-		if (logic.getGameData().players.size() < 4) logic.getGameData().addPlayer("d4", "Delta");
-		
 		logic.nextRound();
 		return PhaseType.DrawCards;
 	}

@@ -66,14 +66,10 @@ public class Phase_SpendMoney extends Phase {
 	}
 
 	@Override
-	public void ReceivedGameStateFromClient(String clientID, GameData g) {
-		// TODO Auto-generated method stub
-	}
+	public void ReceivedGameStateFromClient(String clientID, GameData g) {}
 
 	@Override
-	public void ReceivedPlayerDataFromClient(String clientID, PlayerData p) {
-		// TODO Auto-generated method stub
-	}
+	public void ReceivedPlayerDataFromClient(String clientID, PlayerData p) {}
 
 	@Override
 	public PhaseType getNextPhaseType() {

@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.Vector;
 
+import SharedData.ActionCard.CardType;
+
 public class Combat implements Serializable {
 	
 	private static final long serialVersionUID = -4053919102770431105L;
@@ -26,6 +28,8 @@ public class Combat implements Serializable {
 	
 	public Combat(PlayerData owner) {
 		defender = owner;
+		defenders.put(owner.playerID, owner);
+		remaining_defenders.put(owner.playerID, owner);
 	}
 	
 	public void addAttackingMercenary(Mercenary m) {
@@ -55,6 +59,7 @@ public class Combat implements Serializable {
 	}
 	
 	public boolean removeMercenary(Mercenary m) {
+		if (m == null) return false;
 		boolean retValue = false;
 		if (att_mercs.containsKey(m.mercID)) {
 			retValue = true;
@@ -78,7 +83,7 @@ public class Combat implements Serializable {
 					noMercsLeft = false;
 				}
 			}
-			if (noMercsLeft) {
+			if (noMercsLeft && !defender.playerID.equals(m.playerID)) {
 				remaining_defenders.remove(m.playerID);
 			}
 		}
@@ -89,6 +94,9 @@ public class Combat implements Serializable {
 		int val = 0;
 		for (Mercenary m : att_mercs.values()) {
 			val += m.dice;
+		}
+		for (Card c : attackersCards) {
+			if (c.type == CardType.CATAPULT) val += 3;
 		}
 		return val;
 	}
@@ -101,6 +109,9 @@ public class Combat implements Serializable {
 		}
 		// ignoriere die Gebäude des Verteidigers
 		if (!SURPRISEATTACK) val += defender.numberOfBuildings;
+		for (Card c : defendersCards) {
+			if (c.type == CardType.CATAPULT) val += 3;
+		}
 		return val;
 	}
 	
@@ -160,6 +171,10 @@ public class Combat implements Serializable {
 	public final boolean isProconsulFight() {
 		return defender.isProconsul;
 	}
+	
+	public final boolean attackersWon() {
+		return getDefendValue() < getAttackValue();
+	}
 
 	public void printCombat() {
 		System.out.println("# Combat on ground of " + defender.name + " in stage " + stage);
@@ -177,6 +192,12 @@ public class Combat implements Serializable {
 		for (Mercenary m : def_mercs.values()) System.out.println("# \t" + m.mercID + " owner:'" + m.owner.name + "' target:" + m.getTarget() + " dice:" + m.dice);
 		System.out.println("# def value: " + getDefendValue());
 		System.out.println("# att value: " + getAttackValue());
+		System.out.println("# attackersCards:");
+		for (Card c : attackersCards) System.out.println("# \towner:" + c.owner + " type:" + c.type);
+		System.out.println("# defendersCards:");
+		for (Card c : defendersCards) System.out.println("# \towner:" + c.owner + " type:" + c.type);
+		System.out.println("# lootedCards:");
+		for (Card c : lootedCards) System.out.println("# \towner:" + c.owner + " type:" + c.type);
 		Vector<PlayerData> looters = getLooters();
 		System.out.print("# possible loot order:");
 		for (PlayerData p : looters) System.out.print(" '" + p.name + "'");
@@ -187,6 +208,13 @@ public class Combat implements Serializable {
 		stage++;
 		if (stage == 1) {
 			// fight started
+			// reset all dices to 0 (undice em ;)
+			for (Mercenary m : att_mercs.values()) {
+				m.dice = 0;
+			}
+			for (Mercenary m : def_mercs.values()) {
+				m.dice = 0;
+			}
 			// defenders may use their cards
 		}
 		if (stage == 2) {
@@ -200,5 +228,32 @@ public class Combat implements Serializable {
 			// fight ended
 			// loot or provide promises
 		}
+	}
+	
+	@SuppressWarnings("serial")
+	public final class Card implements Serializable {
+		public final String owner;
+		public final CardType type;
+		public Card(String owner, CardType type) {
+			this.owner = owner;
+			this.type = type;
+		}
+	}
+	public final Vector<Card> attackersCards = new Vector<>();
+	public final Vector<Card> defendersCards = new Vector<>();
+	public boolean addCardUsed(ActionCard a, String owner) {
+		if (remaining_attackers.containsKey(owner)) {
+			attackersCards.add(new Card(owner, a.getType()));
+			return true;
+		}
+		if (remaining_defenders.containsKey(owner)) {
+			defendersCards.add(new Card(owner, a.getType()));
+			return true;
+		}
+		return false;
+	}
+	public final Vector<Card> lootedCards = new Vector<>();
+	public void addLootedCard(ActionCard a, String owner) {
+			lootedCards.add(new Card(owner, a.getType()));
 	}
 }

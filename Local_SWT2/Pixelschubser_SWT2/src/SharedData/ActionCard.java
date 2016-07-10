@@ -324,7 +324,6 @@ public class ActionCard implements Serializable{
 	}
 
 	public boolean isValidTarget(PlayerData player, PlayerData target) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

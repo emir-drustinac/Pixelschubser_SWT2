@@ -11,7 +11,7 @@ public class Presentation {
 	private static MenuWindow menuWindow;
 	
 	public static void createMenuWindow(MenuWindowLogic logic) {
-		menuWindow = new MenuWindow(logic); //TODO
+		menuWindow = new MenuWindow(logic);
 		//logic.setGUI(menuWindow); // unsauber aber was solls
 	}
 

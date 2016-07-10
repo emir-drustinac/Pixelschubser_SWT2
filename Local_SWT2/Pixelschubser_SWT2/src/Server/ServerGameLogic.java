@@ -4,9 +4,16 @@ import java.util.Random;
 
 import javax.swing.JOptionPane;
 
-import Client.gui.MenuWindow;
-import Client.gui.MenuWindowLogic;
-import Server.phase.*;
+import Server.phase.Phase;
+import Server.phase.Phase_CardLimit;
+import Server.phase.Phase_Combat;
+import Server.phase.Phase_CommandMercenaries;
+import Server.phase.Phase_DeclareWinner;
+import Server.phase.Phase_DrawCards;
+import Server.phase.Phase_GameOver;
+import Server.phase.Phase_JoinGame;
+import Server.phase.Phase_MakePromises;
+import Server.phase.Phase_SpendMoney;
 import SharedData.ActionCard;
 import SharedData.ActionCard.CardType;
 import SharedData.GameData;
@@ -55,7 +62,7 @@ public class ServerGameLogic {
 		*/
 		
 		// runde
-		// TODO: init deck
+		// init deck
 		// karten vergeben
 		//
 		
@@ -112,7 +119,7 @@ public class ServerGameLogic {
 			// to start game we need:
 			
 			// all cards
-			// TODO create all cards and put em on to discard pile
+			// create all cards and put em on to discard pile
 			createDeck();
 			/*for (int i = 0; i < 3; i++) {
 				ActionCard a = new ActionCard();
@@ -177,6 +184,10 @@ public class ServerGameLogic {
 
 	public GameData getGameData() {
 		return game;
+	}
+	
+	public void setGameData(GameData g) {
+		game = g;
 	}
 	
 	/**

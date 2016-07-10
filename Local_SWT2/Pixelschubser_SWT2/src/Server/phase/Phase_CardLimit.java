@@ -37,12 +37,10 @@ public class Phase_CardLimit extends Phase {
 
 	@Override
 	public void ReceivedGameStateFromClient(String clientID, GameData g) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void ReceivedPlayerDataFromClient(String clientID, PlayerData p) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override

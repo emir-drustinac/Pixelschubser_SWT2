@@ -2,6 +2,7 @@ package Server.phase;
 
 import Server.ServerCommunicator;
 import Server.ServerGameLogic;
+import SharedData.ActionCard;
 import SharedData.GameData;
 import SharedData.Mercenary;
 import SharedData.PhaseType;
@@ -20,11 +21,6 @@ public class Phase_CommandMercenaries extends Phase {
 				m.setTarget("");
 				m.setDefendingProconsul(false);
 			}
-			// TODO TESTING
-			while(p.mercenaries.size() <= 3){
-				p.mercenaries.add(new Mercenary(p));
-			}
-			// /TESTING
 		}
 	}
 
@@ -75,6 +71,22 @@ public class Phase_CommandMercenaries extends Phase {
 			if (game.allPlayersAreReady()) {
 				logic.nextPhase();
 			} else {
+				com.sendGameDataToAllClients(game);
+			}
+		}
+		
+		// use card
+		if (message.startsWith("command_usecard:")) {
+			// if a card is used
+			String[] s = message.split(":", 2);
+			ActionCard a = game.getPlayer(clientID).getCardByID(s[1]);
+			if (a == null) {
+				com.sendMessageToClient(clientID, "ERROR: you don't have a card with cardID " + s[1]);
+			} else {
+				// discard ActionCard
+				logic.getGameData().discardCard(a);
+
+				// tell all clients
 				com.sendGameDataToAllClients(game);
 			}
 		}

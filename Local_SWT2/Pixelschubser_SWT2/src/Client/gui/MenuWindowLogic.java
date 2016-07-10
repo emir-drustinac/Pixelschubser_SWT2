@@ -26,7 +26,7 @@ public class MenuWindowLogic {
 	public boolean createGame(String playerName){
 		
 		if(!playerName.equals("")){
-			// TODO: create + connect
+			// create + connect
 			Client.create(playerName);
 			return true;
 		} else{
@@ -38,7 +38,7 @@ public class MenuWindowLogic {
 	public boolean connectToGame(String ip, String playerName) {
 		// test auf Fehlerangaben + fehelermeldung
 		if (validate(ip) && !playerName.equals("")) {
-			// TODO: connect
+			// connect
 			Client.connect(ip, playerName);
 			return true;
 		} else {

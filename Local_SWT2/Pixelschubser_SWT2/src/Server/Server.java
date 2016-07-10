@@ -27,7 +27,6 @@ public class Server {
 			//System.in.read();
 			//com.shutdown();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -36,7 +35,7 @@ public class Server {
 		if (db == null) {
 			db = new Database();
 		}
-		// TODO game.setGameData(db.loadGameData());
+		gameLogic.setGameData(db.loadGameData());
 	}
 
 	public void saveGame() {
