@@ -13,7 +13,7 @@ import SharedData.PlayerData;
 
 public class Phase_DrawCards extends Phase {
 	
-	private static Timer timer;
+	private Timer timer;
 
 	public Phase_DrawCards(ServerGameLogic logic, ServerCommunicator com) {
 		super(logic, com);
@@ -78,7 +78,7 @@ public class Phase_DrawCards extends Phase {
 			if (logic.getGameData().allPlayersAreReady()) {
 				logic.nextPhase();
 			}
-			// auto next after x Seconds
+			// auto next after 3 Seconds
 			if (timer == null) {
 				timer = new Timer();
 				timer.schedule(new TimerTask() {
@@ -88,7 +88,7 @@ public class Phase_DrawCards extends Phase {
 						System.out.println("<Timer>");
 						logic.nextPhase();
 					}
-				}, 1000);
+				}, 3000);
 			}
 		}
 	}
