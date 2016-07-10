@@ -34,8 +34,8 @@ public class Phase_SpendMoney extends Phase {
 			String[] card = message.split(":", 2);
 			ActionCard ac = pd.getCardByID(card[1]);
 			pd.removeCard(ac);
-			
-			com.sendGameDataToAllClients(logic.getGameData());
+
+			sendGameDataToAllClients();
 		}
 		
 		if (message.startsWith("kaufen:")) {
@@ -56,15 +56,15 @@ public class Phase_SpendMoney extends Phase {
 				cardsCount--;
 				com.sendPlayerDataToClient(clientID, pd);
 			}
-			
-			com.sendGameDataToAllClients(logic.getGameData());
+
+			sendGameDataToAllClients();
 		}
 		
 		if (message.startsWith("weiter")) {
 			nrOfReadyPlayers++;
 			System.out.println("#####nrOfReadyPlayers: " + nrOfReadyPlayers);
 			if(nrOfReadyPlayers == logic.getGameData().players.size()) {
-				com.sendGameDataToAllClients(logic.getGameData());
+				sendGameDataToAllClients();
 				logic.nextPhase();
 			}
 		}

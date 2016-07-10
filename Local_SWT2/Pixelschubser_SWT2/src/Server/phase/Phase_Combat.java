@@ -231,7 +231,7 @@ public class Phase_Combat extends Phase {
 						}
 					}
 					// tell all clients
-					com.sendGameDataToAllClients(game);
+					sendGameDataToAllClients();
 				}
 			}
 		}
@@ -294,7 +294,7 @@ public class Phase_Combat extends Phase {
 				logic.getGameData().discardCard(a);
 
 				// tell all clients
-				com.sendGameDataToAllClients(game);
+				sendGameDataToAllClients();
 			}
 		}
 	}

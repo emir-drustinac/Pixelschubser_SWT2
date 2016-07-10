@@ -31,16 +31,16 @@ public class Phase_MakePromises extends Phase {
 					if (proconsul.getNumberOfCards() > numberOfPlayersWithoutPromises
 						|| player.getNumberOfPromisedCards() == 0 ) {
 						player.addPromise(actioncard);
-//						com.sendMessageToClient(clientID, "promise_ack:true:u promised a card");
+						com.sendMessageToClient(clientID, "u promised a card to " + player.name);
 						//com.sendPlayerDataToClient(player.playerID, player);
 						//com.sendPlayerDataToClient(clientID, player);
-						com.sendGameDataToAllClients(game);
+						sendGameDataToAllClients();
 					} else {
-						com.sendMessageToClient(clientID, "promise_ack:false:Warning: you would not have enough cards left!");
+						com.sendMessageToClient(clientID, "Warning: you would not have enough cards left to promise all players!");
 					}
 				} else {
-					com.sendMessageToClient(clientID, "promise_ack:false:ERROR: Card " + s[1] + " or Player " + s[2] + " not found!");
-					com.sendGameDataToAllClients(game);
+					com.sendMessageToClient(clientID, "ERROR: Card " + s[1] + " or Player " + s[2] + " not found!");
+					sendGameDataToAllClients();
 				}
 			}
 

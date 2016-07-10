@@ -28,7 +28,7 @@ public class Phase_CardLimit extends Phase {
 		if (message.startsWith("weiter")) {
 			nrOfReadyPlayers++;
 			if(nrOfReadyPlayers == logic.getGameData().players.size()) {
-				com.sendGameDataToAllClients(logic.getGameData());
+				sendGameDataToAllClients();
 				logic.nextPhase();
 			}
 		}

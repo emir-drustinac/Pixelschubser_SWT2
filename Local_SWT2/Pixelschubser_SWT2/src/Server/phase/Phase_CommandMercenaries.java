@@ -62,7 +62,7 @@ public class Phase_CommandMercenaries extends Phase {
 			}
 			// merc mercID not found
 			//com.sendMessageToClient(clientID, "ERROR: mercID not found: " + message);
-			com.sendGameDataToAllClients(game);
+			sendGameDataToAllClients();
 		}
 		
 		if (message.startsWith("confirm:command_mercs")) {
@@ -71,7 +71,7 @@ public class Phase_CommandMercenaries extends Phase {
 			if (game.allPlayersAreReady()) {
 				logic.nextPhase();
 			} else {
-				com.sendGameDataToAllClients(game);
+				sendGameDataToAllClients();
 			}
 		}
 		
@@ -87,7 +87,7 @@ public class Phase_CommandMercenaries extends Phase {
 				logic.getGameData().discardCard(a);
 
 				// tell all clients
-				com.sendGameDataToAllClients(game);
+				sendGameDataToAllClients();
 			}
 		}
 	}
