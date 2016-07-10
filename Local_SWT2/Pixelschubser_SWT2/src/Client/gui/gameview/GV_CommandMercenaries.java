@@ -46,6 +46,7 @@ public class GV_CommandMercenaries extends GameView implements MouseListener{
 	private JPanel myMercenaries;
 	private JPanel[] attackingMercenaries;
 	private JPanel[] defendingMercenaries;
+	private JButton btn;
 	
 	private boolean iAmProconsul = false;
 	private boolean haveSpyCardActive = false;
@@ -62,7 +63,7 @@ public class GV_CommandMercenaries extends GameView implements MouseListener{
 		myGUIMercs = new HashMap<>();
 		
 		// button to proceed in game
-		JButton btn = new JButton("weiter");
+		btn = new JButton("weiter");
 		btn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -167,6 +168,8 @@ public class GV_CommandMercenaries extends GameView implements MouseListener{
 		updateGameData(g);
 		
 		markCardTypes(ActionCard.commandMercenariesCardTypes);
+		
+		btn.setEnabled(true);
 	}
 
 	@Override
