@@ -266,6 +266,7 @@ public class GV_Combat extends GameView {
 		}
 		markCardTypes(types);
 		btnNext.setVisible(btnNextActive);
+		btnNext.setEnabled(!g.getPlayer(myClientID()).isReady);
 	}
 	
 	@Override

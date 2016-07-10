@@ -393,6 +393,8 @@ public class GV_SpendMoney extends GameView {
 
 	@Override
 	public void activateView(GameData g) {
+		btnWeiter.setEnabled(true);
+		btnKaufen.setEnabled(true);
 		updateGameData(g);
 	}
 
