@@ -31,15 +31,15 @@ public class Phase_MakePromises extends Phase {
 					if (proconsul.getNumberOfCards() > numberOfPlayersWithoutPromises
 						|| player.getNumberOfPromisedCards() == 0 ) {
 						player.addPromise(actioncard);
-						com.sendMessageToClient(clientID, "u promised a card to " + player.name);
+						com.sendMessageToClient(clientID, "Sie haben die Karte dem Spieler: " + player.name + " versprochen.");
 						//com.sendPlayerDataToClient(player.playerID, player);
 						//com.sendPlayerDataToClient(clientID, player);
 						sendGameDataToAllClients();
 					} else {
-						com.sendMessageToClient(clientID, "Warning: you would not have enough cards left to promise all players!");
+						com.sendMessageToClient(clientID, "Sie hätten nicht genug Karten übrig um allen Spielern Karte(n) zu versprechen!");
 					}
 				} else {
-					com.sendMessageToClient(clientID, "ERROR: Card " + s[1] + " or Player " + s[2] + " not found!");
+					com.sendMessageToClient(clientID, "Karte " + s[1] + " oder Spieler " + s[2] + " nicht gefunden!");
 					sendGameDataToAllClients();
 				}
 			}
@@ -50,7 +50,7 @@ public class Phase_MakePromises extends Phase {
 				if (game.numberOfPlayersWithPromisedCards() == game.players.size() - 1) {
 					logic.nextPhase();
 				} else {
-					com.sendMessageToClient(clientID, "ERROR: u have not promised cards to all players yet!");
+					com.sendMessageToClient(clientID, "Sie haben noch nicht allen Spielern Karte(n) versprochen!");
 				}
 			}
 		}

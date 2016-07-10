@@ -242,7 +242,7 @@ public class Phase_Combat extends Phase {
 			String[] s = message.split(":", 3);
 			ActionCard a = game.getPlayer(clientID).getCardByID(s[1]);
 			if (a == null) {
-				com.sendMessageToClient(clientID, "ERROR: you don't have a card with cardID " + s[1]);
+				com.sendMessageToClient(clientID, "Sie haben keine Karte mit der ID: " + s[1] + "!");
 			} else {
 				if (currentCombat != null) {
 					// ASSASSINATION
@@ -252,7 +252,7 @@ public class Phase_Combat extends Phase {
 							if (m==null) m = currentCombat.def_mercs.get(s[2]);
 							currentCombat.destroyMercenary(m);
 						} else {
-							com.sendMessageToClient(clientID, "ERROR: malformed command: " + message);
+							com.sendMessageToClient(clientID, "Ungültiger Befehl: " + message + "!");
 						}
 					}
 					if (a.getType() == CardType.SLAVEREVOLT) {

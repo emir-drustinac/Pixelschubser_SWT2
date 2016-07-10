@@ -354,6 +354,8 @@ public class GV_SpendMoney extends GameView {
 		// mark cards in the hand which can be used to buy items
 		if(!types.isEmpty()) {
 			markCardTypes(types);
+		} else if(discardedCards.isEmpty() && types.isEmpty()){
+			btnKaufen.setEnabled(false);
 		}
 	}
 	

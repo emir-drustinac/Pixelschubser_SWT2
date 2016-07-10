@@ -92,12 +92,12 @@ public class ServerGameLogic {
 		if(game.players.size() >= 5) {
 			String msg = "Maximale Anzahl an Spielern(5) sind schon im Spiel! Bitte einem anderen Spiel beitreten.";
 			JOptionPane.showMessageDialog(/*new MenuWindow(new MenuWindowLogic())*/null, msg, "Beitreten nicht möglich", JOptionPane.WARNING_MESSAGE);
-			com.sendMessageToClient(playerID, "kein Beitritt - Max. Anzahl Spieler ist 5");
+			com.sendMessageToClient(playerID, "kein Beitritt - Max. Anzahl Spieler ist 5!");
 			return false;
 		} else if(game.phase != PhaseType.JoinGame) {
 			String msg = "Das Spiel läuft schon! Bitte einem anderen Spiel beitreten.";
 			JOptionPane.showMessageDialog(/*new MenuWindow(new MenuWindowLogic())*/null, msg, "Beitreten nicht möglich", JOptionPane.WARNING_MESSAGE);
-			com.sendMessageToClient(playerID, "kein Beitritt - Spiel läuft");
+			com.sendMessageToClient(playerID, "kein Beitritt - Spiel läuft!");
 			return false;
 		} else {
 			game.addPlayer(playerID, name);

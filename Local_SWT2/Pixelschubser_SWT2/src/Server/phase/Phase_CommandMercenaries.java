@@ -35,7 +35,7 @@ public class Phase_CommandMercenaries extends Phase {
 		if (message.startsWith("merc_command:")) {
 			String[] params = message.split(":", 4);
 			if (params.length < 4) {
-				com.sendMessageToClient(clientID, "ERROR: malformed merc_command: " + message);
+				com.sendMessageToClient(clientID, "Ungültiger Söldner-Befehl: " + message + "!");
 				return;
 			}
 			String mercID = params[1];
@@ -43,7 +43,7 @@ public class Phase_CommandMercenaries extends Phase {
 			boolean attacking = Boolean.valueOf(params[3]);
 			boolean targetIsProconsul = game.getPlayer(targetID).isProconsul;
 			if (p.isProconsul) {
-				com.sendMessageToClient(clientID, "ERROR: proconsul cannot command his mercenaries: " + message);
+				com.sendMessageToClient(clientID, "Proconsul kann seine Söldner nicht befehligen: " + message + "!");
 				return;
 			}
 			// switching to defend myself
@@ -61,7 +61,7 @@ public class Phase_CommandMercenaries extends Phase {
 				}
 			}
 			// merc mercID not found
-			//com.sendMessageToClient(clientID, "ERROR: mercID not found: " + message);
+			//com.sendMessageToClient(clientID, "mercID nicht gefunden: " + message + "!");
 			sendGameDataToAllClients();
 		}
 		
@@ -81,7 +81,7 @@ public class Phase_CommandMercenaries extends Phase {
 			String[] s = message.split(":", 2);
 			ActionCard a = game.getPlayer(clientID).getCardByID(s[1]);
 			if (a == null) {
-				com.sendMessageToClient(clientID, "ERROR: you don't have a card with cardID " + s[1]);
+				com.sendMessageToClient(clientID, "Sie haben keine Karte mit der ID: " + s[1] + "!");
 			} else {
 				// discard ActionCard
 				logic.getGameData().discardCard(a);

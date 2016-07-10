@@ -19,6 +19,7 @@ import javax.swing.border.EmptyBorder;
 import Client.Client;
 import Client.gui.GuiActionCard;
 import Client.gui.PlayerInfos;
+import Client.gui.Presentation;
 import SharedData.ActionCard;
 import SharedData.ActionCard.CardType;
 import SharedData.GameData;
@@ -41,7 +42,6 @@ public class GV_MakePromises extends GameView {
 	
 	public GV_MakePromises() {
 		setLayout(new BorderLayout());
-		Client.sendMessageToServer("phase_infos");
 		
 		// text label
 		info = new JLabel("");

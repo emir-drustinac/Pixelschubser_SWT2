@@ -67,6 +67,7 @@ public class GV_CommandMercenaries extends GameView implements MouseListener{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Client.sendMessageToServer("confirm:command_mercs");
+				btn.setEnabled(false);
 			}
 		});
 		this.add(btn, BorderLayout.SOUTH);

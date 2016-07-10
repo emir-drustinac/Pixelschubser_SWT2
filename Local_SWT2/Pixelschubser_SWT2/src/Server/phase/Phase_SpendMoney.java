@@ -12,6 +12,7 @@ public class Phase_SpendMoney extends Phase {
 	private int nrOfReadyPlayers = 0;
 	private int mercsCount, buildingsCount, cardsCount;
 	private PlayerData pd;
+	private boolean got5VictoryPoint = false;
 	
 	public Phase_SpendMoney(ServerGameLogic logic, ServerCommunicator com) {
 		super(logic, com);
@@ -63,6 +64,10 @@ public class Phase_SpendMoney extends Phase {
 		if (message.startsWith("weiter")) {
 			nrOfReadyPlayers++;
 			System.out.println("#####nrOfReadyPlayers: " + nrOfReadyPlayers);
+			
+			if(pd.getNumberOfVictoryPoints() >= 5) {
+				got5VictoryPoint = true;
+			}
 			if(nrOfReadyPlayers == logic.getGameData().players.size()) {
 				sendGameDataToAllClients();
 				logic.nextPhase();
@@ -79,7 +84,7 @@ public class Phase_SpendMoney extends Phase {
 
 	@Override
 	public PhaseType getNextPhaseType() {
-		return PhaseType.DeclareWinner;
+		return got5VictoryPoint ? PhaseType.DeclareWinner : PhaseType.CardLimit;
 	}
 
 }

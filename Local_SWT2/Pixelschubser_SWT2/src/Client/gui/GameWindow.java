@@ -6,6 +6,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -168,7 +170,27 @@ public class GameWindow extends JFrame {
 		} else {
 			setMessage(m, false);
 		}
-		//gameViews.
+	}
+	
+	public String getMessage() {
+		return message.getText();
+	}
+
+	public void setMessage(String msg, boolean error) {
+		//show message for 3 seconds
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+				System.out.println("<Timer>");
+				message.setText(" ");
+			}
+		}, 3000);
+		
+		message.setText(msg);
+		message.setForeground(error ? Color.red : Color.black);
+
 	}
 
 	public GameViews getGameViews() {
@@ -181,15 +203,6 @@ public class GameWindow extends JFrame {
 	
 	public PlayerInfos getPlayerInfo(String playerID) {
 		return playerInfos.get(playerID);
-	}
-
-	public String getMessage() {
-		return message.getText();
-	}
-
-	public void setMessage(String msg, boolean error) {
-		message.setText(msg);
-		message.setForeground(error ? Color.red : Color.black);
 	}
 
 }

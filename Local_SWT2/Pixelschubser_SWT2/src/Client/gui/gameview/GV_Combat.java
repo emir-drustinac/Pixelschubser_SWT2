@@ -224,6 +224,8 @@ public class GV_Combat extends GameView {
 			lblResult.setVisible(false);
 			cardPanel.setVisible(false);
 			
+			Client.sendMessageToServer("confirm:combat");
+			
 			lblAttackerSummary.setText("<html><br><br><br>Alle Kämpfe sind geschlagen!<br><br><br>Der neue Proconsul ist <b>" + g.getPlayer(g.getProconsulID()).name + "</b></html>");
 		}
 		
