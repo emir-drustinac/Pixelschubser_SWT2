@@ -110,7 +110,7 @@ public class GV_CommandMercenaries extends GameView implements MouseListener{
 			if (gui != null) gui.updateVisuals(m);
 		}
 		
-		validate();
+		revalidate();
 	}
 
 	private int getNumberOfPlayer(String playerID) {

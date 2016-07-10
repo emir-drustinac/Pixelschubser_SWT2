@@ -171,6 +171,10 @@ public class GV_Combat extends GameView {
 			}
 		}
 		
+		// fix
+		if (g.getPlayer(myClientID()).isReady) 
+			chooseAssassinatedMerc = null;
+		
 		// update labels
 		if (g.combat != null) {
 			
