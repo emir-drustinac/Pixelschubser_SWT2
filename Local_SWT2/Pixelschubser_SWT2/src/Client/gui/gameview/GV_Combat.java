@@ -322,6 +322,7 @@ public class GV_Combat extends GameView {
 
 	@Override
 	public void deactivateView() {
+		chooseAssassinatedMerc = null;
 		// clear player list
 		playerNumberList.clear();
 		// clean merc overview
