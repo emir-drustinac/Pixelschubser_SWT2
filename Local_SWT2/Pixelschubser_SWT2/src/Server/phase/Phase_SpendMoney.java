@@ -16,6 +16,12 @@ public class Phase_SpendMoney extends Phase {
 	public Phase_SpendMoney(ServerGameLogic logic, ServerCommunicator com) {
 		super(logic, com);
 		System.out.println("# " + this.getClass().getSimpleName() + " entered");
+		
+		for(PlayerData pd : logic.getGameData().players) {
+			if(pd.numberOfMercenaries() == 0) {
+				pd.mercenaries.add(new Mercenary(pd));
+			}
+		}
 	}
 
 	@Override

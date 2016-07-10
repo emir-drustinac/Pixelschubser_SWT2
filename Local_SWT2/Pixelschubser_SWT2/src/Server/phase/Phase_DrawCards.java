@@ -31,7 +31,7 @@ public class Phase_DrawCards extends Phase {
 				drawCardsForPlayer(g, p, numCards);
 			}
 			//each player gets one mercenary at the beginning
-			p.mercenaries.add(new Mercenary(p));
+			//p.mercenaries.add(new Mercenary(p));
 		}
 		// TODO: other players draw in which order?
 //		Vector<PlayerData> orderedPlayers = new Vector<>();

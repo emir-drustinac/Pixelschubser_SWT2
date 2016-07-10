@@ -31,7 +31,7 @@ public class Phase_MakePromises extends Phase {
 					if (proconsul.getNumberOfCards() > numberOfPlayersWithoutPromises
 						|| player.getNumberOfPromisedCards() == 0 ) {
 						player.addPromise(actioncard);
-						com.sendMessageToClient(clientID, "promise_ack:true:u promised a card");
+//						com.sendMessageToClient(clientID, "promise_ack:true:u promised a card");
 						//com.sendPlayerDataToClient(player.playerID, player);
 						//com.sendPlayerDataToClient(clientID, player);
 						com.sendGameDataToAllClients(game);

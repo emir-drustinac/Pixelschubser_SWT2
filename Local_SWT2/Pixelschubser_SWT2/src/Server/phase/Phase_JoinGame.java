@@ -43,7 +43,7 @@ public class Phase_JoinGame extends Phase {
 						logic.nextPhase();
 						return;
 					} else {
-						com.sendMessageToAllClients(readyPlayers + "/" + numPlayers + " are ready" + (numPlayers <= 2 ? " - " + (3-numPlayers) + " more players to go" : ""));
+//						com.sendMessageToAllClients(readyPlayers + "/" + numPlayers + " are ready" + (numPlayers <= 2 ? " - " + (3-numPlayers) + " more players to go" : ""));
 					}
 				//}
 			}
