@@ -79,7 +79,7 @@ public class Phase_DrawCards extends Phase {
 			if (logic.getGameData().allPlayersAreReady()) {
 				logic.nextPhase();
 			}
-			// auto next after 3 Seconds
+			// auto next after x Seconds
 			if (timer == null) {
 				timer = new Timer();
 				timer.schedule(new TimerTask() {
@@ -89,7 +89,7 @@ public class Phase_DrawCards extends Phase {
 						System.out.println("<Timer>");
 						logic.nextPhase();
 					}
-				}, 3000);
+				}, 1000);
 			}
 		}
 	}
