@@ -230,10 +230,10 @@ public class Phase_Combat extends Phase {
 							game.makeProconsul(nextProconsul.playerID);
 						}
 					}
-					// tell all clients
-					sendGameDataToAllClients();
 				}
 			}
+			// tell all clients
+			sendGameDataToAllClients();
 		}
 		
 		//combat_usecard:cardID
