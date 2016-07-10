@@ -46,7 +46,7 @@ public class GV_CommandMercenaries extends GameView implements MouseListener{
 	private JPanel myMercenaries;
 	private JPanel[] attackingMercenaries;
 	private JPanel[] defendingMercenaries;
-	private JButton btn;
+	private final JButton btn;
 	
 	private boolean iAmProconsul = false;
 	private boolean haveSpyCardActive = false;

@@ -39,6 +39,8 @@ public class GameViews extends JPanel {
 	private CardLayout cardLayout = new CardLayout();
 
 	private HashMap<PhaseType, GameView> allGameViews = new HashMap<>();
+
+	private PhaseType lastPhase;
 	
 	public GameViews(GameData gameData) {
 		this.playerID = Client.getPlayerID();
@@ -76,15 +78,17 @@ public class GameViews extends JPanel {
 		// translate g.phase => GameView
 		//String className = getGameViewClassNameForPhase(g.phase);
 		// if view changed
-		//if (!className.equals(currentView.getClass().getSimpleName()) && allGameViews.containsKey(className)) {
-		if (allGameViews.containsKey(g.phase)) {
-			currentView.deactivateView();
-			currentView = allGameViews.get(g.phase);
-			currentView.activateView(g);
-			cardLayout.show(this, g.phase.toString());
-		} else {
-			System.out.println("ERROR: no GameView instance found GameViews.updateGameData for phase " + g.phase);
-			//throw new Exception("no GameView class found!");
+		if (lastPhase != g.phase) {
+			lastPhase = g.phase;
+			if (allGameViews.containsKey(g.phase)) {
+				currentView.deactivateView();
+				currentView = allGameViews.get(g.phase);
+				currentView.activateView(g);
+				cardLayout.show(this, g.phase.toString());
+			} else {
+				System.out.println("ERROR: no GameView instance found GameViews.updateGameData for phase " + g.phase);
+				//throw new Exception("no GameView class found!");
+			}
 		}
 		// update the current view
 		currentView.updateGameData(g);
