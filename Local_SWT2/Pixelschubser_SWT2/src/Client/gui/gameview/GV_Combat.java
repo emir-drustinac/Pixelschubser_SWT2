@@ -218,6 +218,7 @@ public class GV_Combat extends GameView {
 			lblResult.setText("<html><b>Ergebnis</b><br><br>" + text + "</html>");
 		} else {
 			// all combats done or no combats at all
+			lblTitle.setText("Kämpfe beendet");
 			lblDefenderSummary.setVisible(false);
 			lblAttackerSummary.setVisible(true);
 			lblResult.setVisible(false);
