@@ -73,9 +73,7 @@ public class GV_DrawCards extends GameView {
 		PlayerData p = g.players.get(myClientID());
 		
 		//visible only for the proconsul
-		if(!p.isProconsul) {
-			btnWeiter.setVisible(false);
-		}
+		btnWeiter.setVisible(p.isProconsul);
 		
 		cards.removeAll();
 		for (int i = 0; i < p.getNumberOfCards(); i++) {
