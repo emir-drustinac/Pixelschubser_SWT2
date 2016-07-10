@@ -222,6 +222,8 @@ public class Phase_Combat extends Phase {
 							for (PlayerData p : currentCombat.remaining_defenders.values()) {
 								p.isReady = false;
 							}
+						} else {
+							game.setAllPlayersReady(false);
 						}
 						game.combat = currentCombat;
 						if (currentCombat == null && nextProconsul != null) {
