@@ -216,7 +216,13 @@ public class Phase_Combat extends Phase {
 					} else {
 						// next combat
 						currentCombat = getNextCombat();
-						if (currentCombat != null) currentCombat.nextStage();
+						if (currentCombat != null) {
+							currentCombat.nextStage();
+							// set players ready
+							for (PlayerData p : currentCombat.remaining_defenders.values()) {
+								p.isReady = false;
+							}
+						}
 						game.combat = currentCombat;
 						if (currentCombat == null && nextProconsul != null) {
 							game.makeProconsul(nextProconsul.playerID);
