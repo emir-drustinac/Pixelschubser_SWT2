@@ -183,7 +183,7 @@ public class ActionCard implements Serializable{
 	public String getName() {
 		return getNameText().replace("-", "");
 	}
-	public String getNameText() {
+	private String getNameText() {
 		switch (type) {
 			case PICKLOCK: return "Einbrecher";
 			case SPY: return "Spion";
