@@ -19,7 +19,6 @@ import javax.swing.border.EmptyBorder;
 import Client.Client;
 import Client.gui.GuiActionCard;
 import Client.gui.PlayerInfos;
-import Client.gui.Presentation;
 import SharedData.ActionCard;
 import SharedData.ActionCard.CardType;
 import SharedData.GameData;
@@ -100,7 +99,7 @@ public class GV_MakePromises extends GameView {
 			}
 			
 			btn.setVisible(true);
-			if (g.allPlayersHaveBeenPromised()) btn.setEnabled(true);
+			btn.setEnabled(g.allPlayersHaveBeenPromised());
 
 		} else {
 			// show cards promised in this round
@@ -134,7 +133,7 @@ public class GV_MakePromises extends GameView {
 
 	@Override
 	public void deactivateView() {
-		//markCardTypes(null);
+		markCardTypes(ActionCard.noCardTypes);
 	}
 
 
