@@ -116,7 +116,7 @@ public class Phase_Combat extends Phase {
 	private void providePromises() {
 		GameData game = logic.getGameData();
 		for (PlayerData p : game.players) {
-			boolean attacked = /*currentCombat == null ||*/ !currentCombat.attackers.containsKey(p.playerID);
+			boolean attacked = /*currentCombat == null ||*/ currentCombat.attackers.containsKey(p.playerID);
 			// player has not attacked in currentCombat
 			while (p.getNumberOfPromisedCards() > 0) {
 				ActionCard a = p.getPromise(0);
